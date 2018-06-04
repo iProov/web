@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>iProov HTML5 Demo</title>
+
+    <link rel="shortcut icon" type="image/ico" href="https://www.iproov.com/favicon.ico"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <script src="https://secure.iproov.me/html5/v1/client"></script>
+
+    <script src="/script.js"></script>
+</head>
+<body class="text-center">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/">iProov HTML5 Demo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Demo <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="examples.html">Examples</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="https://github.com/iProov/html5">Documentation</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="alert fade fixed-top" role="alert"></div>
+
+    <form class="form-signin" action="/php/" method="post">
+        <img class="mb-4 logo" src="https://www.iproov.com/images/iproov_logo.svg" alt="iProov" width="150">
+        <div class="start">
+            <h1 class="h3 mb-3 font-weight-normal">Please register or login</h1>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" name="user_id" class="form-control" placeholder="Email address" required autofocus>
+            <input type="hidden" name="action" value="token">
+            <input type="hidden" name="type" value="enrol">
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me" checked> Remember me
+                </label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button value="enrol" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                </div>
+                <div class="col">
+                    <button value="verify" class="btn btn-lg btn-secondary btn-block" type="submit">Login</button>
+                </div>
+            </div>
+        </div>
+        <div id="inject-iproov"></div>
+        <div id="validation"></div>
+    </form>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">&copy; 2018 iProov Limited</span>
+        </div>
+    </footer>
+
+    <div class="loading">
+        <i class="fas fa-spinner fa-pulse fa-5x"></i>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>iProov HTML5 Demo</title>
+
+    <link rel="shortcut icon" type="image/ico" href="https://www.iproov.com/favicon.ico"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <script src="https://secure.iproov.me/html5/v1/client"></script>
+</head>
+<body class="text-left">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/">iProov HTML5 Demo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Demo</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link"
+                           href="examples.html">Examples <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="https://github.com/iProov/html5">Documentation</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="alert fade fixed-top" role="alert"></div>
+
+    <form class="form-examples col-sm-11 col-md-10 col-lg-8 col-xl-6" action="/php/" method="post">
+        <img class="mb-4 logo" src="https://www.iproov.com/images/iproov_logo.svg" alt="iProov" width="150">
+        <h1 class="h3 mb-3 font-weight-normal">Configure the example</h1>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Type</legend>
+                <div class="col-sm-10">
+                    <div class="form-check form-check-inline col-3">
+                        <input class="form-check-input" type="radio" name="type" id="type1" value="enrol" checked>
+                        <label class="form-check-label" for="type1">Enrol</label>
+                    </div>
+                    <div class="form-check form-check-inline col-7">
+                        <input class="form-check-input" type="radio" name="type" id="type2" value="verify">
+                        <label class="form-check-label" for="type2">Verify</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group row">
+            <label for="user-id" class="col-sm-2 col-form-label">User ID</label>
+            <div class="col-sm-10">
+                <input type="text" id="user-id" name="user_id" class="form-control" placeholder="^[a-zA-Z0-9\+_@\.-]{1,256}$" autofocus>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Action</legend>
+                <div class="col-sm-10">
+                    <div class="form-check form-check-inline col-4 col-md-3">
+                        <input class="form-check-input" type="radio" name="action" id="action1" value="token" checked>
+                        <label class="form-check-label" for="action1">Get token</label>
+                    </div>
+                    <div class="form-check form-check-inline col-6">
+                        <input class="form-check-input" type="radio" name="action" id="action2" value="validate">
+                        <label class="form-check-label" for="action2">Validate result</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <label for="token" class="col-sm-2 col-form-label">Token</label>
+            <div class="col-sm-10">
+                <input type="text" id="token" name="token" class="form-control" placeholder="^[a-z0-9]{64}$">
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Integration</legend>
+                <div class="col-sm-10">
+                    <div class="form-check form-check-inline col-3">
+                        <input class="form-check-input" type="radio" name="example" id="example1" value="html" checked>
+                        <label class="form-check-label" for="example1">HTML</label>
+                    </div>
+                    <div class="form-check form-check-inline col-4">
+                        <input class="form-check-input" type="radio" name="example" id="example2" value="javascript">
+                        <label class="form-check-label" for="example2">JavaScript</label>
+                    </div>
+                    <div class="form-check form-check-inline col-3">
+                        <input class="form-check-input" type="radio" name="example" id="example3" value="jquery">
+                        <label class="form-check-label" for="example3">jQuery</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Run example...</button>
+            </div>
+        </div>
+    </form>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">&copy; 2018 iProov Limited</span>
+        </div>
+    </footer>
+
+    <div class="loading">
+        <i class="fas fa-spinner fa-pulse fa-5x"></i>
+    </div>
+
+</body>
+</html>

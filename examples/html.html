@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>iProov HTML5 Demo</title>
+
+    <link rel="shortcut icon" type="image/ico" href="https://www.iproov.com/favicon.ico"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <script src="https://secure.iproov.me/html5/v1/client"></script>
+
+    <script src="/examples.js"></script>
+    <script>
+        window.addEventListener('WebComponentsReady', function(event) {
+            var component = document.querySelector('iproov-me');
+            component.addEventListener('ready', iProovEvent);
+            component.addEventListener('started', iProovEvent);
+            component.addEventListener('aborted', iProovEvent);
+            component.addEventListener('streamed', iProovEvent);
+            component.addEventListener('progress', iProovEvent);
+            component.addEventListener('passed', iProovEvent);
+            component.addEventListener('failed', iProovEvent);
+            component.addEventListener('error', iProovEvent);
+            component.addEventListener('unsupported', iProovEvent);
+        });
+    </script>
+
+</head>
+<body class="text-center">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/">iProov HTML5 Demo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Demo</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link"
+                           href="/examples.html">Examples <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="https://github.com/iProov/html5">Documentation</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="alert fade fixed-top" role="alert"></div>
+
+    <div class="container">
+
+        <iproov-me token="***YOUR_TOKEN_HERE***" type="***YOUR_TYPE_HERE***">
+
+            <div slot="ready" class="iproov-ready">
+                <h2>Ready to iProov</h2>
+            </div>
+
+            <div slot="aborted" class="iproov-aborted">
+                <h2>Try again?</h2>
+            </div>
+
+            <button slot="button" class="btn btn-lg btn-primary">
+                <i class="fa fa-camera"></i> Scan now
+            </button>
+
+            <div slot="progress" class="iproov-progress">
+                <p class="spinner">
+                    <span>40%</span><i class="fas fa-spinner fa-pulse fa-5x"></i>
+                </p>
+                <progress max="100" value="40"></progress>
+                <p class="status">Streaming...</p>
+            </div>
+
+            <div slot="passed" class="iproov-passed row justify-content-center">
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle"></i> Passed
+                </div>
+            </div>
+
+            <div slot="failed" class="iproov-failed row justify-content-center">
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-user-times"></i> <span>Failed</span>
+                </div>
+            </div>
+
+            <div slot="error" class="iproov-error">
+                <h2>There's a problem</h2>
+                <p><span></span> - <code></code></p>
+            </div>
+
+            <div slot="unsupported" class="iproov-unsupported">
+                <h2>Browser not supported</h2>
+                <p><span></span> - <code></code></p>
+            </div>
+
+        </iproov-me>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">&copy; 2018 iProov Limited</span>
+        </div>
+    </footer>
+
+    <div class="loading">
+        <i class="fas fa-spinner fa-pulse fa-5x"></i>
+    </div>
+
+</body>
+</html>
