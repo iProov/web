@@ -91,7 +91,11 @@ function call_api($url, $data) {
 	curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);// this should be true when calling from a secure page
 	$result = curl_exec($curl);
+	if ($result === false) {
+		echo 'Curl error: ' . curl_error($curl);
+	}
 	curl_close($curl);
 
 	return $result;
