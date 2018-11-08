@@ -81,7 +81,7 @@ function iProovValidate(event) {
 
     $.ajax({
         type: 'POST',
-        url: '/php/',
+        url: './php/',
         data: postData,
         dataType: 'json',
         success: function(data) {

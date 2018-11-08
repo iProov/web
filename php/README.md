@@ -11,7 +11,7 @@ php -v
 
 ## Run the demo
 
-Set the `$api_key` and `$secret` variables in [ajax.php](./ajax.php) with the ones provided to you (get new keys from the [iProov Portal](https://www.iproov.net)).
+Set the `$api_key` and `$secret` variables in [index.php](./index.php) with the ones provided to you (get new keys from the [iProov Portal](https://www.iproov.net)).
 
 From the command line, change directory into the root of this project (containing [index.html](../index.html)) and run the following command:
 
