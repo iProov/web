@@ -67,7 +67,7 @@ window.addEventListener('WebComponentsReady', function(event) {
 
 ### jQuery
 
-The HTML cal also be injected directly onto the page as in this jQuery example:
+The HTML can also be injected directly onto the page as in this jQuery example:
 
 ```javascript
 window.addEventListener('WebComponentsReady', function(event) {
