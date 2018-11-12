@@ -23,4 +23,9 @@ Now you can load the demo in a browser at the following URL:
 
 [http://localhost:8000](http://localhost:8000)
 
+## Troubleshooting
+If you are getting `error setting certificate verify locations: CAfile...` returned on your requests, this is due to your CURL not being able to find your local certificate. You need to uncomment this line:
 
+    curl_setopt($curl, CURLOPT_CAINFO, 'PATH_TO_YOUR_CERTIFICATE');
+
+And replace `PATH_TO_YOUR_CERTIFICATE` with the actual path to your local certificate.

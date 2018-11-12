@@ -91,7 +91,12 @@ function call_api($url, $data) {
 	curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+	// uncomment below if you are getting the error "error setting certificate verify locations"
+	// curl_setopt($curl, CURLOPT_CAINFO, 'PATH_TO_YOUR_CERTIFICATE');
 	$result = curl_exec($curl);
+	if ($result === false) {
+		echo curl_error($curl);exit;
+	}
 	curl_close($curl);
 
 	return $result;
