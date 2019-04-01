@@ -86,30 +86,28 @@ Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/Cust
 
 ```json
 {
-    "cameras": 1,
-    "token": "t0k3n...",
-    "type": "enrol"
+    "token": "THE TOKEN"
 }
 ```
 
 The available events are detailed below with any extra properties that are supplied:
 
-| Event           | Extra Properties      | Description                                                           |
-|-----------------|-----------------------|-----------------------------------------------------------------------|
-| **ready**       | None                  | iProov has initialised successfully                                   |
-| **started**     | None                  | The user has started iProov by launching into fullscreen              |
-| **aborted**     | *feedback, reason*    | The user has aborted iProov by exiting fullscreen                     |
-| **streamed**    | None                  | The user has finished streaming and the client has exited fullscreen  |
-| **progress**    | *percentage, message* | iProov has published a progress update for the authentication         |
-| **passed**      | None                  | The authentication was successful so the result can now be validated  |
-| **failed**      | *feedback, reason*    | The authentication was unsuccessful so the user needs to try again    |
-| **error**       | *feedback, reason*    | iProov encountered an error while processing the authentication       |
-| **unsupported** | *feedback, reason*    | The browser does not support using iProov                             |
+| Event           | Extra Properties      | Description                                                          |
+| --------------- | --------------------- | -------------------------------------------------------------------- |
+| **ready**       | None                  | iProov has initialised successfully                                  |
+| **started**     | None                  | The user has started iProov by launching into fullscreen             |
+| **aborted**     | *feedback, reason*    | The user has aborted iProov by exiting fullscreen                    |
+| **streamed**    | None                  | The user has finished streaming and the client has exited fullscreen |
+| **progress**    | *percentage, message* | iProov has published a progress update for the authentication        |
+| **passed**      | None                  | The authentication was successful so the result can now be validated |
+| **failed**      | *feedback, reason*    | The authentication was unsuccessful so the user needs to try again   |
+| **error**       | *feedback, reason*    | iProov encountered an error while processing the authentication      |
+| **unsupported** | *feedback, reason*    | The browser does not support using iProov                            |
 
 All possible properties of the event's **detail** property are described below:
 
 | Property       | Events                                | Description                                                |
-|----------------|---------------------------------------|------------------------------------------------------------|
+| -------------- | ------------------------------------- | ---------------------------------------------------------- |
 | **cameras**    | All                                   | The total number of cameras available to the browser       |
 | **token**      | All                                   | The token associated with the authentication attempt       |
 | **type**       | All                                   | The type of authentication (enrol or verify)               |
@@ -120,25 +118,25 @@ All possible properties of the event's **detail** property are described below:
 
 In the case of the **aborted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases and the _reason_ can be displayed to the user. The following are some of the possible responses:
 
-| Feedback                              | Reason                                                | Event         |
-|---------------------------------------|-------------------------------------------------------|--------------:|
+| Feedback                              | Reason                                                |         Event |
+| ------------------------------------- | ----------------------------------------------------- | ------------: |
 | **client_browser**                    | The browser is not supported                          | *unsupported* |
-| **fullscreen_change**                 | Exited fullscreen without completing iProov           | *aborted*     |
-| **ambiguous_outcome**                 | Sorry, ambiguous outcome                              | *failed*      |
-| **network_problem**                   | Sorry, network problem                                | *failed*      |
-| **user_timeout**                      | Sorry, your session has timed out                     | *failed*      |
-| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low | *failed*      |
-| **lighting_backlit**                  | Strong light source detected behind you               | *failed*      |
-| **lighting_too_dark**                 | Your environment appears too dark                     | *failed*      |
-| **lighting_face_too_bright**          | Too much light detected on your face                  | *failed*      |
-| **motion_too_much_movement**          | Please keep still                                     | *failed*      |
-| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                    | *failed*      |
-| **client_config**                     | There was an error with the client configuration      | *error*       |
-| **client_api**                        | There was an error calling the API                    | *error*       |
-| **client_camera**                     | There was an error getting video from the camera      | *error*       |
-| **client_stream**                     | There was an error streaming the video                | *error*       |
-| **client_error**                      | An unknown error occurred                             | *error*       |
-| **server_abort**                      | The server aborted the claim before iProov completed  | *error*       |
+| **fullscreen_change**                 | Exited fullscreen without completing iProov           |     *aborted* |
+| **ambiguous_outcome**                 | Sorry, ambiguous outcome                              |      *failed* |
+| **network_problem**                   | Sorry, network problem                                |      *failed* |
+| **user_timeout**                      | Sorry, your session has timed out                     |      *failed* |
+| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low |      *failed* |
+| **lighting_backlit**                  | Strong light source detected behind you               |      *failed* |
+| **lighting_too_dark**                 | Your environment appears too dark                     |      *failed* |
+| **lighting_face_too_bright**          | Too much light detected on your face                  |      *failed* |
+| **motion_too_much_movement**          | Please keep still                                     |      *failed* |
+| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                    |      *failed* |
+| **client_config**                     | There was an error with the client configuration      |       *error* |
+| **client_api**                        | There was an error calling the API                    |       *error* |
+| **client_camera**                     | There was an error getting video from the camera      |       *error* |
+| **client_stream**                     | There was an error streaming the video                |       *error* |
+| **client_error**                      | An unknown error occurred                             |       *error* |
+| **server_abort**                      | The server aborted the claim before iProov completed  |       *error* |
 
 ### Listeners
 
@@ -198,7 +196,7 @@ Further examples of event usage can be found in [examples.js](./examples.js) and
 Visual customisation can be achieved with [templates and slots](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots) using the [Shadow DOM API](https://webkit.org/blog/4096/introducing-shadow-dom-api/). The following [slots](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) can be used with the iProov Web Component and have associated [events](#events):
 
 | Slot            | Description                                                                                    |
-|-----------------|------------------------------------------------------------------------------------------------|
+| --------------- | ---------------------------------------------------------------------------------------------- |
 | **button**      | Element that a user taps or clicks on to launch into fullscreen and start iProov               |
 | **ready**       | Screen displayed to the user when the component is ready to start the main iProov user journey |
 | **aborted**     | Screen displayed to the user when they exit fullscreen before iProoving                        |
