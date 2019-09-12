@@ -1,4 +1,4 @@
->This is a prototype of the iProov browser solution for desktop browsers. We are aware of issues with this version of the product on mobile devices.  A new version for use on desktop and mobile browsers is being developed and will be available in Q4-2019.
+>This is a prototype of the iProov browser solution for desktop browsers. We are aware of issues with this version of the product on mobile devices.  A new version for use on desktop and mobile browsers is [currently in beta](https://github.com/iProov/html5/tree/beta) and will be released in Q4-2019.
 # iProov HTML5 Integration Demo
 The iProov HTML5 Integration Demo illustrates a range of integrations with the HTML5 client. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
 
