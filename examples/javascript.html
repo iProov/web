@@ -13,15 +13,13 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-    <script src="https://secure.iproov.me/html5/v1/client"></script>
+    <script src="https://client.iproov.app/v2"></script>
 
     <script src="../examples.js"></script>
     <script>
         window.addEventListener('WebComponentsReady', function(event) {
-            var component = new IProovMe({
-                token: '***YOUR_TOKEN_HERE***',
-                type: '***YOUR_TYPE_HERE***'
-            });
+            var component = document.createElement("iproov-me");
+            component.setAttribute("token", "***YOUR_TOKEN_HERE***");
             document.getElementById('inject-iproov').appendChild(component);
         });
     </script>

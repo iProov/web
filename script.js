@@ -40,10 +40,8 @@ function showMessage(text, type) {
 }
 
 function injectIproov(data){
-    var component = new IProovMe({
-        token: data.token,
-        type: $('input[name=type]').val()
-    });
+    var component = document.createElement('iproov-me');
+    component.setAttribute('token', data.token);
 
     //Component customisations
     component.appendChild($('<button slot="button" type="button" class="btn btn-success">Scan my face</button>')[0]);
@@ -56,16 +54,16 @@ function injectIproov(data){
     component.addEventListener('progress', iProovProgress);
     component.addEventListener('passed', iProovValidate);
 
-    $(component).on('ready unsupported', function() {
+    $(component).on('ready unsupported permission', function() {
         $('.loading').removeClass('show');
     });
 
-    $(component).on('ready started aborted streamed progress passed failed error unsupported', iProovEvent);
+    $(component).on('ready permission started aborted streamed progress passed failed error unsupported', iProovEvent);
 }
 
 function iProovProgress(event) {
-    $('.iproov-progress progress').attr('value', event.detail.percentage);
-    $('.iproov-progress .spinner span').html(event.detail.percentage + '%');
+    $('.iproov-progress progress').attr('value', event.detail.progress);
+    $('.iproov-progress .spinner span').html(event.detail.progress + '%');
     $('.iproov-progress .status').html(event.detail.message);
 }
 
@@ -108,9 +106,9 @@ function iProovEvent(event) {
             console.warn('iProov ' + event.type + ' - ' + event.detail.reason);
             break;
         case 'progress':
-            console.info(event.detail.message + ' (' + event.detail.percentage + '%)');
+            console.info(event.detail.message + ' (' + event.detail.progress + '%)');
             break;
         default:
-            console.log('iProov ' +  event.detail.type + ' ' + event.type);
+            console.log('iProov ' + event.type);
     }
 }
