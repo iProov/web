@@ -2,7 +2,13 @@
 
 ## Introduction
 
-The HTML5 client integration requires backend API calls to our [REST API](https://secure.iproov.me/docs.html) and frontend integration to your web page. The current published version is 2.0.0 beta 4 provided for customers and partners to integrate with stable API calls and customisation options. A small number of features are still in progress. Accordingly this version should be considered as beta and should not be used in full production.
+The HTML5 client is the iProov client for web browser based authentication. It can be integrated in a number of ways to support your web journeys for onboarding and authentication.
+
+Please note that to use the HTML5 client you will require Service Provider credentials. You can set these up automatically after registering your company on our [portal](https://portal.iproov.com/login).
+
+You will need to generate a token from your back-end to use with the HTML5 client. You can use the [API documentation](https://secure.iproov.me/docs.html) to make the relevant API calls and return the token to your front-end.
+
+The current published version is 2.0.0 beta 4 provided for customers and partners to integrate with stable API calls and customisation options. A small number of features are still in progress. Accordingly this version should be considered as beta and should not be used in full production.
 
 ## Quick Links
 - [iProov HTML5 Client v2.0.0 (beta)](#iproov-html5-client-v200-beta)
