@@ -2,21 +2,61 @@
 
 ## Introduction
 
-The HTML5 client integration requires backend API calls to our [REST API](https://secure.iproov.me/docs.html) and frontend integration to your web page.
+The HTML5 client integration requires backend API calls to our [REST API](https://secure.iproov.me/docs.html) and frontend integration to your web page. The current published version is 2.0.0 beta 4 provided for customers and partners to integrate with stable API calls and customisation options. A small number of features are still in progress. Accordingly this version should be considered as beta and should not be used in full production.
 
+## Quick Links
+- [iProov HTML5 Client v2.0.0 (beta)](#iproov-html5-client-v200-beta)
+  - [Introduction](#introduction)
+  - [Quick Links](#quick-links)
+  - [Supported Browsers](#supported-browsers)
+  - [Integrating](#integrating)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Script Tag](#script-tag)
+  - [Node Module](#node-module)
+    - [Setup](#setup)
+    - [Vanilla JavaScript](#vanilla-javascript)
+    - [jQuery](#jquery)
+    - [Angular v7](#angular-v7)
+      - [Safari 12.1 Known WebRTC issue](#safari-121-known-webrtc-issue)
+    - [React v16](#react-v16)
+    - [Vue v2](#vue-v2)
+  - [Events](#events)
+    - [Details](#details)
+    - [Listeners](#listeners)
+  - [Customisation](#customisation)
+    - [Slots](#slots)
+    - [Options](#options)
+      - [Screen Brightness](#screen-brightness)
+      - [Show Countdown](#show-countdown)
+      - [Prefer App](#prefer-app)
+    - [HTML](#html)
+    - [JavaScript](#javascript)
+    - [Language Support](#language-support)
+      - [Default Language](#default-language)
+      - [Custom Language](#custom-language)
+    - [Language Code Examples](#language-code-examples)
+      - [ES6 static JSON object](#es6-static-json-object)
+      - [ES6 async/await fetch file from local or external source](#es6-asyncawait-fetch-file-from-local-or-external-source)
+      - [React 16, Axios, ES6 async/await fetch file from local or external source](#react-16-axios-es6-asyncawait-fetch-file-from-local-or-external-source)
+      - [Angular 7, HttpClient, ES6 fetch file from local filesystem](#angular-7-httpclient-es6-fetch-file-from-local-filesystem)
+      - [Angular 7, HttpClient, ES6 fetch file from external source](#angular-7-httpclient-es6-fetch-file-from-external-source)
+  
 ## Supported Browsers
 
 iProov's HTML5 Application requires modern browsers to be able to work due to making use of technologies [WebRTC](https://webrtc.org/), [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API), [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and [WebAssembly](https://webassembly.org/). See below for the full list of supported browsers and their minimum versions.
 
-| ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/chrome_1-11/chrome_1-11.svg) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/firefox_1.5-3/firefox_1.5-3.svg) | ![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/opera_10-14/opera_10-14.svg) | ![Edge](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/edge/edge.svg) | ![Safari](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/safari-ios/safari-ios.svg) | ![SamsungInternet](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/samsung-internet_5/samsung-internet_5.svg) |
-| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| 58+ ✔                                                                                                       | 55+ ✔                                                                                                            | 45+ ✔                                                                                                      | 15+ ✔                                                                               | 11+ ✔                                                                                             | 8.2 ✔                                                                                                                              |
+| ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/chrome_1-11/chrome_1-11.svg) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/firefox_1.5-3/firefox_1.5-3.svg) | ![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/opera_10-14/opera_10-14.svg) | ![Safari](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/safari-ios/safari-ios.svg) | ![SamsungInternet](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/samsung-internet_5/samsung-internet_5.svg) |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 58+ ✔                                                                                                       | 55+ ✔                                                                                                            | 45+ ✔                                                                                                      | 11+ ✔                                                                                             | 8.2 ✔                                                                                                                              |
 
 > If the device attempting to iProov doesn't meet the minimum requirements. The `unsupported` event will be fired. See [#events](#events) for more details.
 
 ## Integrating
 
 ### Backend
+
+To make use of this HTML5 client you will require integration with the back-end iProov service. To access credentials and an integration guide, please visit [portal.iproov.com](https://portal.iproov.com).
 
 When starting an iProov transaction (or claim), you would first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be done as part of the page load or with AJAX. You would then need to pass the token to your frontend to initialise the HTML5 client.
 
@@ -70,8 +110,6 @@ require("@iproov/html5")
 ```
 
 It's as simple as that including the HTML5 client. You now need to inject the webcomponent by one of the [integration methods](#integration) shown below.
-
-## Integration
 
 To include the iProov HTML5 client on your page, complete one of the following steps.
 
@@ -405,7 +443,7 @@ function iProovEvent(event) {
       console.warn("iProov " + event.type + " - " + event.detail.reason)
       break
     case "progress":
-      console.info(event.detail.message + " (" + event.detail.percentage + "%)")
+      console.info(event.detail.message + " (" + event.detail.progress + "%)")
       break
     case "feedback":
       feedback(event)
@@ -461,6 +499,8 @@ Further examples of event usage can be found in [examples.js](./examples.js) and
 
 ## Customisation
 
+### Slots
+
 Visual customisation can be achieved with [templates and slots](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots) using the [Shadow DOM API](https://webkit.org/blog/4096/introducing-shadow-dom-api/). The following [slots](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) can be used with the `<iproov-me>` web component and have associated [events](#events):
 
 | Slot                  | Description                                                                                    |
@@ -480,7 +520,9 @@ Visual customisation can be achieved with [templates and slots](https://develope
 
 Slots can be embedded as HTML or injected with JavaScript.
 
-### Screen Brightness Option
+### Options
+
+#### Screen Brightness
 
 The screen brightness prompt which is displayed on mobile devices can be disabled by passing in `screen_brightness_prompt` `false`. By default, `screen_brightness_prompt` is true (on). The example below shows how to disable the screen brightness prompt.
 
@@ -492,7 +534,7 @@ The screen brightness prompt which is displayed on mobile devices can be disable
 </iproov-me>
 ```
 
-### Show Countdown Option
+#### Show Countdown
 
 By setting `show_countdown` to `true`, a countdown will be shown to the user before scanning actually starts. If this is set to `false`, when the users face becomes properly aligned the scanner will start in 2 seconds as long as the users face is still properly aligned. By default, `show_countdown` is `false`. The example below shows how to enable the countdown.
 
@@ -504,7 +546,7 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 </iproov-me>
 ```
 
-### Prefer App Option
+#### Prefer App
 
 The `prefer_app` setting converts the scan button into an app launch URL which will launch the iProov app or iProov SDK when within a WebView. The following values are allowed and multiple can be used when separated by a comma:
 
@@ -574,17 +616,17 @@ window.addEventListener("WebComponentsReady", function(event) {
 })
 ```
 
-## Language Support
+### Language Support
 
-The iProov HTML5 application supports the customisation of languages through JSON configurations. An example configuration file can be [seen here](#). All language files have the same keys and only the values of those keys are what will be shown. You can download ALL current language files for reference [here](#)
+The iProov HTML5 application supports the customisation of languages through JSON configurations. All language files have the same keys and only the values of those keys are what will be shown.
 
-### Default Language
+#### Default Language
 The default language is set by looking at the device's language and then if a configuration for that language exists, that will be set as default. If a configuration file cannot be found then the default language is set to `en`. 
 
-### Customisation
-You can customise the language by supplying the `language` key with your iProov component. The keys value must be valid JSON and passed as a string. This is then converted and merged with the default language overriding any given keys. See below for [examples](#examples).
+#### Custom Language
+You can customise the language by supplying the `language` key with your iProov component. The keys value must be valid JSON and passed as a string. This is then converted and merged with the default language overriding any given keys. See below for [language code examples](#language-code-examples).
 
-### Examples
+### Language Code Examples
 #### ES6 static JSON object
 ```javascript
 window.addEventListener("WebComponentsReady", event => {
@@ -666,7 +708,7 @@ export default class App extends Component {
 }
 ```
 
-### Angular 7, HttpClient, ES6 fetch file from local filesystem
+#### Angular 7, HttpClient, ES6 fetch file from local filesystem
 Add below to your `tsconfig.json` file to import json files locally in Angular. The example below is based from the [Angular integration examples](#Angular-v7).
 ```json
 {
@@ -709,7 +751,7 @@ export class IproovComponent implements OnInit {
 }
 ```
 
-### Angular 7, HttpClient, ES6 fetch file from external source
+#### Angular 7, HttpClient, ES6 fetch file from external source
 Add below to your `tsconfig.json` file to import json files locally in Angular. The example below is based from the [Angular integration examples](#Angular-v7).
 ```json
 {
