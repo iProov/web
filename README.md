@@ -11,7 +11,9 @@ You will need to generate a token from your back-end to use with the HTML5 clien
 The current published version is 2.0.0 beta 4 provided for customers and partners to integrate with stable API calls and customisation options. A small number of features are still in progress. Accordingly this version should be considered as beta and should not be used in full production.
 
 ## Quick Links
+
 - [iProov HTML5 Client v2.0.0 (beta)](#iproov-html5-client-v200-beta)
+
   - [Introduction](#introduction)
   - [Quick Links](#quick-links)
   - [Supported Browsers](#supported-browsers)
@@ -33,9 +35,15 @@ The current published version is 2.0.0 beta 4 provided for customers and partner
   - [Customisation](#customisation)
     - [Slots](#slots)
     - [Options](#options)
+      - [Base URL](#base-url)
+      - [Allow Landscape](#allow-landscape)
       - [Screen Brightness](#screen-brightness)
       - [Show Countdown](#show-countdown)
       - [Prefer App](#prefer-app)
+      - [Colours](#colours)
+      - [Logo](#logo)
+      - [Custom Title](#custom-title)
+        - [Examples](#custom-title-examples)
     - [HTML](#html)
     - [JavaScript](#javascript)
     - [Language Support](#language-support)
@@ -47,7 +55,7 @@ The current published version is 2.0.0 beta 4 provided for customers and partner
       - [React 16, Axios, ES6 async/await fetch file from local or external source](#react-16-axios-es6-asyncawait-fetch-file-from-local-or-external-source)
       - [Angular 7, HttpClient, ES6 fetch file from local filesystem](#angular-7-httpclient-es6-fetch-file-from-local-filesystem)
       - [Angular 7, HttpClient, ES6 fetch file from external source](#angular-7-httpclient-es6-fetch-file-from-external-source)
-  
+
 ## Supported Browsers
 
 iProov's HTML5 Application requires modern browsers to be able to work due to making use of technologies [WebRTC](https://webrtc.org/), [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API), [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and [WebAssembly](https://webassembly.org/). See below for the full list of supported browsers and their minimum versions.
@@ -528,6 +536,62 @@ Slots can be embedded as HTML or injected with JavaScript.
 
 ### Options
 
+#### Base URL
+
+You can change the backend server you are attempting to iProov against by passing the `base_url` property. This needs to match the same endpoint you used when generating tokens for enrols and verifications.
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" base_url="https://eu.rp.secure.iproov.me">
+  <div slot="ready">
+    <h1>Ready to iProov</h1>
+  </div>
+</iproov-me>
+```
+
+#### Locale
+
+The iProov HTML5 app will look at the device currently iprooving and determine its locale value. This value is used to decide which language files to use (where supported). You can pass `locale` as an option which will override the devices value and force that language.
+
+> This feature will only work if the language is supported. In the case it isn't, a warning in the console will be fired and you will need to pass in the language overrides by using the options found in [Languages](#language-support)
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" locale="nl">
+  <div slot="ready">
+    <h1>Ready to iProov</h1>
+  </div>
+</iproov-me>
+```
+
+#### Prefer App
+
+The `prefer_app` setting converts the scan button into an app launch URL which will launch the iProov app or iProov SDK when within a WebView. The following values are allowed and multiple can be used when separated by a comma:
+
+- always
+- ios
+- android
+- ios-webview
+- android-webview
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" prefer_app="ios,ios-webview">
+  <div slot="ready">
+    <h1>Ready to iProov</h1>
+  </div>
+</iproov-me>
+```
+
+#### Allow Landscape
+
+Mobile devices are by default prevented from iProoving while in landscape. This feature can be disabled by passing `allow_landscape` `true` with your component as shown below.
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="true">
+  <div slot="ready">
+    <h1>Ready to iProov</h1>
+  </div>
+</iproov-me>
+```
+
 #### Screen Brightness
 
 The screen brightness prompt which is displayed on mobile devices can be disabled by passing in `screen_brightness_prompt` `false`. By default, `screen_brightness_prompt` is true (on). The example below shows how to disable the screen brightness prompt.
@@ -552,22 +616,60 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 </iproov-me>
 ```
 
-#### Prefer App
+#### Colours
 
-The `prefer_app` setting converts the scan button into an app launch URL which will launch the iProov app or iProov SDK when within a WebView. The following values are allowed and multiple can be used when separated by a comma:
+You can customise the look and feel of the main layout by changing the following options. You can pass a literal value i.e. `red`, RGB i.e. `rgb(230, 245, 66)` or a hex value i.e. `#e6f542`.
 
-- always
-- ios
-- android
-- ios-webview
-- android-webview
+```javascript
+loading_tint_color = "#5c5c5c" // The app is connecting to the server or no face found. Default: grey (#5c5c5c)
+not_ready_tint_color = "#f5a623" // Cannot start iProoving until the user takes action (e.g. move closer, etc). Default: orange (#f5a623)
+ready_tint_color = "#01bf46" // Ready to start iProoving. Default: green (#01bf46)
+```
+
+The example below changes the default grey no face to `#4293f5` (blue), giving feedback like "Move Closer" to red `rgb(245, 66, 66)` and starting to `purple`.
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***" prefer_app="ios,ios-webview">
+<iproov-me
+  token="***YOUR_TOKEN_HERE***"
+  loading_tint_color="#4293f5"
+  not_ready_tint_color="rgb(245, 66, 66)"
+  ready_tint_color="purple"
+>
   <div slot="ready">
     <h1>Ready to iProov</h1>
   </div>
 </iproov-me>
+```
+
+#### Logo
+
+You can use a custom logo by simply passing a relative link or absolute path to your logo. Ideally, the logo would be in an SVG format for scaling but you can use any web safe image format. If you don't pass a logo, the iProov logo will be shown by default. If you do not want a logo to show pass the `logo` attribute as `null`.
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" logo="https://www.waterloobank.co.uk/assets/img/logo.svg">
+  <div slot="ready">
+    <h1>Ready to iProov</h1>
+  </div>
+</iproov-me>
+```
+
+#### Custom Title
+
+Specify a custom title to be shown. Defaults to show an iProov-generated message. Set to empty string "" to hide the message entirely. You can also pass in `%@` characters which will be mapped in this order to `type` (Enrol or Verify), `user_name` (the user_name you passed when generating the token), `sp_name` (the service provider you used to generate the token).
+
+> Note: iProov-generated messages are passed through our translators. Passing a custom title will prevent this and you will need to provide the translated version.
+
+##### Custom Title Examples:
+```html
+<!-- Set the title to a plain string -->
+<iproov-me token="***YOUR_TOKEN_HERE***" custom_title="iProov Ltd" />
+
+<!-- Hide the title, empty string, "null" or "false" can be used. Must be a string! -->
+<iproov-me token="***YOUR_TOKEN_HERE***" custom_title="" />
+
+<!-- Build dynamic string with type, user_name and sp_name-->
+<!-- i.e. Below would generate "Enrol AS andrew@iproov.com TO iProov" -->
+<iproov-me token="***YOUR_TOKEN_HERE***" custom_title="%@ AS %@ TO %@" />
 ```
 
 ### HTML
@@ -627,30 +729,35 @@ window.addEventListener("WebComponentsReady", function(event) {
 The iProov HTML5 application supports the customisation of languages through JSON configurations. All language files have the same keys and only the values of those keys are what will be shown.
 
 #### Default Language
-The default language is set by looking at the device's language and then if a configuration for that language exists, that will be set as default. If a configuration file cannot be found then the default language is set to `en`. 
+
+The default language is set by looking at the device's language and then if a configuration for that language exists, that will be set as default. If a configuration file cannot be found then the default language is set to `en`.
 
 #### Custom Language
+
 You can customise the language by supplying the `language` key with your iProov component. The keys value must be valid JSON and passed as a string. This is then converted and merged with the default language overriding any given keys. See below for [language code examples](#language-code-examples).
 
 ### Language Code Examples
+
 #### ES6 static JSON object
+
 ```javascript
 window.addEventListener("WebComponentsReady", event => {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-  
+
   const customLanguage = `{
     "iproov_success": "You passed!",
     "prompt_loading": "Its loading"
   }`
   element.setAttribute("language", customLanguage)
-  
+
   // inject iproov element into page
   document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
 #### ES6 async/await fetch file from local or external source
+
 ```javascript
 window.addEventListener("WebComponentsReady", async event => {
   async function getLanguage(path) {
@@ -659,52 +766,51 @@ window.addEventListener("WebComponentsReady", async event => {
 
     return language
   }
-  
+
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-  
+
   const languageFile = "" // local or external path to language file
   const customLanguage = await getLanguage(languageFile)
   element.setAttribute("language", customLanguage)
-  
+
   // inject iproov element into page
   document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
 #### React 16, Axios, ES6 async/await fetch file from local or external source
+
 ```javascript
-import React, { Component } from 'react';
+import React, { Component } from "react"
 import axios from "axios" // assumes you have already installed axios as a dependency
 import "@iproov/html5" // includes the @iproov/html5 client into your app
 
 export default class App extends Component {
   state = {
     language: "", // keep empty to stop render firing until we have a language object
-    token: "***YOUR_TOKEN_HERE***"
+    token: "***YOUR_TOKEN_HERE***",
   }
-  
+
   componentDidMount() {
     this.setLanguage()
   }
-  
+
   async setLanguage() {
-    const path = "" // local or external path to language JSON file 
-    const response = await axios
-      .get(path)  
-      .catch(error => console.error(error))
-      
+    const path = "" // local or external path to language JSON file
+    const response = await axios.get(path).catch(error => console.error(error))
+
     const language = await JSON.stringify(response.data)
-    this.setState({language})
+    this.setState({ language })
   }
-  
+
   render() {
     const { token, language } = this.state
     // only render in the iproov component when we have a language object
     if (!language) {
       return null
     }
-    
+
     return (
       <div className="App">
         <iproov-me token={token} language={language} />
@@ -715,13 +821,16 @@ export default class App extends Component {
 ```
 
 #### Angular 7, HttpClient, ES6 fetch file from local filesystem
+
 Add below to your `tsconfig.json` file to import json files locally in Angular. The example below is based from the [Angular integration examples](#Angular-v7).
+
 ```json
 {
   "resolveJsonModule": true,
   "esModuleInterop": true
 }
 ```
+
 ```typescript
 import { Component, OnInit, Injectable } from "@angular/core"
 import "@iproov/html5"
@@ -730,9 +839,8 @@ import Language from "./lang.json" // enter your relative path to desired langua
 
 @Component({
   selector: "app-iproov",
-  templateUrl: './iproov-component.html',
+  templateUrl: "./iproov-component.html",
 })
-
 export class IproovComponent implements OnInit {
   constructor() {
     // this.getData() // external file example
@@ -749,60 +857,58 @@ export class IproovComponent implements OnInit {
       iProovMe.setAttribute("language", JSON.stringify(this.language))
 
       // inject iproov element into your page
-      document
-        .getElementById("iproov-container")
-        .insertAdjacentElement("beforebegin", iProovMe)
+      document.getElementById("iproov-container").insertAdjacentElement("beforebegin", iProovMe)
     })
   }
 }
 ```
 
 #### Angular 7, HttpClient, ES6 fetch file from external source
+
 Add below to your `tsconfig.json` file to import json files locally in Angular. The example below is based from the [Angular integration examples](#Angular-v7).
+
 ```json
 {
   "resolveJsonModule": true,
   "esModuleInterop": true
 }
 ```
-You then need to import `HttpClientModule` within your `app.module.ts`
-```typescript
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http' // import HttpClientModule from Angular
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { IproovComponent } from './iproov.component';
+You then need to import `HttpClientModule` within your `app.module.ts`
+
+```typescript
+import { BrowserModule } from "@angular/platform-browser"
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core"
+import { HttpClientModule } from "@angular/common/http" // import HttpClientModule from Angular
+
+import { AppRoutingModule } from "./app-routing.module"
+import { AppComponent } from "./app.component"
+import { IproovComponent } from "./iproov.component"
 @NgModule({
-  declarations: [
-    AppComponent,
-    IproovComponent
-  ],
+  declarations: [AppComponent, IproovComponent],
   imports: [
     BrowserModule,
     HttpClientModule, // add new imported module here
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule { }
+export class AppModule {}
 ```
+
 Then within your component, you can access the HttpClient and inject into the `<iproov />` component as shown below.
+
 ```typescript
 import { Component, OnInit, Injectable } from "@angular/core"
-import { HttpClient } from '@angular/common/http' // import HttpClient from angular
+import { HttpClient } from "@angular/common/http" // import HttpClient from angular
 import "@iproov/html5"
 
 @Component({
   selector: "app-iproov",
-  templateUrl: './iproov-component.html',
+  templateUrl: "./iproov-component.html",
 })
-
 export class IproovComponent implements OnInit {
   // add HttpClient to component
   constructor(private http: HttpClient) {
@@ -810,7 +916,7 @@ export class IproovComponent implements OnInit {
   }
   getData() {
     // get the json file and return as a string
-    this.http.get("https://path-to-your-lang-file.json", {responseType: "text"}).subscribe(res => {
+    this.http.get("https://path-to-your-lang-file.json", { responseType: "text" }).subscribe(res => {
       this.language = <any>res
       this.injectElement()
     })
@@ -833,11 +939,9 @@ export class IproovComponent implements OnInit {
       // set your generated token
       iProovMe.setAttribute("token", this.token)
       iProovMe.setAttribute("language", this.language)
-  
+
       // inject iproov element into your page
-      document
-        .getElementById("iproov-container")
-        .insertAdjacentElement("beforebegin", iProovMe)
+      document.getElementById("iproov-container").insertAdjacentElement("beforebegin", iProovMe)
     }
   }
 }
