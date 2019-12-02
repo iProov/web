@@ -423,51 +423,12 @@ function iProovEvent(event) {
     case "progress":
       console.info(event.detail.message + " (" + event.detail.progress + "%)")
       break
-    case "feedback":
-      feedback(event)
-      break
     case "passed":
     case "failed":
       console.log("iProov " + event.detail.type + " " + event.type)
       break
     default:
       console.log("iProov " + event.type)
-  }
-}
-
-// - Example of how to use the feedback event
-// - This example would require the HTML below to work:
-/*
-<style type="text/css">
-  #accessibility {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-</style>
-<!-- Screen reader dynamic messages injected here from the feedback event -->
-<div id="accessibility" aria-live="assertive" aria-hidden="false"></div>
-*/
-function feedback(event) {
-  var key = event.detail.key // optional key used for different languages
-  var message = event.detail.message // the full message to be read out
-
-  // - Triggers event to DOM element
-  function trigger(target) {
-    var evt = document.createEvent("HTMLEvents")
-    evt.initEvent("change", true, true)
-    target.dispatchEvent(evt)
-  }
-
-  var element = document.getElementById("accessibility")
-  if (element) {
-    element.textContent = message // escape html...
-    trigger(element)
   }
 }
 ```
