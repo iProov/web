@@ -153,27 +153,13 @@ window.addEventListener("WebComponentsReady", function(event) {
 
 Integrating with an Angular project has a few steps that need to be implemented to work out of the box. You will first need to create a custom Angular component which will allow you to inject the HTML5 client into your project.
 
-> Note that the iProov HTML5 client has only been tested with Angular v7 and may not be compatiable with earlier versions.
+> Note that the iProov HTML5 client has only been tested with Angular v7 and may not be compatible with earlier versions.
 
 The example below shows how to use iProov within your application and an example integrating with some of the events available for you to use. [View the full list of events](#events)
 
 `iproov-component.html`
 
 ```html
-<style type="text/css">
-  #accessibility {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-</style>
-<!-- Screen reader dynamic messages injected here from the feedback event -->
-<div id="accessibility" aria-live="assertive" aria-hidden="false"></div>
 <!-- <iproov-me> web component is injected here-->
 <div id="iproov-container"></div>
 ```
@@ -198,25 +184,6 @@ export class IproovComponent implements OnInit {
       //- Bind any events before injecting into the page (must be before to work)
       iProovMe.addEventListener("unsupported", () => {
         console.warn("unsupported event was fired!")
-      })
-
-      // - Bind messages from the feedback event to div on page
-      iProovMe.addEventListener("feedback", event => {
-        const { key, message } = event.detail
-        console.warn(`Key: ${key} Message: ${message}`)
-
-        // - Triggers event to DOM element
-        const trigger = (target, event = "change") => {
-          const evt = document.createEvent("HTMLEvents")
-          evt.initEvent(event, true, true)
-          target.dispatchEvent(evt)
-        }
-
-        const element = document.getElementById("accessibility")
-        if (element) {
-          element.textContent = message // escape html...
-          trigger(element)
-        }
       })
 
       //- Set your generated token
@@ -354,7 +321,7 @@ There are a set of [CustomEvents](https://developer.mozilla.org/en-US/docs/Web/A
 
 ### Details
 
-Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) property which contains data relating to that event. The following details are present for every event:
+Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) property which contains data relating to that event. The token is present for every event:
 
 ```json
 {
@@ -364,28 +331,27 @@ Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/Cust
 
 The available events are detailed below with any extra properties that are supplied:
 
-| Event                 | Extra Properties      | Description                                                          |
-| --------------------- | --------------------- | -------------------------------------------------------------------- |
-| **ready**             | None                  | iProov has initialised successfully and has camera permission        |
-| **started**           | None                  | The user has started iProov by launching into fullscreen             |
-| **aborted**           | _feedback, reason_    | The user has aborted iProov by exiting fullscreen                    |
-| **streamed**          | None                  | The user has finished streaming and the client has exited fullscreen |
-| **progress**          | _percentage, message_ | iProov has published a progress update for the authentication        |
-| **passed**            | None                  | The authentication was successful so the result can now be validated |
-| **failed**            | _feedback, reason_    | The authentication was unsuccessful so the user needs to try again   |
-| **error**             | _feedback, reason_    | iProov encountered an error while processing the authentication      |
-| **unsupported**       | _feedback, reason_    | The browser does not support using iProov                            |
-| **feedback**          | _key, message_        | Used for accessibility integration see [example below](#listeners)   |
-| **permission**        | None                  | Camera permission is unknown and not blocked, show permission screen |
-| **permission_denied** | None                  | The user has blocked access to the camera                            |
+| Event                 | Extra Properties                 | Description                                                          |
+| --------------------- | -------------------------------- | -------------------------------------------------------------------- |
+| **ready**             | None                             | iProov has initialised successfully and has camera permission        |
+| **started**           | None                             | The user has started iProov by launching into fullscreen             |
+| **aborted**           | _feedback, reason_               | The user has aborted iProov by exiting fullscreen                    |
+| **streamed**          | None                             | The user has finished streaming and the client has exited fullscreen |
+| **progress**          | _percentage, message_            | iProov has published a progress update for the authentication        |
+| **passed**            | _type, passed_                   | The authentication was successful so the result can now be validated |
+| **failed**            | _type, passed, feedback, reason_ | The authentication was unsuccessful so the user needs to try again   |
+| **error**             | _feedback, reason_               | iProov encountered an error while processing the authentication      |
+| **unsupported**       | _feedback, reason_               | The browser does not support using iProov                            |
+| **permission**        | None                             | Camera permission is unknown and not blocked, show permission screen |
+| **permission_denied** | None                             | The user has blocked access to the camera                            |
 
 All possible properties of the event's **detail** property are described below:
 
 | Property       | Events                                | Description                                                |
 | -------------- | ------------------------------------- | ---------------------------------------------------------- |
-| **cameras**    | All                                   | The total number of cameras available to the browser       |
 | **token**      | All                                   | The token associated with the authentication attempt       |
-| **type**       | All                                   | The type of authentication (enrol or verify)               |
+| **type**       | _passed, failed_                      | The type of authentication (enrol, verify or id_match)     |
+| **passed**     | _passed, failed_                      | Boolean value whether the result passed or failed          |
 | **percentage** | _progress_                            | A percentage (between 0 and 100) representing the progress |
 | **message**    | _progress_                            | A user-friendly description of the current progress stage  |
 | **feedback**   | _aborted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
@@ -398,7 +364,6 @@ In the case of the **aborted**, **failed**, **error** and **unsupported** events
 | **client_browser**                    | The browser is not supported                          | _unsupported_ |
 | **fullscreen_change**                 | Exited fullscreen without completing iProov           |     _aborted_ |
 | **ambiguous_outcome**                 | Sorry, ambiguous outcome                              |      _failed_ |
-| **network_problem**                   | Sorry, network problem                                |      _failed_ |
 | **user_timeout**                      | Sorry, your session has timed out                     |      _failed_ |
 | **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low |      _failed_ |
 | **lighting_backlit**                  | Strong light source detected behind you               |      _failed_ |
@@ -413,6 +378,7 @@ In the case of the **aborted**, **failed**, **error** and **unsupported** events
 | **client_error**                      | An unknown error occurred                             |       _error_ |
 | **server_abort**                      | The server aborted the claim before iProov completed  |       _error_ |
 | **invalid_token**                     | The provided token has already been claimed           |       _error_ |
+| **network_problem**                   | Sorry, network problem                                |       _error_ |
 
 ### Listeners
 
@@ -420,7 +386,7 @@ It is recommended that you listen for at least the **ready** and **unsupported**
 
 ```javascript
 document.querySelector("iproov-me").addEventListener("ready", function(event) {
-  console.log("iProov is ready to " + event.detail.type + " with token " + event.detail.token)
+  console.log("iProov is ready with token " + event.detail.token)
 })
 document.querySelector("iproov-me").addEventListener("unsupported", function(event) {
   console.warn("iProov is not supported: " + event.detail.reason)
@@ -442,14 +408,12 @@ iProovMe.addEventListener("passed", iProovEvent)
 iProovMe.addEventListener("failed", iProovEvent)
 iProovMe.addEventListener("error", iProovEvent)
 iProovMe.addEventListener("unsupported", iProovEvent)
-iProovMe.addEventListener("feedback", iProovEvent)
 iProovMe.addEventListener("permission", iProovEvent)
 iProovMe.addEventListener("permission_denied", iProovEvent)
 
 function iProovEvent(event) {
   switch (event.type) {
     case "aborted":
-    case "failed":
     case "error":
     case "unsupported":
     case "permission":
@@ -461,8 +425,13 @@ function iProovEvent(event) {
       break
     case "feedback":
       feedback(event)
-    default:
+      break
+    case "passed":
+    case "failed":
       console.log("iProov " + event.detail.type + " " + event.type)
+      break
+    default:
+      console.log("iProov " + event.type)
   }
 }
 
@@ -503,7 +472,7 @@ function feedback(event) {
 }
 ```
 
-If using [jQuery](https://jquery.com), you can attach to all the events in one go:
+> If using [jQuery](https://jquery.com), you can attach to all the events in one go:
 
 ```javascript
 $("iproov-me").on("ready started aborted streamed progress passed failed error unsupported", iProovEvent)
@@ -660,6 +629,7 @@ Specify a custom title to be shown. Defaults to show an iProov-generated message
 > Note: iProov-generated messages are passed through our translators. Passing a custom title will prevent this and you will need to provide the translated version.
 
 ##### Custom Title Examples:
+
 ```html
 <!-- Set the title to a plain string -->
 <iproov-me token="***YOUR_TOKEN_HERE***" custom_title="iProov Ltd" />
