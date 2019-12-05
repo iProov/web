@@ -663,6 +663,8 @@ The iProov HTML5 application supports the customisation of languages through JSO
 
 The default language is set by looking at the device's language and then if a configuration for that language exists, that will be set as default. If a configuration file cannot be found then the default language is set to `en`.
 
+> [You can view the default language file here which has all keys and translations.](https://github.com/iProov/html5/blob/beta/iproov-en.json)
+
 #### Custom Language
 
 You can customise the language by supplying the `language` key with your iProov component. The keys value must be valid JSON and passed as a string. This is then converted and merged with the default language overriding any given keys. See below for [language code examples](#language-code-examples).
