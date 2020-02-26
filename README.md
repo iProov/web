@@ -8,7 +8,7 @@ Please note that to use the HTML5 client you will require Service Provider crede
 
 You will need to generate a token from your back-end to use with the HTML5 client. You can use the [API documentation](https://secure.iproov.me/docs.html) to make the relevant API calls and return the token to your front-end.
 
-The current published version is 2.0.0 beta 4 provided for customers and partners to integrate with stable API calls and customisation options. A small number of features are still in progress. Accordingly this version should be considered as beta and should not be used in full production.
+The current published version is 2.0.0 beta 5.3 provided for customers and partners to integrate with stable API calls and customisation options. A small number of features are still in progress. Accordingly this version should be considered as beta and should not be used in full production.
 
 ## Quick Links
 
@@ -26,7 +26,6 @@ The current published version is 2.0.0 beta 4 provided for customers and partner
     - [Vanilla JavaScript](#vanilla-javascript)
     - [jQuery](#jquery)
     - [Angular v7](#angular-v7)
-      - [Safari 12.1 Known WebRTC issue](#safari-121-known-webrtc-issue)
     - [React v16](#react-v16)
     - [Vue v2](#vue-v2)
   - [Events](#events)
@@ -35,15 +34,16 @@ The current published version is 2.0.0 beta 4 provided for customers and partner
   - [Customisation](#customisation)
     - [Slots](#slots)
     - [Options](#options)
-      - [Base URL](#base-url)
       - [Allow Landscape](#allow-landscape)
-      - [Screen Brightness](#screen-brightness)
-      - [Show Countdown](#show-countdown)
-      - [Prefer App](#prefer-app)
+      - [Assets URL](#assets-url)
+      - [Base URL](#base-url)
       - [Colours](#colours)
-      - [Logo](#logo)
       - [Custom Title](#custom-title)
         - [Examples](#custom-title-examples)
+      - [Logo](#logo)
+      - [Prefer App](#prefer-app)
+      - [Screen Brightness](#screen-brightness)
+      - [Show Countdown](#show-countdown)
     - [HTML](#html)
     - [JavaScript](#javascript)
     - [Language Support](#language-support)
@@ -58,11 +58,11 @@ The current published version is 2.0.0 beta 4 provided for customers and partner
 
 ## Supported Browsers
 
-iProov's HTML5 Application requires modern browsers to be able to work due to making use of technologies [WebRTC](https://webrtc.org/), [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API), [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and [WebAssembly](https://webassembly.org/). See below for the full list of supported browsers and their minimum versions.
+iProov's HTML5 Application requires modern browsers to be able to work due to making use of technologies [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API), [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and [WebAssembly](https://webassembly.org/). See below for the full list of supported browsers and their minimum versions.
 
-| ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/chrome_1-11/chrome_1-11.svg) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/firefox_1.5-3/firefox_1.5-3.svg) | ![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/opera_10-14/opera_10-14.svg) | ![Safari](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/safari-ios/safari-ios.svg) | ![SamsungInternet](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/samsung-internet_5/samsung-internet_5.svg) |
-| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| 58+ ✔                                                                                                       | 55+ ✔                                                                                                            | 45+ ✔                                                                                                      | 11+ ✔                                                                                             | 8.2 ✔                                                                                                                              |
+| ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/chrome_1-11/chrome_1-11.svg) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/firefox_1.5-3/firefox_1.5-3.svg) | ![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/opera_10-14/opera_10-14.svg) | ![Edge](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/edge/edge.svg) | ![Safari](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/safari-ios/safari-ios.svg) | ![SamsungInternet](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/samsung-internet_5/samsung-internet_5.svg) |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 58+ ✔                                                                                                       | 55+ ✔                                                                                                            | 45+ ✔                                                                                                      | 15+ ✔                                                                               | 11+ ✔                                                                                             | 8.2 ✔                                                                                                                              |
 
 > If the device attempting to iProov doesn't meet the minimum requirements. The `unsupported` event will be fired. See [#events](#events) for more details.
 
@@ -192,7 +192,7 @@ export class IproovComponent implements OnInit {
       //- Inject any custom slots
       iProovMe.innerHTML = `
       <div slot="button">
-          <button>
+          <button type="button">
               Scan Face <small>BETA TEST</small>
           </button>
       </slot>`
@@ -250,10 +250,6 @@ We then need to reference our new component in our app. The code below is again 
 </div>
 ```
 
-#### Safari 12.1 Known WebRTC issue
-
-Currently, Angular Apps in Safari 12.1 using WebRTC have an issue causing video streams to not send. To fix this, create a file called `zone-flags.js` if you don't already have one and paste inside that file: `(window as any).__zone_symbol__BLACK_LISTED_EVENTS = ['icecandidate'];`. Then import that file within your `pollyfills.js` with the following `import './zone-flags.ts'` before the zone import.
-
 ### React v16
 
 Integrating with React is pretty straight forward. First of all, include the `@iproov/html5` package into your application and then include the <iproov-me> web component with your generated token. If you want to pass any [custom slots](#Customisation) in, use the same method as shown below. The example below is taken from the [create-react-app](https://github.com/facebook/create-react-app) tool.
@@ -271,7 +267,7 @@ class App extends Component {
         <iproov-me token="***YOUR_TOKEN_HERE***">
             <!-- add any custom slots here -->
             <div slot="button">
-                <button>
+                <button type="button">
                     My Custom Button Text
                 </button>
             </slot>
@@ -296,7 +292,7 @@ Integrating with Vue JS is super easy and can be done with just a few lines of c
       ><!-- replace with your generated token -->
       <!-- add any custom slots here -->
       <div slot="button">
-        <button>Scan Face <small>Vue Example</small></button>
+        <button type="button">Scan Face <small>Vue Example</small></button>
       </div>
     </iproov-me>
   </div>
@@ -398,7 +394,7 @@ document.querySelector("iproov-me").addEventListener("unsupported", function(eve
 As all of the event **details** follow the same structure, they can be handled by a single function if desired:
 
 ```javascript
-var iProovMe = document.querySelector("iproov-me")
+const iProovMe = document.querySelector("iproov-me")
 iProovMe.addEventListener("ready", iProovEvent)
 iProovMe.addEventListener("started", iProovEvent)
 iProovMe.addEventListener("aborted", iProovEvent)
@@ -445,6 +441,8 @@ Further examples of event usage can be found in [examples.js](./examples.js) and
 
 ### Slots
 
+> When customising any slots with button elements the type must be set to button
+
 Visual customisation can be achieved with [templates and slots](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots) using the [Shadow DOM API](https://webkit.org/blog/4096/introducing-shadow-dom-api/). The following [slots](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) can be used with the `<iproov-me>` web component and have associated [events](#events):
 
 | Slot                  | Description                                                                                    |
@@ -466,26 +464,34 @@ Slots can be embedded as HTML or injected with JavaScript.
 
 ### Options
 
-#### Base URL
+#### Assets URL
 
-You can change the backend server you are attempting to iProov against by passing the `base_url` property. This needs to match the same endpoint you used when generating tokens for enrols and verifications.
+Currently, external resources are loaded from our CDN at iproov.app. This may cause issues with firewall rules and custom reverse proxy configurations and therefore this option is available to use.
+
+These resources include WASM files, UI assets, animations, and web workers relevant to encoding and face finding on the client side.
+
+Some of these files cannot be packaged as part of a JS bundle, and in some cases it makes sense for us to be able to ship updates without requiring code changes the integrator's end.
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***" base_url="https://eu.rp.secure.iproov.me">
+<iproov-me
+  token="***YOUR_TOKEN_HERE***"
+  assets_url="https://assets.rp.yourdomain.com"
+  base_url="https://your.rp.yourdomain.com"
+>
   <div slot="ready">
     <h1>Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
 
-#### Locale
+#### Base URL
 
-The iProov HTML5 app will look at the device currently iprooving and determine its locale value. This value is used to decide which language files to use (where supported). You can pass `locale` as an option which will override the devices value and force that language.
+You can change the backend server you are attempting to iProov against by passing the `base_url` property. This needs to point to the same platform used for generating tokens (defaults to the EU platform if not defined). Reverse proxies are supported and a custom path to the WebSocket endpoint can be used, for example: `https://custom.domain.com/custom-path/socket.io/v2/`
 
-> This feature will only work if the language is supported. In the case it isn't, a warning in the console will be fired and you will need to pass in the language overrides by using the options found in [Languages](#language-support)
+**Deprecation notice:** passing malformed URLs without a protocol is deprecated from beta 5.3; your console will emit a warning and `https://` will be prepended to the passed-in option.
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***" locale="nl">
+<iproov-me token="***YOUR_TOKEN_HERE***" base_url="https://eu.rp.secure.iproov.me">
   <div slot="ready">
     <h1>Ready to iProov</h1>
   </div>
@@ -613,7 +619,7 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
     <h1>Ready to iProov</h1>
   </div>
   <slot name="button">
-    <button>Scan Face <small>beta</small></button>
+    <button type="button">Scan Face <small>beta</small></button>
   </slot>
 </iproov-me>
 ```
@@ -628,15 +634,15 @@ You can also build up the slots with JavaScript before injecting the Web Compone
 window.addEventListener("WebComponentsReady", function(event) {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-  var ready = document.createElement("div")
+  const ready = document.createElement("div")
   ready.setAttribute("slot", "ready")
   ready.innerHTML = "<h1>Register your face</h1>"
-  component.appendChild(ready)
+  iProovMe.appendChild(ready)
 
-  var button = document.createElement("button")
+  const button = document.createElement("button")
   button.setAttribute("slot", "button")
   button.innerText = "Start face scan..."
-  component.appendChild(button)
+  iProovMe.appendChild(button)
 
   document.getElementById("your-container-id").appendChild(iProovMe)
 })
@@ -646,12 +652,12 @@ With [jQuery](https://jquery.com), the entire Web Component can be injected with
 
 ```javascript
 window.addEventListener("WebComponentsReady", function(event) {
-  var component = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
+  const iProovMe = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
 
-  component.append('<div slot="ready"><h1>Register your face</h1></div>')
-  component.append('<button slot="button">Start face scan...</button>')
+  iProovMe.append('<div slot="ready"><h1>Register your face</h1></div>')
+  iProovMe.append('<button type="button" slot="button">Start face scan...</button>')
 
-  $("#your-container-id").append(component)
+  $("#your-container-id").append(iProovMe)
 })
 ```
 
@@ -661,7 +667,7 @@ The iProov HTML5 application supports the customisation of languages through JSO
 
 #### Default Language
 
-The default language is set by looking at the device's language and then if a configuration for that language exists, that will be set as default. If a configuration file cannot be found then the default language is set to `en`.
+The default language is set to `en`.
 
 > [You can view the default language file here which has all keys and translations.](https://github.com/iProov/html5/blob/beta/iproov-en.json)
 
@@ -714,7 +720,7 @@ window.addEventListener("WebComponentsReady", async event => {
 
 #### React 16, Axios, ES6 async/await fetch file from local or external source
 
-```javascript
+```jsx harmony
 import React, { Component } from "react"
 import axios from "axios" // assumes you have already installed axios as a dependency
 import "@iproov/html5" // includes the @iproov/html5 client into your app
