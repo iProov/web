@@ -44,6 +44,7 @@ The current published version is 2.0.0 beta 5.3 provided for customers and partn
       - [Prefer App](#prefer-app)
       - [Screen Brightness](#screen-brightness)
       - [Show Countdown](#show-countdown)
+      - [Kiosk Mode](#kiosk-mode)
     - [HTML](#html)
     - [JavaScript](#javascript)
     - [Language Support](#language-support)
@@ -588,6 +589,22 @@ You can use a custom logo by simply passing a relative link or absolute path to 
   </div>
 </iproov-me>
 ```
+
+#### Kiosk Mode
+
+Note this setting enables a feature which is in alpha and still under active development.
+
+For deploying iProov on tablets or fixed hardware such as laptops and desktop devices. Enables snap to face and increases matchable range.
+
+Set to true to enable; omit the setting to keep disabled.
+
+```html
+ <iproov-me token="***YOUR_TOKEN_HERE***" kiosk_mode="true">
+   <div slot="ready">
+     <h1>Ready to iProov</h1>
+   </div>
+ </iproov-me>
+ ```
 
 #### Custom Title
 
