@@ -8,7 +8,7 @@ Please note that to use the HTML5 client you will require Service Provider crede
 
 You will need to generate a token from your back-end to use with the HTML5 client. You can use the [API documentation](https://secure.iproov.me/docs.html) to make the relevant API calls and return the token to your front-end.
 
-The current published version is 2.0.0 beta 5.3 provided for customers and partners to integrate with stable API calls and customisation options. A small number of features are still in progress. Accordingly this version should be considered as beta and should not be used in full production.
+The current published version is provided for customers and partners to integrate with stable API calls and customisation options. A number of features are still in progress. Accordingly this version should be considered as beta.
 
 ## Quick Links
 
@@ -344,15 +344,18 @@ The available events are detailed below with any extra properties that are suppl
 
 All possible properties of the event's **detail** property are described below:
 
-| Property       | Events                                | Description                                                |
-| -------------- | ------------------------------------- | ---------------------------------------------------------- |
-| **token**      | All                                   | The token associated with the authentication attempt       |
-| **type**       | _passed, failed_                      | The type of authentication (enrol, verify or id_match)     |
-| **passed**     | _passed, failed_                      | Boolean value whether the result passed or failed          |
-| **percentage** | _progress_                            | A percentage (between 0 and 100) representing the progress |
-| **message**    | _progress_                            | A user-friendly description of the current progress stage  |
-| **feedback**   | _aborted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
-| **reason**     | _aborted, failed, error, unsupported_ | An English description of the reason for the event         |
+| Property             | Events                                | Description                                                |
+| -------------------- | ------------------------------------- | ---------------------------------------------------------- |
+| **token**            | All                                   | The token associated with the authentication attempt       |
+| **type** (†)         | _passed, failed_                      | The type of authentication (enrol, verify or id_match)     |
+| **passed**           | _passed, failed_                      | Boolean value whether the result passed or failed          |
+| **percentage**       | _progress_                            | A percentage (between 0 and 100) representing the progress |
+| **message**          | _progress_                            | A user-friendly description of the current progress stage  |
+| **feedback**         | _aborted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
+| **reason**           | _aborted, failed, error, unsupported_ | An English description of the reason for the event         |
+| **is_native_bridge** | All                                   | Boolean value if event originates from the native bridge   |
+
+† - Not available when running with the `prefer_app` setting in native bridge mode.
 
 In the case of the **aborted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases and the _reason_ can be displayed to the user. The following are some of the possible responses:
 
@@ -501,6 +504,11 @@ You can change the backend server you are attempting to iProov against by passin
 
 #### Prefer App
 
+Use this collection of settings to handle launching a native app containing the iProov SDK on mobile devices.
+
+- `prefer_app`
+- `prefer_app_options`
+
 The `prefer_app` setting converts the scan button into an app launch URL which will launch the iProov app or iProov SDK when within a WebView. The following values are allowed and multiple can be used when separated by a comma:
 
 - always
@@ -515,6 +523,31 @@ The `prefer_app` setting converts the scan button into an app launch URL which w
     <h1>Ready to iProov</h1>
   </div>
 </iproov-me>
+```
+
+Base64 encoding is required to work around HTML attributes.
+
+To communicate from the app back to the WebView component, you can use the `nativeBridge` methods exposed from the web component.
+
+You can access the object like you would on any other DOM element, so you can call this directly on the `iproov-me` component.
+
+These methods are exposed to a native SDK when running in `prefer_app` mode:
+
+```javascript
+document.querySelector("iproov-me").nativeBridge.processing(progress, message)
+document.querySelector("iproov-me").nativeBridge.success(token)
+document.querySelector("iproov-me").nativeBridge.cancelled()
+document.querySelector("iproov-me").nativeBridge.failure(reason, feedbackCode)
+document.querySelector("iproov-me").nativeBridge.error(IProovError)
+```
+
+The `prefer_app_options` setting accepts a base64 encoded JSON object of iProov native SDK options:
+
+```js
+iProovMe.setAttribute(
+  "prefer_app_options",
+  btoa(JSON.stringify({ ui: { scan_line_disabled: true, filter: "classic" } }))
+)
 ```
 
 #### Allow Landscape
@@ -598,13 +631,15 @@ For deploying iProov on tablets or fixed hardware such as laptops and desktop de
 
 Set to true to enable; omit the setting to keep disabled.
 
+A known issue is that kiosk mode currently has display issues in portrait mode, this will be resolved in a later release.
+
 ```html
- <iproov-me token="***YOUR_TOKEN_HERE***" kiosk_mode="true">
-   <div slot="ready">
-     <h1>Ready to iProov</h1>
-   </div>
- </iproov-me>
- ```
+<iproov-me token="***YOUR_TOKEN_HERE***" kiosk_mode="true">
+  <div slot="ready">
+    <h1>Ready to iProov</h1>
+  </div>
+</iproov-me>
+```
 
 #### Custom Title
 

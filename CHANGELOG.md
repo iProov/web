@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 12.03.2020 2.0.0-beta-5.4
+
+## Fixed
+
+- Encoding corrupt images resulted in facial features going missing, causing liveness to fail.
+- Face cropping logic improved to handle extremes in the camera's field of view without clipping.
+- Huge memory management improvements to reduce device load.
+- Fixed a missing missing `asset_url` domain prefix when loading Pico.
+- Scaling issues relating to face alignment on non-retina iOS devices have been resolved (`devicePixelRatio` interpretation)
+- Various moves to align the HTML5 web SDK with the iOS and Android SDKs which make performance analysis easier, resulting in even better service for our customers!
+
+## Added
+
+- Kiosk mode has landed in alpha, with a new and improved UI design for this particular mode.
+- Ability to configure face finder and face alignment envelope from a service provider.
+- New language term `error_exited_native_bridge`, used when exiting a native SDK using the `prefer_app` setting.
+
+## Changed
+
+- Only crop face on desktop/kiosk or mobile landscape orientation
+- Increased overall crop size of a face on desktop and mobile landscape
+- Native bridge mode replaces the previous `prefer_app` functionality. The Web SDK now listens directly to the iProov native SDK for better UX.
+
+## Removed
+
+- The `type` (verify/enrol) event detail property has been removed. The type of authentication is known to the integrator before SDK instantiation and is handled internally in native SDKs.
+
 ## 26.02.2020 2.0.0-beta-5.3
 
 ## Added
@@ -22,8 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
-- Only crop face on desktop/kiosk or mobile landscape orientation
-- Increased overall crop size of a face on desktop and mobile landscape
 - Lowered threshold of move closer to bring the user closer
 - Snap to face is disabled by default
 
