@@ -5,6 +5,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Known issues
+
+We are working to deliver durable fixes for this non-exhaustive list of known issues:
+
+- Occasionally flashing may crash if started quickly. This appears to affect all devices.
+- The scan display in some devices may appear warped or squashed.
+
+## 14.04.2020 2.0.0-beta-5.6
+
+## Added
+
+- Standalone support checker component
+- Assets have been moved to cdn.iproov.app for better load speed
+
+## Fixed
+
+- We now wait for WASM modules to fully load before interacting with them (stops crashing)
+- SVG repositioning has been tweaked to remove jank
+- Video feeds that change resolution, particularly on iMacs, no longer cause face alignment issues
+- King Kong has been tamed 🍌
+
+## Changed
+
+- Class names are now used to identify language text elements rather than blanket tags
+- The rotate animation has been switched from lottie to gif (saves bundle size)
+- Support is now checked by the support checker component rather than a whitelist of browsers and devices
+- Alignment feedback frequency has been tweaked to work better with a new face detector in a future release
+- Face detection lifecycle has been tidied to facilitate a new face detector in a future release
+- PicoJS's face detector memory allocation and maxFaces have been reduced for performance on lower end/swapping devices
+- Various telemetry improvements around face detection: accuracy, reduction in performance cost, etc
+
+## Removed
+
+- Option `screen_brightness` removed; due to lossless encoding and improved adaptive screen brightness, it is no longer needed. Removing it saves around 300kB from the bundle.
+
+## Deprecated
+
+- The screen_brightness animations and usage in older clients have been deprecated and will be removed in a later release.
+- Loading assets from the iproov.app domain have been deprecated in favour of using the CDN.
+
+## 03.04.2020 2.0.0-beta-5.4.5
+
+## Changed
+
+- Face alignment envelopes have been tweaked to improve user experience.
+- The ability to set alignment envelopes from your service provider has been added.
+
+## Added
+
+- If no face is found by the face finder for 50% of the time, we time out after 30 seconds. This is configurable from your service provider.
+
+## 01.04.2020 2.0.0-beta-5.4.4
+
+## Fixed
+
+- Preventative measures added to ensure screen flashing _never_ violates safe parameters for photosensitive epilepsy.
+- Measures added to partially mitigate crashing when started too quickly.
+
+## 25.03.2020 2.0.0-beta-5.4.2
+
+## Fixed
+
+- `show_countdown` option fixed in default mode, was previously causing `streaming_error`
+
 ## 19.03.2020 2.0.0-beta-5.4.1
 
 ## Fixed

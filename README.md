@@ -20,6 +20,9 @@ The current published version is provided for customers and partners to integrat
   - [Integrating](#integrating)
     - [Backend](#backend)
     - [Frontend](#frontend)
+  - [Android Web View](#android-web-view)
+    - [Java Example](#java-example)
+    - [Kotlin Example](#kotlin-example)
   - [Script Tag](#script-tag)
   - [Node Module](#node-module)
     - [Setup](#setup)
@@ -42,7 +45,6 @@ The current published version is provided for customers and partners to integrat
         - [Examples](#custom-title-examples)
       - [Logo](#logo)
       - [Prefer App](#prefer-app)
-      - [Screen Brightness](#screen-brightness)
       - [Show Countdown](#show-countdown)
       - [Kiosk Mode](#kiosk-mode)
     - [HTML](#html)
@@ -59,13 +61,123 @@ The current published version is provided for customers and partners to integrat
 
 ## Supported Browsers
 
-iProov's HTML5 Application requires modern browsers to be able to work due to making use of technologies [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API), [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and [WebAssembly](https://webassembly.org/). See below for the full list of supported browsers and their minimum versions.
+iProov's Web SDK makes use of the following technologies:
+
+- [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+- [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+- [WebAssembly](https://webassembly.org/)
+
+It also requires a front facing camera with permission granted to use it.
+
+Developers can use the `IProovSupport` check component to ensure their users have the correct hardware and software to
+use the Web SDK. If the user device is unsupported, the integrator can send the user down a separate, manual or
+password-based journey.
+
+`IProovSupport` is a slim and separate component to the main `IProovMe` web component.
+
+To benefit from tree-shaking in a module-based build environment you can use the named import:
+
+```ecmascript 6
+// Just load the support component:
+import { IProovSupport } from "@iproov/html5"
+const optionalLogger = console;
+const supportChecker = new IProovSupport(optionalLogger);
+```
+
+For script tag integrations, `IProovSupport` is available on the window object once included:
+
+```ecmascript 6
+const supportChecker = new IProov.IProovSupport();
+```
+
+`IProovSupport` can check just for the required APIs on the user's browser, using either event or Promise based APIs:
+
+```ecmascript 6
+const supportChecker = new IProovSupport();
+supportChecker.addEventListener("check", ({ supported, granted }) => {
+    if (supported === false) {
+         // go to fallback UX
+    }
+    if (supported && granted) {
+        // full permission and granted, we can definitely iProov!
+    }
+    if (supported && granted === null) {
+        // browser API support, but we haven't run a permission check (see checkWithPermission)
+    }
+    if (supported && granted === false) {
+        // browser API support, but camera access denied - try again or advise user before proceeding
+    }
+});
+const { supported, granted } = await supportChecker.check();
+```
+
+...or to carry out a complete lightweight check for camera access with user interaction, this can pre-set the required
+permissions for iProoving, save some bandwidth, and provide a cleaner user journey if camera access isn't possible:
+
+```ecmascript 6
+const supportChecker = new IProovSupport();
+document.querySelector("#check-button").addEventListener("click", () => {
+  const { supported, granted } = await supportChecker.checkWithPermission()
+});
+```
+
+If `.checkWithPermission()` is run and permission is granted and cached within the browser, future interaction is often not
+required and we can tell if permission has been granted using a soft `.check()`.
+
+Note that browsers have varying regimes to protect against device fingerprinting and to ensure user privacy. Repeated
+calls to `getUserMedia` or the Permissions API can result in prompt blockage, or the redaction of media devices, which
+can return inaccurate results. Our advice is therefore to avoid running multiple checks, in quick succession, on the
+same page. Therefore, please avoid automatic or accidental repeat calls to `check` or `checkWithPermission`, especially
+without user interaction.
+
+The following events can be emitted from `IProovSupport`:
+
+```ecmascript 6
+const supportChecker = new IProovSupport();
+const onCheckResult = ({ supported, granted, tests }) => ({});
+const onUnsupported = ({ supported, tests }) => ({});
+const onPermissionWasGranted = ({ tests }) => ({});
+const onPermissionWasDenied = ({ tests }) => ({});
+supportChecker.addEventListener('check', onCheckResult);
+supportChecker.addEventListener('unsupported', onUnsupported);
+supportChecker.addEventListener('granted', onPermissionWasGranted);
+supportChecker.addEventListener('denied', onPermissionWasDenied);
+// The `tests` object consists of the following options:
+// null if unchecked, true if supported, false if not supported:
+const possibleTests = {
+    videoInput: null,
+    wasm: null,
+    userMedia: null,
+    mediaStreamTrack: null,
+    frontCamera: null,
+    fullScreen: null,
+    webgl: null,
+}
+```
+
+Using the support checker is the best and canonical way to detect whether a browser is supported.
+
+The below list is a best-effort representation of minimum feature support across browsers:
+
+### Desktop browser support:
 
 | ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/chrome_1-11/chrome_1-11.svg) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/firefox_1.5-3/firefox_1.5-3.svg) | ![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/opera_10-14/opera_10-14.svg) | ![Edge](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/edge/edge.svg) | ![Safari](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/safari-ios/safari-ios.svg) | ![SamsungInternet](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/samsung-internet_5/samsung-internet_5.svg) |
 | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| 58+ ✔                                                                                                       | 55+ ✔                                                                                                            | 45+ ✔                                                                                                      | 15+ ✔                                                                               | 11+ ✔                                                                                             | 8.2 ✔                                                                                                                              |
+| 57+ ✔                                                                                                       | 53+ ✔                                                                                                            | 43+ ✔                                                                                                      | 16+ ✔                                                                               | 11+ ✔                                                                                             | 8.2 ✔                                                                                                                              |
 
-> If the device attempting to iProov doesn't meet the minimum requirements. The `unsupported` event will be fired. See [#events](#events) for more details.
+### iOS browser support
+
+| ![Safari](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/safari-ios/safari-ios.svg) | ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/chrome_1-11/chrome_1-11.svg) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/firefox_1.5-3/firefox_1.5-3.svg) |
+| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 11+ ✔                                                                                             | Not supported, due no camera support. Bug tracker suggests coming soon.                                     | Not supported, due no camera support. Bug tracker suggests coming soon.                                          |
+
+### Android browser support
+
+| ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/chrome_1-11/chrome_1-11.svg) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/51.0.17/archive/firefox_1.5-3/firefox_1.5-3.svg) |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 80+                                                                                                         | 68+                                                                                                              |
+
+> If the device attempting to iProov doesn't meet the minimum requirements, the `unsupported` event is emitted. See [#events](#events) for more details.
 
 ## Integrating
 
@@ -93,6 +205,243 @@ In these examples, the token is generated and validated using AJAX (in the regis
 - **action** - the specific endpoint to call:
   - _token_ - generate a unique 64 character token for the client
   - _validate_ - check the validity of the result provided by the client
+
+## Android Web View
+
+The iProov HTML5 component is compatiable with Andoird web views inside applications. For the component to work as expected, the app MUST allow fullscreen mode otherwise the way the user interface is scaled and calculated is broken. Below are examples on how to ensure fullscreen is allowed and configured correctly inside your application.
+
+### Java Example
+
+```java
+package com.iproov.webview;
+
+import android.Manifest;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.view.View;
+import android.webkit.PermissionRequest;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final int CAMERA_PERMISSIONS_REQUEST_CODE = 12345;
+    private static final String URL = "https://demo.iproov.com";
+    private WebView webView;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        WebView.setWebContentsDebuggingEnabled(true);
+
+        webView = findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+        //This is really important part. Our custom implementation of chrome client will allow webView to go full screen,
+        //and will restore the same state of host app after we exit from full screen mode.
+        webView.setWebChromeClient(new WebChromeClientFullScreen());
+
+        final int cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (cameraPermission == PackageManager.PERMISSION_GRANTED) {
+            webView.loadUrl(URL);
+        } else {
+            requestPermissions();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.CAMERA},
+                CAMERA_PERMISSIONS_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSIONS_REQUEST_CODE && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                webView.loadUrl(URL);
+        }
+    }
+
+    private  class WebChromeClientFullScreen extends WebChromeClient {
+        private View customView = null;
+        private CustomViewCallback customViewCallback = null;
+        int originalOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+        int originalVisibility = View.INVISIBLE;
+
+        @Override
+        public void onPermissionRequest(PermissionRequest request) {
+           if (request != null) request.grant(request.getResources());
+        }
+
+        /**
+         * Callback will tell the host application that the current page would
+         * like to show a custom View in a particular orientation
+         */
+        @Override
+        public void onShowCustomView(View view, CustomViewCallback callback) {
+            //If we have custom view, that means that we are already in full screen, and need to go to original state
+            if (customView != null) {
+                onHideCustomView();
+                return;
+            }
+            //going full screen
+            customView = view;
+            //We need to store there parameters, so we can restore app state, after we exit full screen mode
+            originalVisibility = getWindow().getDecorView().getWindowSystemUiVisibility();
+            originalOrientation = getRequestedOrientation();
+            ((FrameLayout)getWindow().getDecorView()).addView(customView, new FrameLayout.LayoutParams(-1, -1));
+            getWindow().getDecorView().setSystemUiVisibility(3846 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+
+        /**
+         * Callback will tell the host application that the current page exited full screen mode,
+         * and the app has to hide custom view.
+         */
+        @Override
+        public void onHideCustomView() {
+            ((FrameLayout)getWindow().getDecorView()).removeView(customView);
+            customView = null;
+            //Restoring aps state, as it was before we go to full screen
+            getWindow().getDecorView().setSystemUiVisibility(originalVisibility);
+            setRequestedOrientation(originalOrientation);
+            if (customViewCallback != null) customViewCallback.onCustomViewHidden();
+            customViewCallback = null;
+        }
+    }
+}
+
+```
+
+### Kotlin Example
+
+```kotlin
+package com.iproov.webview
+
+import android.Manifest
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import android.os.Bundle
+import android.view.View
+import android.webkit.PermissionRequest
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivityKotlin : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        WebView.setWebContentsDebuggingEnabled(true)
+
+        webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
+        webView.webViewClient = WebViewClient()
+        webView.webChromeClient = object : WebChromeClient() {
+            var customView: View? = null
+            var callback: CustomViewCallback? = null
+            var originalOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            var originalVisibility: Int = View.INVISIBLE
+            override fun onPermissionRequest(request: PermissionRequest?) {
+                request?.grant(request.resources);
+            }
+
+            override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
+                if (customView != null) {
+                    onHideCustomView()
+                    return
+                }
+                customView = view
+                originalVisibility = window.decorView.systemUiVisibility
+                originalOrientation = requestedOrientation
+                (window.decorView as FrameLayout).addView(this.customView, FrameLayout.LayoutParams(-1, -1))
+                window.decorView.systemUiVisibility = 3846 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+            }
+
+            override fun onHideCustomView() {
+                (window.decorView as FrameLayout).removeView(customView)
+                customView = null
+                window.decorView.systemUiVisibility = originalVisibility
+                requestedOrientation = originalOrientation
+                callback?.onCustomViewHidden()
+                callback = null
+            }
+        }
+
+        val cameraPermission: Int = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.CAMERA
+        )
+
+        if (cameraPermission == PackageManager.PERMISSION_GRANTED)
+            webView.loadUrl("https://demo.iproov.com/")
+        else
+            requestPermissions()
+    }
+
+    override fun onBackPressed() {
+
+        if (webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    fun requestPermissions() {
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.CAMERA),
+            12345
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 12345 && grantResults.size > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                webView.loadUrl("https://demo.iproov.com/")
+            }
+        }
+    }
+
+}
+```
 
 ## Script Tag
 
@@ -196,7 +545,7 @@ export class IproovComponent implements OnInit {
           <button type="button">
               Scan Face <small>BETA TEST</small>
           </button>
-      </slot>`
+      </div>`
 
       //- An alternative way of injecting a custom slots
       const buttonSlot = document.createElement("button")
@@ -271,7 +620,7 @@ class App extends Component {
                 <button type="button">
                     My Custom Button Text
                 </button>
-            </slot>
+            </div>
         </iproov-me>
       </div>
     );
@@ -445,6 +794,17 @@ Further examples of event usage can be found in [examples.js](./examples.js) and
 
 ### Slots
 
+To allow language keys to be dynamically applied to slots special class names must be applied to your slots when customising. Headings must have `.iproov-lang-heading` and terms (message, reason etc) must have `.iproov-lang-term`.
+
+> `h3` tags and the `div` element are allowed without classes, this functionality has been deprecated and will be removed in `2.1.0`
+
+```html
+<slot name="passed">
+  <h3 class="iproov-lang-heading">Passed</h3>
+  <div class="iproov-lang-term">You have iProoved successfully</div>
+</slot>
+```
+
 > When customising any slots with button elements the type must be set to button
 
 Visual customisation can be achieved with [templates and slots](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots) using the [Shadow DOM API](https://webkit.org/blog/4096/introducing-shadow-dom-api/). The following [slots](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) can be used with the `<iproov-me>` web component and have associated [events](#events):
@@ -483,7 +843,7 @@ Some of these files cannot be packaged as part of a JS bundle, and in some cases
   base_url="https://your.rp.yourdomain.com"
 >
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
@@ -497,7 +857,7 @@ You can change the backend server you are attempting to iProov against by passin
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" base_url="https://eu.rp.secure.iproov.me">
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
@@ -520,26 +880,12 @@ The `prefer_app` setting converts the scan button into an app launch URL which w
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" prefer_app="ios,ios-webview">
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
 
 Base64 encoding is required to work around HTML attributes.
-
-To communicate from the app back to the WebView component, you can use the `nativeBridge` methods exposed from the web component.
-
-You can access the object like you would on any other DOM element, so you can call this directly on the `iproov-me` component.
-
-These methods are exposed to a native SDK when running in `prefer_app` mode:
-
-```javascript
-document.querySelector("iproov-me").nativeBridge.processing(progress, message)
-document.querySelector("iproov-me").nativeBridge.success(token)
-document.querySelector("iproov-me").nativeBridge.cancelled()
-document.querySelector("iproov-me").nativeBridge.failure(reason, feedbackCode)
-document.querySelector("iproov-me").nativeBridge.error(IProovError)
-```
 
 The `prefer_app_options` setting accepts a base64 encoded JSON object of iProov native SDK options:
 
@@ -557,19 +903,7 @@ Mobile devices are by default prevented from iProoving while in landscape. This 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="true">
   <div slot="ready">
-    <h1>Ready to iProov</h1>
-  </div>
-</iproov-me>
-```
-
-#### Screen Brightness
-
-The screen brightness prompt which is displayed on mobile devices can be disabled by passing in `screen_brightness_prompt` `false`. By default, `screen_brightness_prompt` is true (on). The example below shows how to disable the screen brightness prompt.
-
-```html
-<iproov-me token="***YOUR_TOKEN_HERE***" screen_brightness_prompt="false">
-  <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
@@ -581,7 +915,7 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" show_countdown="true">
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
@@ -606,7 +940,7 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
   ready_tint_color="purple"
 >
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
@@ -618,7 +952,7 @@ You can use a custom logo by simply passing a relative link or absolute path to 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" logo="https://www.waterloobank.co.uk/assets/img/logo.svg">
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
@@ -636,7 +970,7 @@ A known issue is that kiosk mode currently has display issues in portrait mode, 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" kiosk_mode="true">
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
 </iproov-me>
 ```
@@ -668,11 +1002,11 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***">
   <div slot="ready">
-    <h1>Ready to iProov</h1>
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
   </div>
-  <slot name="button">
+  <div slot="button">
     <button type="button">Scan Face <small>beta</small></button>
-  </slot>
+  </div>
 </iproov-me>
 ```
 
@@ -688,7 +1022,7 @@ window.addEventListener("WebComponentsReady", function(event) {
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
   const ready = document.createElement("div")
   ready.setAttribute("slot", "ready")
-  ready.innerHTML = "<h1>Register your face</h1>"
+  ready.innerHTML = '<h1 class="iproov-lang-heading">Register your face</h1>'
   iProovMe.appendChild(ready)
 
   const button = document.createElement("button")
@@ -706,7 +1040,7 @@ With [jQuery](https://jquery.com), the entire Web Component can be injected with
 window.addEventListener("WebComponentsReady", function(event) {
   const iProovMe = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
 
-  iProovMe.append('<div slot="ready"><h1>Register your face</h1></div>')
+  iProovMe.append('<div slot="ready"><h1 class="iproov-lang-heading">Register your face</h1></div>')
   iProovMe.append('<button type="button" slot="button">Start face scan...</button>')
 
   $("#your-container-id").append(iProovMe)
