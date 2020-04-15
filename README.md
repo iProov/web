@@ -33,13 +33,13 @@ This repository contains a demo showing an example of a backend and frontend int
   - _token_ - generate a unique 64 character token for the client
   - _validate_ - check the validity of the result provided by the client
 
-## ⬆️ Upgrading from earlier versions
+## ⬆ Upgrading from earlier versions
 
 Please note that there is new name for the NPM package and URL for the script tag. If you are upgrading from v1 or v2-beta, please ensure you update you integration to use the new name or URL as described in the [installation](#-installation) section below.
 
-A few of the options have changed from easiler versions so be sure to check the current supported [list of options](#-options) when upgrading.
+A few of the options have changed from earlier versions so be sure to check the current supported [list of options](#-options) when upgrading.
 
-## ✍️ Registration
+## ✍ Registration
 
 You can obtain API credentials by registering on the [iProov Portal](https://portal.iproov.com/).
 
@@ -113,7 +113,7 @@ The simplest way to pass the token to iProov is to include it as an attribute to
 
 #### JavaScript
 
-The `<iproov-me>` element can alse be injected into the page with the token:
+The `<iproov-me>` element can also be injected into the page with the token:
 
 ```javascript
 window.addEventListener("WebComponentsReady", function(event) {
@@ -231,7 +231,7 @@ The `prefer_app` setting converts the scan button into an app launch URL which w
 <iproov-me token="***YOUR_TOKEN_HERE***" prefer_app="android-webview,ios-webview"></iproov-me>
 ```
 
-The `prefer_app_options` setting accepts a base64 encoded JSON object of iProov native SDK options as defined in the [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options) documentaion:
+The `prefer_app_options` setting accepts a base64 encoded JSON object of iProov native SDK options as defined in the [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options) documentation:
 
 ```js
 iProovMe.setAttribute(
@@ -272,7 +272,7 @@ A known issue is that kiosk mode currently has display issues in portrait mode, 
 
 ## 📥 Slots
 
-Slots allow the HTML content shown before and after the iProov fullscreen experience to be customised and styled for a more seamless visual integration. The folloing examples show different ways to include some of the most commonly used slots.
+Slots allow the HTML content shown before and after the iProov fullscreen experience to be customised and styled for a more seamless visual integration. The following examples show different ways to include some of the most commonly used slots.
 
 ### HTML
 
@@ -547,16 +547,16 @@ It also requires a front facing camera with permission granted to use it.
 
 The table below is a best-effort representation of minimum feature support across browsers:
 
-| OS      | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /><br/>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /><br/>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" /><br/>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /><br/>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /><br/>Opera | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /><br/>Samsung |
+| <img src="https://avatars1.githubusercontent.com/u/4119093?s=200&v=4" alt="Safari" width="24px" height="24px" /><br/>Platform | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /><br/>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /><br/>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" /><br/>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /><br/>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /><br/>Opera | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /><br/>Samsung |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 16+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
-| MacOS   | 11+                                                                                                                                                       | 57+                                                                                                                                                       | 78+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
-| iOS     | 11+                                                                                                                                                       | N/A                                                                                                                                                       | N/A                                                                                                                                                    | N/A                                                                                                                                                           | N/A                                                                                                                                                   | N/A                                                                                                                                                                             |
-| Android | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 45+                                                                                                                                                    | 68+                                                                                                                                                           | 57+                                                                                                                                                   | 8.2+                                                                                                                                                                            |
+| **Windows** | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 16+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
+| **MacOS**   | 11+                                                                                                                                                       | 57+                                                                                                                                                       | 78+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
+| **iOS**     | 11+                                                                                                                                                       | N/A                                                                                                                                                       | N/A                                                                                                                                                    | N/A                                                                                                                                                           | N/A                                                                                                                                                   | N/A                                                                                                                                                                             |
+| **Android** | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 45+                                                                                                                                                    | 68+                                                                                                                                                           | 57+                                                                                                                                                   | 8.2+                                                                                                                                                                            |
 
 > If the device attempting to iProov doesn't meet the minimum requirements, the `unsupported` event is emitted. See the [events](#-events) section for more details.
 
-Developers can use the `IProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an althernative journey.
+Developers can use the `IProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an alternative journey.
 
 `IProovSupport` is a slim and separate component to the main `IProovMe` web component.
 
@@ -642,17 +642,17 @@ const possibleTests = {
 
 Using the support checker is the best and canonical way to detect whether a browser is supported.
 
-## ️🕸️ WebViews
+## 🕸 WebViews
 
-The iProov SDKs can work with WebView based apps using the Native Bridge feature which allows the Web SDK to seamlessly launch the native SDKs embedded within the app. Use this approch for the best results by setting the [Prefer App](#prefer-app) option.
+The iProov SDKs can work with WebView based apps using the Native Bridge feature which allows the Web SDK to seamlessly launch the native SDKs embedded within the app. Use this approach for the best results by setting the [Prefer App](#prefer-app) option.
 
-On Andrid, it is possible to use the Web SDK directly inside a WebView. For it to work as expected, the app _must_ correctly allow fullscreen mode, otherwise the user interface will not display correctly. These WebView examples demonstrate how to ensure fullscreen is allowed and configured correctly inside your Android app.
+On Android, it is possible to use the Web SDK directly inside a WebView. For it to work as expected, the app _must_ correctly allow fullscreen mode, otherwise the user interface will not display correctly. These WebView examples demonstrate how to ensure fullscreen is allowed and configured correctly inside your Android app.
 
 For more information on using iProov within a WebView based app, see the following Wiki pages:
 
 - [Java Fullscreen WebView Example](https://github.com/iProov/android/wiki/Java-WebView)
 - [Kotlin Fullscreen WebView Example](https://github.com/iProov/android/wiki/Kotlin-WebView)
-- [iOS Native Bridge Intergration Guide](https://github.com/iProov/ios/wiki/HTML5-Native-Bridge)
+- [iOS Native Bridge Integration Guide](https://github.com/iProov/ios/wiki/HTML5-Native-Bridge)
 
 ## ❓ Help & support
 
