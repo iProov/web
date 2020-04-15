@@ -16,12 +16,12 @@ function iProovEvent(event) {
             console.warn('iProov ' + event.type + ' - ' + event.detail.reason);
             break;
         case 'progress':
-            document.querySelector('.iproov-progress progress').value = event.detail.percentage;
-            document.querySelector('.iproov-progress .spinner span').innerText = event.detail.percentage + '%';
+            document.querySelector('.iproov-progress progress').value = event.detail.progress;
+            document.querySelector('.iproov-progress .spinner span').innerText = event.detail.progress + '%';
             document.querySelector('.iproov-progress .status').innerText = event.detail.message;
-            console.info(event.detail.message + ' (' + event.detail.percentage + '%)');
+            console.info(event.detail.message + ' (' + event.detail.progress + '%)');
             break;
         default:
-            console.log('iProov ' +  event.detail.type + ' ' + event.type);
+            console.log('iProov ' + event.type);
     }
 }
