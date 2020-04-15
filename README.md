@@ -12,6 +12,8 @@
 - [Slots](#-slots)
 - [Events](#-events)
 - [Localization](#-localization)
+- [Browser Support](#-browser-support)
+- [WebViews](#-webviews)
 - [Help & support](#-help--support)
 
 ## 🤳 Introduction
@@ -640,7 +642,7 @@ const possibleTests = {
 
 Using the support checker is the best and canonical way to detect whether a browser is supported.
 
-## WebViews
+## ️🕸️ WebViews
 
 The iProov SDKs can work with WebView based apps using the Native Bridge feature which allows the Web SDK to seamlessly launch the native SDKs embedded within the app. Use this approch for the best results by setting the [Prefer App](#prefer-app) option.
 
