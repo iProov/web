@@ -1,4 +1,4 @@
-# iProov Web SDK v2.0.0
+# iProov Web SDK v2.0.2
 
 ## 📖 Table of contents
 
@@ -47,7 +47,7 @@ You can obtain API credentials by registering on the [iProov Portal](https://por
 
 ### Script Tag
 
-The simplest and fastest method of integrating with the iProov Web SDK is to reference it in a script tag using our NPM package hosted on a CDN such as [jsDelivr](https://www.jsdelivr.com/package/npm/@iproov/web) or [UNPKG](https://unpkg.com/browse/@iproov/web/).
+The simplest and fastest method of integrating with the iProov Web SDK is to reference it in a script tag using our [NPM package](https://www.npmjs.com/package/@iproov/web) hosted on a CDN such as [jsDelivr](https://www.jsdelivr.com/package/npm/@iproov/web) or [UNPKG](https://unpkg.com/browse/@iproov/web/).
 
 #### jsDelivr
 
