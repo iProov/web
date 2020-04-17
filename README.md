@@ -1,4 +1,4 @@
-# iProov Web SDK v2.0.2
+# iProov Web SDK v2.0.3
 
 ## 📖 Table of contents
 
@@ -18,11 +18,9 @@
 
 ## 🤳 Introduction
 
-The iProov Web SDK is the iProov client for web browser based authentication. It can be integrated in a number of ways to support your web journeys for onboarding and authentication. [How to use iProov web in your user journey](https://portal.iproov.com/documentation).
+The iProov Web SDK is the client for web browser based authentication. It can be integrated in a number of ways to support your web journeys for onboarding and authentication. You can find out more about how to use iProov Web in your [User Journeys](https://portal.iproov.com/documentation) and create [API Keys](https://portal.iproov.com/service-providers/create) on the [iProov Portal](https://portal.iproov.com/).
 
-Please note that to use the Web SDK you will require Service Provider credentials. You can set these up automatically after registering your company on our [portal](https://portal.iproov.com/login).
-
-You will need to generate a token from your back-end to use with the iProov Web SDK. You can use the [API documentation](https://eu.rp.secure.iproov.me/docs.html) to make the relevant API calls and return the token to your front-end.
+You will need to generate a token from your back-end to use with the iProov Web SDK. You can use the [REST API](https://eu.rp.secure.iproov.me/docs.html) to make the relevant calls and return the token to your front-end. See the [backend section](#backend) for more details.
 
 ## 📖 Contents
 
@@ -35,7 +33,7 @@ This repository contains a demo showing an example of a backend and frontend int
 
 ## ⬆ Upgrading from earlier versions
 
-Please note that there is new name for the NPM package and URL for the script tag. If you are upgrading from v1 or v2-beta, please ensure you update you integration to use the new name or URL as described in the [installation](#-installation) section below.
+Please note that there is new name for the NPM package and URL for the script tag. If you are upgrading from v1 or v2-beta, please ensure that you update your integration to use the new name or URL as described in the [installation](#-installation) section below.
 
 A few of the options have changed from earlier versions so be sure to check the current supported [list of options](#-options) when upgrading.
 
@@ -69,11 +67,11 @@ The npm package `@iproov/web` allows for integration of the iProov Web SDK. It m
 
 Install the package as a dependency. You can use [Yarn](https://yarnpkg.com/lang/en/) or [NPM](https://www.npmjs.com/get-npm) to do this.
 
-```
+```sh
 yarn add @iproov/web
 ```
 
-```
+```sh
 npm i @iproov/web --save
 ```
 
@@ -93,7 +91,7 @@ To make use of this SDK you will require integration with the back-end iProov se
 
 When starting an iProov transaction (or claim), you would first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be done as part of the page load or with AJAX. You would then need to pass the token to your frontend to initialise the iProov Web SDK.
 
-After receiving the result from the SDK, you must then confirm its authenticity by calling the validate API from your backend on page submission or with AJAX.
+After receiving the result from the SDK, you must then confirm its authenticity by validating the [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolValidate) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyValidate) token _before_ escalating the user's privileges. This must be done from your backend and is typically invoked with a redirect, form submission or AJAX call triggered by the `passed` [event](#-events).
 
 > ⚠️ The REST API should always be called from your backend so as to never expose your secret to your client application.
 
