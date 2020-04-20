@@ -19,7 +19,9 @@
     <script src="../examples.js"></script>
     <script>
         window.addEventListener('WebComponentsReady', function(event) {
-            var component = $('<iproov-me token="***YOUR_TOKEN_HERE***" type="***YOUR_TYPE_HERE***"></iproov-me>');
+            var component = $(
+                `<iproov-me token="***TOKEN***" base_url="***BASE_URL***"></iproov-me>`
+            );
             $('#inject-iproov').append(component);
         });
     </script>

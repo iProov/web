@@ -1,7 +1,8 @@
 <?php
 
 // Change this if you want to use a specific region or instance
-define('BASE_URL', 'https://secure.iproov.me/api/v2');
+define('BASE_URL', 'https://eu.rp.secure.iproov.me');
+define('API_URL', BASE_URL . '/api/v2');
 
 // TODO: Set your API credentials
 $api_key = '***YOUR_API_KEY***';
@@ -50,7 +51,7 @@ if(!in_array($example, ['html', 'javascript', 'jquery'])) {
 }
 
 // Make API call with relevant data
-$url = BASE_URL . "/claim/$type/$action";
+$url = API_URL . "/claim/$type/$action";
 $data = [
 	'api_key'  => $api_key,
 	'secret'   => $secret,
@@ -77,8 +78,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 	if(property_exists($response, 'error')) {
 		// An error occurred - see $response->error_description;
 	} else {
-		$html = str_replace('***YOUR_TOKEN_HERE***', $response->token, $html);
-		$html = str_replace('***YOUR_TYPE_HERE***', $type, $html);
+		$html = str_replace('***TOKEN***', $response->token, $html);
+		$html = str_replace('***BASE_URL***', BASE_URL, $html);
 	}
 	echo $html;
 }

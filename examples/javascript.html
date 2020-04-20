@@ -19,7 +19,8 @@
     <script>
         window.addEventListener('WebComponentsReady', function(event) {
             var component = document.createElement("iproov-me");
-            component.setAttribute("token", "***YOUR_TOKEN_HERE***");
+            component.setAttribute("token", "***TOKEN***");
+            component.setAttribute("base_url", "***BASE_URL***");
             document.getElementById('inject-iproov').appendChild(component);
         });
     </script>
