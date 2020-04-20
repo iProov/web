@@ -1,4 +1,4 @@
-# iProov Web SDK v2.0.3
+# iProov Web SDK v2.0.4
 
 ## 📖 Table of contents
 
