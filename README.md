@@ -1,4 +1,4 @@
-# iProov Web SDK v2.0.4
+# iProov Web SDK v2.0.5
 
 ## 📖 Table of contents
 
@@ -94,8 +94,7 @@ When starting an iProov transaction (or claim), you would first need to generate
 After receiving the result from the SDK, you must then confirm its authenticity by validating the [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolValidate) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyValidate) token _before_ escalating the user's privileges. This must be done from your backend and is typically invoked with a redirect, form submission or AJAX call triggered by the `passed` [event](#-events).
 
 > ⚠️ The REST API should always be called from your backend so as to never expose your secret to your client application.
-
-> Always call the validate API from your backend after receiving a result; never trust the result provided directly from the HTML client.
+> Always call the validate API from your backend after receiving a result; never trust the result provided by the web client.
 
 ### Frontend
 
@@ -137,7 +136,7 @@ There are also the following framework specific example integrations available o
 - [React v16](https://github.com/iProov/web/wiki/React-v16)
 - [Vue v2](https://github.com/iProov/web/wiki/Vue-v2)
 
-> Note that JavaScript methods are run after the **WebComponentsReady** event to ensure that the SDK is ready to be injected.
+> ℹ️ JavaScript methods are run after the **WebComponentsReady** event to ensure that the SDK is ready to be injected.
 
 ## ⚙ Options
 
@@ -175,7 +174,7 @@ You can use a custom logo by simply passing a relative link or absolute path to 
 
 Specify a custom title to be shown. Defaults to show an iProov-generated message. Set to empty string "" to hide the message entirely. You can also pass in `%@` characters which will be mapped in this order to `type` (Enrol or Verify), `user_name` (the user_name you passed when generating the token), `sp_name` (the service provider you used to generate the token).
 
-> Note: iProov-generated messages are passed through our translators. Passing a custom title will prevent this and you will need to provide the translated version.
+> ⚠️ iProov-generated messages are passed through our translators. Passing a custom title will prevent this and you will need to provide the translated version.
 
 ```html
 <!-- Set the title to a plain string -->
@@ -287,7 +286,7 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
 </iproov-me>
 ```
 
-> In order to style and manipulate your slots, you can add custom classes and IDs which can be accessed from your CSS and JavaScript.
+> ℹ️ In order to style and manipulate your slots, you can add custom classes and IDs which can be accessed from your CSS and JavaScript.
 
 #### JavaScript
 
@@ -326,7 +325,7 @@ window.addEventListener("WebComponentsReady", function(event) {
 
 To allow language keys to be dynamically applied to slots, special class names must be applied to your slots when customising. Headings must have `.iproov-lang-heading` and terms (message, reason etc) must have `.iproov-lang-term`.
 
-> `h3` tags and the `div` element are allowed without classes, this functionality has been deprecated and will be removed in `2.1.0`
+> ⚠️ `h3` tags and the `div` element are allowed without classes, this functionality has been deprecated and will be removed in `2.1.0`.
 
 ```html
 <div slot="passed">
@@ -335,7 +334,7 @@ To allow language keys to be dynamically applied to slots, special class names m
 </div>
 ```
 
-> When customising any slots with button elements the type must be set to button
+> ⚠️ When customising any slots with button elements, the type must be set to button.
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 
@@ -475,7 +474,7 @@ function iProovEvent(event) {
 }
 ```
 
-> If using [jQuery](https://jquery.com), you can attach to all the events in one go:
+If you're using [jQuery](https://jquery.com), you can attach to all the events in one go:
 
 ```javascript
 $("iproov-me").on("ready started aborted streamed progress passed failed error unsupported", iProovEvent)
@@ -546,13 +545,15 @@ It also requires a front facing camera with permission granted to use it.
 The table below is a best-effort representation of minimum feature support across browsers:
 
 | <img src="https://avatars1.githubusercontent.com/u/4119093?s=200&v=4" alt="Safari" width="24px" height="24px" /><br/>Platform | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /><br/>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /><br/>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" /><br/>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /><br/>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /><br/>Opera | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /><br/>Samsung |
-| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Windows** | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 16+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
-| **MacOS**   | 11+                                                                                                                                                       | 57+                                                                                                                                                       | 78+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
-| **iOS**     | 11+                                                                                                                                                       | N/A                                                                                                                                                       | N/A                                                                                                                                                    | N/A                                                                                                                                                           | N/A                                                                                                                                                   | N/A                                                                                                                                                                             |
-| **Android** | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 45+                                                                                                                                                    | 68+                                                                                                                                                           | 57+                                                                                                                                                   | 8.2+                                                                                                                                                                            |
+| ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Windows**                                                                                                                   | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 16+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
+| **MacOS**                                                                                                                     | 11+                                                                                                                                                       | 57+                                                                                                                                                       | 78+                                                                                                                                                    | 53+                                                                                                                                                           | 43+                                                                                                                                                   | N/A                                                                                                                                                                             |
+| **iOS**                                                                                                                       | 11+                                                                                                                                                       | N/A                                                                                                                                                       | N/A                                                                                                                                                    | N/A                                                                                                                                                           | N/A                                                                                                                                                   | N/A                                                                                                                                                                             |
+| **Android**                                                                                                                   | N/A                                                                                                                                                       | 57+                                                                                                                                                       | 45+                                                                                                                                                    | 68+                                                                                                                                                           | 57+                                                                                                                                                   | 8.2+                                                                                                                                                                            |
 
-> If the device attempting to iProov doesn't meet the minimum requirements, the `unsupported` event is emitted. See the [events](#-events) section for more details.
+> ℹ️ If the device attempting to iProov doesn't meet the minimum requirements, the `unsupported` event is emitted. See the [events](#-events) section for more details.
+
+### Support Checker
 
 Developers can use the `IProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an alternative journey.
 
