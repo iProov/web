@@ -8,6 +8,8 @@ define('API_URL', BASE_URL . '/api/v2');
 $api_key = '***YOUR_API_KEY***';
 $secret = '***YOUR_SECRET***';
 
+header('Content-Type: application/json');
+
 // Get data from the form
 $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_EMAIL);
 $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
