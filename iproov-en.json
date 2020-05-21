@@ -54,6 +54,6 @@
     "error_camera_permission_denied_message": "Permission to access the camera has been denied. Please allow camera access to use iProov. If you have already allowed access, please reload the page.",
     "error_user_timeout": "Your session has expired",
     "error_flashmark": "Malformed flashmark",
-    "error_camera_unavailable": "Unable to access the camera, access is only available through https or localhost",
+    "error_camera_unavailable": "Unable to access the camera. A secure context (valid https) or localhost domain is required.",
     "prompt_rotate_portrait": "Please rotate your device to portrait"
 }
