@@ -652,7 +652,7 @@ For more information on using iProov within a WebView based app, see the followi
 - [Java Fullscreen WebView Example](https://github.com/iProov/android/wiki/Java-WebView)
 - [Kotlin Fullscreen WebView Example](https://github.com/iProov/android/wiki/Kotlin-WebView)
 - [Android Native Bridge Integration Guide](https://github.com/iProov/android/wiki/Web-Native-Bridge)
-- [iOS Native Bridge Integration Guide](https://github.com/iProov/ios/wiki/Web-Native-Bridge)
+- [iOS Native Bridge Integration Guide](https://github.com/iProov/ios/wiki/Native-Bridge)
 
 ## ❓ Help & support
 
