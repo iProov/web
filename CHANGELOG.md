@@ -5,6 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 22.05.2020 2.1.0
+
+## Fixed
+
+- Kiosk mode: face centering on the y-axis has been correctly aligned.
+- Kiosk mode: custom logo positioning has been fixed.
+- Product performance: timing issues when starting in landscape causing occasional errors have been resolved.
+- Product performance: issues where iMacs were unable to obtain a camera feed have been resolved.
+- Native bridge: In Native Bridge mode, the support checker would return unsupported which is not always the case.
+- CJS/ESM/UMD: Support has been ensured as per the docs. Previously imports would not work correctly.
+
+## Changed
+
+- The `base_url` option now requires a URL using `https://`; the deprecated functionality of prepending the secure protocol has been removed.
+- Native bridge mode has been radically overhauled to make native integration possible with one line of code in a single location.
+  - Web automatically detects this simple, one-line Native Bridge integration and switches to Native Bridge mode if applicable.
+  - Breaking change: `prefer_app` has been removed in favour of this automatic integration.
+  - Breaking change: `prefer_app_options` has been renamed to `native_sdk_options`
+  - Breaking change: Native bridge mode now requires the following SDK minimum versions:
+    - iOS SDK 7.5.0
+    - Android SDK 5.3.0 (to be released and confirmed - if you urgently require this feature please get in touch: support@iproov.com)
+- Improved error handling around fetching and loading external assets to help debug integration issues easier
+- Improved error handling with cameras
+
+## Added
+
+- Added the capability for `sdk_unsupported` errors to be gracefully displayed to users, should a particular version of the Web SDK remain in production past its EOL.
+- Added capability to provide early deprecation warnings to integrator developers via the console.
+
+## 01.05.2020 2.0.6
+
+## Fixed
+
+- Safari 13.1 iMac camera failing due to getUserMedia invalid constraints
+
+## 22.04.2020 2.0.5
+
+## Fixed
+
+- Scanning running twice if double clicking
+
+## Changed
+
+- Block landscape orientation on iOS due to camera position
+- Disabled vibration in Firefox due to permissions issue
+
 ## 20.04.2020 2.0.4
 
 ## Fixed
@@ -20,7 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 
-- Invalidate events in from native bridge in iOS are now correctly  proxied back to the Web SDK.
+- Invalidate events in from native bridge in iOS are now correctly proxied back to the Web SDK.
 
 ## 16.04.2020 2.0.2
 

@@ -1,4 +1,4 @@
-# iProov Web SDK v2.0.5
+# iProov Web SDK v2.1.0
 
 ## 📖 Table of contents
 
@@ -14,6 +14,7 @@
 - [Localization](#-localization)
 - [Browser Support](#-browser-support)
 - [WebViews](#-webviews)
+- [Native Bridge](#-native-bridge)
 - [Help & support](#-help--support)
 
 ## 🤳 Introduction
@@ -209,34 +210,6 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
 ></iproov-me>
 ```
 
-#### Prefer App
-
-Use this collection of settings to handle launching a native app containing the iProov SDK on mobile devices.
-
-- `prefer_app`
-- `prefer_app_options`
-
-The `prefer_app` setting converts the scan button into an app launch URL which will launch the iProov app or iProov SDK when within a WebView. The following values are allowed and multiple can be used when separated by a comma:
-
-- always
-- ios
-- android
-- ios-webview
-- android-webview
-
-```html
-<iproov-me token="***YOUR_TOKEN_HERE***" prefer_app="android-webview,ios-webview"></iproov-me>
-```
-
-The `prefer_app_options` setting accepts a base64 encoded JSON object of iProov native SDK options as defined in the [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options) documentation:
-
-```js
-iProovMe.setAttribute(
-  "prefer_app_options",
-  btoa(JSON.stringify({ ui: { scan_line_disabled: true, filter: "classic" } }))
-)
-```
-
 #### Allow Landscape
 
 Mobile devices are by default prevented from iProoving while in landscape. This feature can be disabled by passing `allow_landscape` `true` with your component as shown below.
@@ -398,30 +371,32 @@ All possible properties of the event's **detail** property are described below:
 | **reason**           | _aborted, failed, error, unsupported_ | An English description of the reason for the event         |
 | **is_native_bridge** | All                                   | Boolean value if event originates from the native bridge   |
 
-† - Not available when running with the `prefer_app` setting in native bridge mode.
+> † - The **type** property is not available when running in Native Bridge mode.
 
 In the case of the **aborted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases and the _reason_ can be displayed to the user. The following are some of the possible responses:
 
-| Feedback                              | Reason                                                |         Event |
-| ------------------------------------- | ----------------------------------------------------- | ------------: |
-| **client_browser**                    | The browser is not supported                          | _unsupported_ |
-| **fullscreen_change**                 | Exited fullscreen without completing iProov           |     _aborted_ |
-| **ambiguous_outcome**                 | Sorry, ambiguous outcome                              |      _failed_ |
-| **user_timeout**                      | Sorry, your session has timed out                     |      _failed_ |
-| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low |      _failed_ |
-| **lighting_backlit**                  | Strong light source detected behind you               |      _failed_ |
-| **lighting_too_dark**                 | Your environment appears too dark                     |      _failed_ |
-| **lighting_face_too_bright**          | Too much light detected on your face                  |      _failed_ |
-| **motion_too_much_movement**          | Please keep still                                     |      _failed_ |
-| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                    |      _failed_ |
-| **client_config**                     | There was an error with the client configuration      |       _error_ |
-| **client_api**                        | There was an error calling the API                    |       _error_ |
-| **client_camera**                     | There was an error getting video from the camera      |       _error_ |
-| **client_stream**                     | There was an error streaming the video                |       _error_ |
-| **client_error**                      | An unknown error occurred                             |       _error_ |
-| **server_abort**                      | The server aborted the claim before iProov completed  |       _error_ |
-| **invalid_token**                     | The provided token has already been claimed           |       _error_ |
-| **network_problem**                   | Sorry, network problem                                |       _error_ |
+| Feedback                              | Reason                                                        |         Event |
+| ------------------------------------- | ------------------------------------------------------------- | ------------: |
+| **client_browser**                    | The browser is not supported                                  | _unsupported_ |
+| **fullscreen_change**                 | Exited fullscreen without completing iProov                   |     _aborted_ |
+| **ambiguous_outcome**                 | Sorry, ambiguous outcome                                      |      _failed_ |
+| **user_timeout**                      | Sorry, your session has timed out                             |      _failed_ |
+| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low         |      _failed_ |
+| **lighting_backlit**                  | Strong light source detected behind you                       |      _failed_ |
+| **lighting_too_dark**                 | Your environment appears too dark                             |      _failed_ |
+| **lighting_face_too_bright**          | Too much light detected on your face                          |      _failed_ |
+| **motion_too_much_movement**          | Please keep still                                             |      _failed_ |
+| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                            |      _failed_ |
+| **client_config**                     | There was an error with the client configuration              |       _error_ |
+| **client_api**                        | There was an error calling the API                            |       _error_ |
+| **client_camera**                     | There was an error getting video from the camera              |       _error_ |
+| **client_stream**                     | There was an error streaming the video                        |       _error_ |
+| **client_error**                      | An unknown error occurred                                     |       _error_ |
+| **server_abort**                      | The server aborted the claim before iProov completed          |       _error_ |
+| **invalid_token**                     | The provided token has already been claimed                   |       _error_ |
+| **network_problem**                   | Sorry, network problem                                        |       _error_ |
+| **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported     |       _error_ |
+| **error_camera_in_use**               | The camera is currently already in use and cannot be accessed |       _error_ |
 
 ### Listeners
 
@@ -578,12 +553,15 @@ const supportChecker = new IProov.IProovSupport()
 
 ```javascript
 const supportChecker = new IProovSupport()
-supportChecker.addEventListener("check", ({ supported, granted }) => {
+supportChecker.addEventListener("check", ({ supported, granted, is_native_bridge }) => {
   if (supported === false) {
     // go to fallback UX
   }
   if (supported && granted) {
     // full permission and granted, we can definitely iProov!
+    if (is_native_bridge) {
+      // if native bridge mode has been detected then permission checks have been circumvented as they aren't needed
+    }
   }
   if (supported && granted === null) {
     // browser API support, but we haven't run a permission check (see checkWithPermission)
@@ -592,7 +570,7 @@ supportChecker.addEventListener("check", ({ supported, granted }) => {
     // browser API support, but camera access denied - try again or advise user before proceeding
   }
 })
-const { supported, granted } = await supportChecker.check()
+const { supported, granted, is_native_bridge } = await supportChecker.check()
 ```
 
 ...or to carry out a complete lightweight check for camera access with user interaction, this can pre-set the required
@@ -605,8 +583,8 @@ document.querySelector("#check-button").addEventListener("click", async () => {
 })
 ```
 
-If `.checkWithPermission()` is run and permission is granted and cached within the browser, future interaction is often not
-required and we can tell if permission has been granted using a soft `.check()`.
+If `.checkWithPermission()` is executed when permission has already been granted and cached within the browser,
+further permission checks are not required; we can tell if permission has been granted using a soft `.check()`.
 
 Note that browsers have varying regimes to protect against device fingerprinting and to ensure user privacy. Repeated
 calls to `getUserMedia` or the Permissions API can result in prompt blockage, or the redaction of media devices, which
@@ -618,7 +596,32 @@ The following events can be emitted from `IProovSupport`:
 
 ```javascript
 const supportChecker = new IProovSupport()
-const onCheckResult = ({ supported, granted, tests }) => ({})
+function onCheckResult({
+  /** @var boolean */
+  supported,
+  /** @var boolean */
+  granted,
+  /** @var array */
+  tests,
+  /** @var boolean|undefined */
+  is_native_bridge,
+}) {
+  console.debug("Checks run:", tests)
+  if (supported) {
+    if (is_native_bridge) {
+      console.debug("User can iProov with the Native SDK")
+    } else {
+      console.debug("User can iProov with the Web SDK")
+    }
+    if (granted) {
+      console.debug("User has granted permission for camera access")
+    } else {
+      console.debug("Prompt the user for camera access permission")
+    }
+  } else {
+    console.error("Browser does not support the Web SDK")
+  }
+}
 const onUnsupported = ({ supported, tests }) => ({})
 const onPermissionWasGranted = ({ tests }) => ({})
 const onPermissionWasDenied = ({ tests }) => ({})
@@ -639,23 +642,49 @@ const possibleTests = {
 }
 ```
 
-Using the support checker is the best and canonical way to detect whether a browser is supported.
+The `is_native_bridge` property will be exposed on support checker events if the checker detects that `iProovNativeBridgeInfo` exists within the global scope. This variable is injected automatically by the native SDK. In this case, the browser support and permission checks are cast to `true` as we won't be using the browser to iProov.
+
+Using the support checker is the best and canonical way to detect whether the user's browser supports the Web SDK.
 
 ## 🕸 WebViews
 
-The iProov SDKs can work with WebView based apps using the Native Bridge feature which allows the Web SDK to seamlessly launch the native SDKs embedded within the app. Use this approach for the best results by setting the [Prefer App](#prefer-app) option.
+The iProov Web and Native SDKs can work with WebView based apps using the [Native Bridge](#native-bridge) feature. This allows the Web SDK to seamlessly launch the native SDKs embedded within the app.
 
-On Android, it is possible to use the Web SDK directly inside a WebView. For it to work as expected, the app _must_ correctly allow fullscreen mode, otherwise the user interface will not display correctly. These WebView examples demonstrate how to ensure fullscreen is allowed and configured correctly inside your Android app.
+You can enable this with one line of code in your mobile app; from that point, the Web/Native SDKs take care of the rest.
 
-For more information on using iProov within a WebView based app, see the following Wiki pages:
+Note that:
+
+- Native Bridge mode is _mandatory_ for iOS WebViews until Apple releases camera feed support, otherwise the unsupported event will fire.
+- In Android WebViews apps, it _is_ possible to use the Web SDK directly provided that your app correctly allows fullscreen mode. This ensures the user interface is correctly rendered.
+
+These WebView examples demonstrate how to ensure fullscreen is allowed and configured correctly inside your Android app:
 
 - [Java Fullscreen WebView Example](https://github.com/iProov/android/wiki/Java-WebView)
 - [Kotlin Fullscreen WebView Example](https://github.com/iProov/android/wiki/Kotlin-WebView)
+
+## 🌉 Native Bridge
+
+If integrating iProov into a WebView based app, why not take advantage of our Native SDKs?
+
+Native SDK integration is possible with one line of code in a single location in your app's codebase. The Web SDK then automatically detects and switches to Native Bridge mode if available.
+
+### Native SDK Integration Guides
+
+For more information on using iProov Web within a native WebView based app, see the following Wiki pages:
+
 - [Android Native Bridge Integration Guide](https://github.com/iProov/android/wiki/Web-Native-Bridge)
 - [iOS Native Bridge Integration Guide](https://github.com/iProov/ios/wiki/Native-Bridge)
 
+### Customisation
+
+The `native_sdk_options` setting accepts a base64 encoded JSON object of iProov Native SDK options as defined in the [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options) documentation:
+
+```js
+iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ ui: { scanLineDisabled: true, filter: "classic" } })))
+```
+
 ## ❓ Help & support
 
-You may find your question is answered on our [Wiki pages](https://github.com/iProov/web/wiki).
+You may find your question answered on our [Wiki pages](https://github.com/iProov/web/wiki).
 
 For further help with integrating the SDK, please contact [support@iproov.com](mailto:support@iproov.com).
