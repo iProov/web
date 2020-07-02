@@ -12,9 +12,9 @@
 - [Slots](#-slots)
 - [Events](#-events)
 - [Localization](#-localization)
-- [Browser Support](#-browser-support)
+- [Browser support](#-browser-support)
 - [WebViews](#-webviews)
-- [Native Bridge](#-native-bridge)
+- [Native bridge](#-native-bridge)
 - [Help & support](#-help--support)
 
 ## 🤳 Introduction
@@ -133,7 +133,7 @@ window.addEventListener("WebComponentsReady", function(event) {
 
 There are also the following framework specific example integrations available on the wiki:
 
-- [Angular v7](https://github.com/iProov/web/wiki/Angular-v7)
+- [Angular v10](https://github.com/iProov/web/wiki/Angular-v10)
 - [React v16](https://github.com/iProov/web/wiki/React-v16)
 - [Vue v2](https://github.com/iProov/web/wiki/Vue-v2)
 
@@ -298,7 +298,7 @@ window.addEventListener("WebComponentsReady", function(event) {
 
 To allow language keys to be dynamically applied to slots, special class names must be applied to your slots when customising. Headings must have `.iproov-lang-heading` and terms (message, reason etc) must have `.iproov-lang-term`.
 
-> ⚠️ `h3` tags and the `div` element are allowed without classes, this functionality has been deprecated and will be removed in `2.1.0`.
+> ⚠️ The ability to use localized `h3` tags and the `div` elements without these special classes was removed in `2.1.0`.
 
 ```html
 <div slot="passed">
@@ -471,8 +471,8 @@ window.addEventListener("WebComponentsReady", event => {
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
   const customLanguage = `{
-    "iproov_success": "You passed!",
-    "prompt_loading": "Its loading"
+    "passed": "You passed!",
+    "prompt_connecting": "It's loading..."
   }`
   element.setAttribute("language", customLanguage)
 
@@ -504,9 +504,9 @@ window.addEventListener("WebComponentsReady", async event => {
 })
 ```
 
-There are also some framework specific examples on the [Angular](https://github.com/iProov/web/wiki/Angular-v7#local-language-file) and [React](https://github.com/iProov/web/wiki/React-v16#include-language-file) wiki pages.
+There are also some framework specific examples on the [Angular](https://github.com/iProov/web/wiki/Angular-v10#local-language-file) and [React](https://github.com/iProov/web/wiki/React-v16#include-language-file) wiki pages.
 
-## 🌐 Browser Support
+## 🌐 Browser support
 
 iProov's Web SDK makes use of the following technologies:
 
@@ -528,7 +528,7 @@ The table below is a best-effort representation of minimum feature support acros
 
 > ℹ️ If the device attempting to iProov doesn't meet the minimum requirements, the `unsupported` event is emitted. See the [events](#-events) section for more details.
 
-### Support Checker
+### Support checker
 
 Developers can use the `IProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an alternative journey.
 
@@ -662,13 +662,13 @@ These WebView examples demonstrate how to ensure fullscreen is allowed and confi
 - [Java Fullscreen WebView Example](https://github.com/iProov/android/wiki/Java-WebView)
 - [Kotlin Fullscreen WebView Example](https://github.com/iProov/android/wiki/Kotlin-WebView)
 
-## 🌉 Native Bridge
+## 🌉 Native bridge
 
 If integrating iProov into a WebView based app, why not take advantage of our Native SDKs?
 
 Native SDK integration is possible with one line of code in a single location in your app's codebase. The Web SDK then automatically detects and switches to Native Bridge mode if available.
 
-### Native SDK Integration Guides
+### Native SDK integration guides
 
 For more information on using iProov Web within a native WebView based app, see the following Wiki pages:
 
