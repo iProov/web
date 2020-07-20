@@ -1,4 +1,4 @@
-# iProov Web SDK v2.2.0
+# iProov Web SDK v2.2.1
 
 ## 📖 Table of contents
 
@@ -698,5 +698,4 @@ For further help with integrating the SDK, please contact [support@iproov.com](m
 ### Known issues
 
 - Title exceeds header on some small screens, a workaround is to use a Custom Title or hide the title completely.
-- Firefox Android v68: unable to grant camera permission access due to bug in permission handler.
 - Microsoft Edge Mobile v42 on Android user interface not scaling to screen size correctly.
