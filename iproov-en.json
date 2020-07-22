@@ -55,5 +55,16 @@
     "error_user_timeout": "Your session has expired",
     "error_flashmark": "Malformed flashmark",
     "error_camera_unavailable": "Unable to access the camera. A secure context (valid https) or localhost domain is required.",
-    "prompt_rotate_portrait": "Please rotate your device to portrait"
+    "prompt_rotate_portrait": "Please rotate your device to portrait",
+    
+    "prompt_loading": "Please wait…",
+    "prompt_too_right": "Move left",
+    "prompt_too_left": "Move right",
+    "prompt_too_high": "Move down",
+    "prompt_too_low": "Move up",
+    "prompt_beginning_in": "Starting in…",
+    "error_sdk_internal": "An error has occurred",
+    "error_device_not_supported": "Sorry, your device is currently not supported",
+    "iproov_success": "You have iProoved successfully",
+    "progress_processing": "Processing…"
 }
