@@ -1,4 +1,4 @@
-# iProov Web SDK v2.2.1
+# iProov Web SDK v3.0.0-beta.1
 
 ## 📖 Table of contents
 
@@ -311,20 +311,21 @@ To allow language keys to be dynamically applied to slots, special class names m
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 
-| Slot                  | Description                                                                                    |
-| --------------------- | ---------------------------------------------------------------------------------------------- |
-| **button**            | Element that a user taps or clicks on to launch into fullscreen and start iProov               |
-| **ready**             | Screen displayed to the user when the component is ready to start the main iProov user journey |
-| **aborted**           | Screen displayed to the user when they exit fullscreen before iProoving                        |
-| **progress**          | Screen displayed to the user when streaming has completed and iProov is processing the result  |
-| **passed**            | Screen displayed to the user when the user passed iProov                                       |
-| **failed**            | Screen displayed to the user when the user failed iProov                                       |
-| **error**             | Screen displayed to the user in the event of an error                                          |
-| **unsupported**       | Screen displayed to the user when their browser is not supported                               |
-| **permission_denied** | Screen displayed to the user when camera permission has been blocked                           |
-| **grant_permission**  | Screen displayed to the user when camera permission is unknown and not blocked                 |
-| **grant_button**      | Element that user taps or clicks to grant camera permission                                    |
-| **no_camera**         | Screen displayed to the user when there is no camera                                           |
+| Slot                  | Description                                                                                   |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| **button**            | Element that a user taps or clicks on to launch into fullscreen and start iProov              |
+| **ready**             | State displayed to the user when the component is ready to start the main iProov user journey |
+| **cancelled**         | State displayed to the user when they exit fullscreen before iProoving                        |
+| **interrupted**       | State displayed to the user when fullscreen quickly exits after launch, maybe due to software |
+| **progress**          | State displayed to the user when streaming has completed and iProov is processing the result  |
+| **passed**            | State displayed to the user when the user passed iProov                                       |
+| **failed**            | State displayed to the user when the user failed iProov                                       |
+| **error**             | State displayed to the user in the event of an error                                          |
+| **unsupported**       | State displayed to the user when their browser is not supported                               |
+| **permission_denied** | State displayed to the user when camera permission has been blocked                           |
+| **grant_permission**  | State displayed to the user when camera permission is unknown and not blocked                 |
+| **grant_button**      | Element that user taps or clicks to grant camera permission                                   |
+| **no_camera**         | State displayed to the user when there is no camera                                           |
 
 Slots can be embedded as HTML or injected with JavaScript.
 
@@ -344,63 +345,64 @@ Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/Cust
 
 The available events are detailed below with any extra properties that are supplied:
 
-| Event                 | Extra Properties                 | Description                                                      |
-| --------------------- | -------------------------------- | ---------------------------------------------------------------- |
-| **ready**             | None                             | iProov has initialised successfully and has camera permission    |
-| **started**           | None                             | User has started iProov by launching into fullscreen             |
-| **aborted**           | _feedback, reason_               | User has aborted iProov by exiting fullscreen                    |
-| **streamed**          | None                             | User has finished streaming and the client has exited fullscreen |
-| **progress**          | _percentage, message_            | iProov has published a progress update for the authentication    |
-| **passed**            | _type, passed_                   | Authentication was successful, the result can now be validated   |
-| **failed**            | _type, passed, feedback, reason_ | Authentication was unsuccessful, the user needs to try again     |
-| **error**             | _feedback, reason_               | iProov encountered an error while processing the authentication  |
-| **unsupported**       | _feedback, reason_               | Browser does not support using iProov                            |
-| **permission**        | None                             | Camera permission is unknown & not blocked, show permission      |
-| **permission_denied** | None                             | User has blocked access to the camera                            |
+| Event                 | Extra Properties                 | Description                                                       |
+| --------------------- | -------------------------------- | ----------------------------------------------------------------- |
+| **ready**             | None                             | iProov has initialised successfully and has camera permission     |
+| **started**           | None                             | User has started iProov by launching into fullscreen              |
+| **cancelled**         | _feedback, reason_               | User has cancelled iProov by exiting fullscreen                   |
+| **interrupted**       | _feedback, reason_               | Fast fullscreen exit possible due to software. Retry is possible. |
+| **streamed**          | None                             | User has finished streaming and the client has exited fullscreen  |
+| **progress**          | _percentage, message_            | iProov has published a progress update for the authentication     |
+| **passed**            | _type, passed_                   | Authentication was successful, the result can now be validated    |
+| **failed**            | _type, passed, feedback, reason_ | Authentication was unsuccessful, the user needs to try again      |
+| **error**             | _feedback, reason_               | iProov encountered an error while processing the authentication   |
+| **unsupported**       | _feedback, reason_               | Browser does not support using iProov                             |
+| **permission**        | None                             | Camera permission is unknown & not blocked, show permission       |
+| **permission_denied** | None                             | User has blocked access to the camera                             |
 
 All possible properties of the event's **detail** property are described below:
 
-| Property             | Events                                | Description                                                |
-| -------------------- | ------------------------------------- | ---------------------------------------------------------- |
-| **token**            | All                                   | The token associated with the authentication attempt       |
-| **type** (†)         | _passed, failed_                      | The type of authentication (enrol, verify or id_match)     |
-| **passed**           | _passed, failed_                      | Boolean value whether the result passed or failed          |
-| **percentage**       | _progress_                            | A percentage (between 0 and 100) representing the progress |
-| **message**          | _progress_                            | A user-friendly description of the current progress stage  |
-| **feedback**         | _aborted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
-| **reason**           | _aborted, failed, error, unsupported_ | An English description of the reason for the event         |
-| **is_native_bridge** | All                                   | Boolean value if event originates from the native bridge   |
+| Property             | Events                                               | Description                                                |
+| -------------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
+| **token**            | All                                                  | The token associated with the authentication attempt       |
+| **type** (†)         | _passed, failed_                                     | The type of authentication (enrol, verify or id_match)     |
+| **passed**           | _passed, failed_                                     | Boolean value whether the result passed or failed          |
+| **percentage**       | _progress_                                           | A percentage (between 0 and 100) representing the progress |
+| **message**          | _progress_                                           | A user-friendly description of the current progress stage  |
+| **feedback**         | _cancelled, interrupted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
+| **reason**           | _cancelled, interrupted, failed, error, unsupported_ | An English description of the reason for the event         |
+| **is_native_bridge** | All                                                  | Boolean value if event originates from the native bridge   |
 
 > † - The **type** property is not available when running in Native Bridge mode.
 
-In the case of the **aborted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases and the _reason_ can be displayed to the user. The following are some of the possible responses:
+In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 
-| Feedback                              | Reason                                                        |         Event |
-| ------------------------------------- | ------------------------------------------------------------- | ------------: |
-| **client_browser**                    | The browser is not supported                                  | _unsupported_ |
-| **fullscreen_change**                 | Exited fullscreen without completing iProov                   |     _aborted_ |
-| **ambiguous_outcome**                 | Sorry, ambiguous outcome                                      |      _failed_ |
-| **user_timeout**                      | Sorry, your session has timed out                             |      _failed_ |
-| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low         |      _failed_ |
-| **lighting_backlit**                  | Strong light source detected behind you                       |      _failed_ |
-| **lighting_too_dark**                 | Your environment appears too dark                             |      _failed_ |
-| **lighting_face_too_bright**          | Too much light detected on your face                          |      _failed_ |
-| **motion_too_much_movement**          | Please keep still                                             |      _failed_ |
-| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                            |      _failed_ |
-| **client_config**                     | There was an error with the client configuration              |       _error_ |
-| **client_api**                        | There was an error calling the API                            |       _error_ |
-| **client_camera**                     | There was an error getting video from the camera              |       _error_ |
-| **client_stream**                     | There was an error streaming the video                        |       _error_ |
-| **client_error**                      | An unknown error occurred                                     |       _error_ |
-| **server_abort**                      | The server aborted the claim before iProov completed          |       _error_ |
-| **invalid_token**                     | The provided token has already been claimed                   |       _error_ |
-| **network_problem**                   | Sorry, network problem                                        |       _error_ |
-| **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported     |       _error_ |
-| **error_camera_in_use**               | The camera is currently already in use and cannot be accessed |       _error_ |
+| Feedback                              | Reason                                                        |                    Event |
+| ------------------------------------- | ------------------------------------------------------------- | -----------------------: |
+| **client_browser**                    | The browser is not supported                                  |            _unsupported_ |
+| **fullscreen_change**                 | Exited fullscreen without completing iProov                   | _cancelled, interrupted_ |
+| **ambiguous_outcome**                 | Sorry, ambiguous outcome                                      |                 _failed_ |
+| **user_timeout**                      | Sorry, your session has timed out                             |                 _failed_ |
+| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low         |                 _failed_ |
+| **lighting_backlit**                  | Strong light source detected behind you                       |                 _failed_ |
+| **lighting_too_dark**                 | Your environment appears too dark                             |                 _failed_ |
+| **lighting_face_too_bright**          | Too much light detected on your face                          |                 _failed_ |
+| **motion_too_much_movement**          | Please keep still                                             |                 _failed_ |
+| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                            |                 _failed_ |
+| **client_config**                     | There was an error with the client configuration              |                  _error_ |
+| **client_api**                        | There was an error calling the API                            |                  _error_ |
+| **client_camera**                     | There was an error getting video from the camera              |                  _error_ |
+| **client_stream**                     | There was an error streaming the video                        |                  _error_ |
+| **client_error**                      | An unknown error occurred                                     |                  _error_ |
+| **server_abort**                      | The server aborted the claim before iProov completed          |                  _error_ |
+| **invalid_token**                     | The provided token has already been claimed                   |                  _error_ |
+| **network_problem**                   | Sorry, network problem                                        |                  _error_ |
+| **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported     |                  _error_ |
+| **error_camera_in_use**               | The camera is currently already in use and cannot be accessed |                  _error_ |
 
 ### Listeners
 
-It is recommended that you listen for at least the **ready** and **unsupported** events as one of them will always be called so you can determine if iProov is supported or not:
+We recommend the integrator listens for at least the **ready** and **unsupported** events because one of them will always be called, so you can determine if iProov is supported or not:
 
 ```javascript
 document.querySelector("iproov-me").addEventListener("ready", function(event) {
@@ -411,13 +413,14 @@ document.querySelector("iproov-me").addEventListener("unsupported", function(eve
 })
 ```
 
-As all of the event **details** follow the same structure, they can be handled by a single function if desired:
+Because all event **details** share the same structure, they can be handled by a single function if desired:
 
 ```javascript
 const iProovMe = document.querySelector("iproov-me")
 iProovMe.addEventListener("ready", iProovEvent)
 iProovMe.addEventListener("started", iProovEvent)
-iProovMe.addEventListener("aborted", iProovEvent)
+iProovMe.addEventListener("cancelled", iProovEvent)
+iProovMe.addEventListener("interrupted", iProovEvent)
 iProovMe.addEventListener("streamed", iProovEvent)
 iProovMe.addEventListener("progress", iProovEvent)
 iProovMe.addEventListener("passed", iProovEvent)
@@ -429,7 +432,8 @@ iProovMe.addEventListener("permission_denied", iProovEvent)
 
 function iProovEvent(event) {
   switch (event.type) {
-    case "aborted":
+    case "cancelled":
+    case "interrupted":
     case "error":
     case "unsupported":
     case "permission":
@@ -452,7 +456,7 @@ function iProovEvent(event) {
 If you're using [jQuery](https://jquery.com), you can attach to all the events in one go:
 
 ```javascript
-$("iproov-me").on("ready started aborted streamed progress passed failed error unsupported", iProovEvent)
+$("iproov-me").on("ready started cancelled interrupted streamed progress passed failed error unsupported", iProovEvent)
 ```
 
 ## 🌎 Localization
@@ -699,3 +703,4 @@ For further help with integrating the SDK, please contact [support@iproov.com](m
 
 - Title exceeds header on some small screens, a workaround is to use a Custom Title or hide the title completely.
 - Microsoft Edge Mobile v42 on Android user interface not scaling to screen size correctly.
+- The kiosk mode UI is being revamped and is currently unfinished in 3.0.0 beta

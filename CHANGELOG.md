@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## XX.XX.2020 3.0.0
+
+## Changed
+
+- The "aborted" event has been removed, and replaced with "cancelled" in line with the native SDKs.
+
+## Added
+
+- The "interrupted" event and slot have been added, which allow users to retry should a fast exit from fullscreen occur.
+  This rarely happens but can be caused by software launched automatically as a result of webcam usage.
+
+## Removed
+
+- Legacy native bridge mode has been removed
+- The "aborted" event and associated slots
+
 ## 20.07.2020 2.2.1
 
 ## Fixed
@@ -199,10 +215,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 
-- Encoding corrupt images resulted in facial features going missing, causing liveness to fail.
+- Encoding corrupt images resulted in facial features going missing, causing transactions to fail.
 - Face cropping logic improved to handle extremes in the camera's field of view without clipping.
 - Huge memory management improvements to reduce device load.
-- Fixed a missing missing `asset_url` domain prefix when loading Pico.
+- Fixed a missing `asset_url` domain prefix when loading Pico.
 - Scaling issues relating to face alignment on non-retina iOS devices have been resolved (`devicePixelRatio` interpretation)
 - Various moves to align the HTML5 web SDK with the iOS and Android SDKs which make performance analysis easier, resulting in even better service for our customers!
 
