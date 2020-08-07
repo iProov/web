@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## XX.XX.2020 3.0.0
 
+## Fixed
+
+- Kiosk mode can now be localised using the standard Web SDK localization feature.
+
 ## Changed
 
 - The "aborted" event has been removed, and replaced with "cancelled" in line with the native SDKs.
@@ -15,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The "interrupted" event and slot have been added, which allow users to retry should a fast exit from fullscreen occur.
   This rarely happens but can be caused by software launched automatically as a result of webcam usage.
+- Two new language strings, `prompt_kiosk_align_face` and `prompt_kiosk_keep_still` have been added. See iproov-en.json for English translations.
 
 ## Removed
 

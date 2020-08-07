@@ -1,4 +1,4 @@
-# iProov Web SDK v3.0.0-beta.1
+# iProov Web SDK v3.0.0-beta.2
 
 ## 📖 Table of contents
 
@@ -702,5 +702,5 @@ For further help with integrating the SDK, please contact [support@iproov.com](m
 ### Known issues
 
 - Title exceeds header on some small screens, a workaround is to use a Custom Title or hide the title completely.
-- Microsoft Edge Mobile v42 on Android user interface not scaling to screen size correctly.
+- Firefox and Microsoft Edge Mobile v42 on Android user interface not scaling to screen size correctly.
 - The kiosk mode UI is being revamped and is currently unfinished in 3.0.0 beta
