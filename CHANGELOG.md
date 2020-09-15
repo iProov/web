@@ -5,15 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## XX.XX.2020 3.0.0
+## 15.09.2020 3.0.0-beta.3
 
 ## Fixed
 
 - Kiosk mode can now be localised using the standard Web SDK localization feature.
+- Add missing `client_error` key to language file.
+- Firefox performance issues
 
 ## Changed
 
 - The "aborted" event has been removed, and replaced with "cancelled" in line with the native SDKs.
+- WASM and Worker files are now bundled within the Web SDK package instead of being fetched via the CDN.
 
 ## Added
 
@@ -25,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Legacy native bridge mode has been removed
 - The "aborted" event and associated slots
+- PicoJS face detector
 
 ## 20.07.2020 2.2.1
 

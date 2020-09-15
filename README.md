@@ -1,4 +1,4 @@
-# iProov Web SDK v3.0.0-beta.2
+# iProov Web SDK v3.0.0-beta.3
 
 ## 📖 Table of contents
 
@@ -377,28 +377,29 @@ All possible properties of the event's **detail** property are described below:
 
 In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 
-| Feedback                              | Reason                                                        |                    Event |
-| ------------------------------------- | ------------------------------------------------------------- | -----------------------: |
-| **client_browser**                    | The browser is not supported                                  |            _unsupported_ |
-| **fullscreen_change**                 | Exited fullscreen without completing iProov                   | _cancelled, interrupted_ |
-| **ambiguous_outcome**                 | Sorry, ambiguous outcome                                      |                 _failed_ |
-| **user_timeout**                      | Sorry, your session has timed out                             |                 _failed_ |
-| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low         |                 _failed_ |
-| **lighting_backlit**                  | Strong light source detected behind you                       |                 _failed_ |
-| **lighting_too_dark**                 | Your environment appears too dark                             |                 _failed_ |
-| **lighting_face_too_bright**          | Too much light detected on your face                          |                 _failed_ |
-| **motion_too_much_movement**          | Please keep still                                             |                 _failed_ |
-| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                            |                 _failed_ |
-| **client_config**                     | There was an error with the client configuration              |                  _error_ |
-| **client_api**                        | There was an error calling the API                            |                  _error_ |
-| **client_camera**                     | There was an error getting video from the camera              |                  _error_ |
-| **client_stream**                     | There was an error streaming the video                        |                  _error_ |
-| **client_error**                      | An unknown error occurred                                     |                  _error_ |
-| **server_abort**                      | The server aborted the claim before iProov completed          |                  _error_ |
-| **invalid_token**                     | The provided token has already been claimed                   |                  _error_ |
-| **network_problem**                   | Sorry, network problem                                        |                  _error_ |
-| **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported     |                  _error_ |
-| **error_camera_in_use**               | The camera is currently already in use and cannot be accessed |                  _error_ |
+| Feedback                              | Reason                                                    |                    Event |
+| ------------------------------------- | --------------------------------------------------------- | -----------------------: |
+| **client_browser**                    | The browser is not supported                              |            _unsupported_ |
+| **fullscreen_change**                 | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
+| **ambiguous_outcome**                 | Sorry, ambiguous outcome                                  |                 _failed_ |
+| **error_camera_in_use**               | The camera is already in use and cannot be accessed       |                  _error_ |
+| **error_expired_token**               | The token has already been used or has expired            |                  _error_ |
+| **error_invalid_token**               | The token is invalid                                      |                  _error_ |
+| **lighting_backlit**                  | Strong light source detected behind you                   |                 _failed_ |
+| **lighting_face_too_bright**          | Too much light detected on your face                      |                 _failed_ |
+| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low     |                 _failed_ |
+| **lighting_too_dark**                 | Your environment appears too dark                         |                 _failed_ |
+| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                        |                 _failed_ |
+| **motion_too_much_movement**          | Please keep still                                         |                 _failed_ |
+| **user_timeout**                      | Sorry, your session has timed out                         |                 _failed_ |
+| **client_api**                        | There was an error calling the API                        |                  _error_ |
+| **client_camera**                     | There was an error getting video from the camera          |                  _error_ |
+| **client_config**                     | There was an error with the client configuration          |                  _error_ |
+| **client_error**                      | An unknown error occurred                                 |                  _error_ |
+| **client_stream**                     | There was an error streaming the video                    |                  _error_ |
+| **server_abort**                      | The server aborted the claim before iProov completed      |                  _error_ |
+| **network_problem**                   | Sorry, network problem                                    |                  _error_ |
+| **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported |                  _error_ |
 
 ### Listeners
 
@@ -702,5 +703,6 @@ For further help with integrating the SDK, please contact [support@iproov.com](m
 ### Known issues
 
 - Title exceeds header on some small screens, a workaround is to use a Custom Title or hide the title completely.
-- Firefox and Microsoft Edge Mobile v42 on Android user interface not scaling to screen size correctly.
-- The kiosk mode UI is being revamped and is currently unfinished in 3.0.0 beta
+- Microsoft Edge Mobile v42 on Android user interface not scaling to screen size correctly.
+- The kiosk mode UI is being revamped and is currently unfinished in 3.0.0 beta.
+- MacOS Safari, the camera isn't turning off after a claim or on a error. This is currently being looked at and will be released in v3.0.1.
