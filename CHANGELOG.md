@@ -5,13 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 25.09.2020 3.0.1
+
+## Fixed
+
+- Delay in camera starting after grant permission button clicked.
+- Fullscreen prompts in iPad.
+- Console errors on completion of a claim.
+- Camera not turning off in Safari after a claim.
+- Smoothing in snap to face.
+- Support checker events now contain the correct detail payload.
+
+## Changed
+
+- We now request 1080p or 720p video on desktops if available. This gives better biometric performance.
+
 ## 16.09.2020 3.0.0
 
 ## Fixed
 
 - Kiosk mode can now be localised using the standard Web SDK localization feature.
 - Add missing `client_error` key to language file.
-- Firefox performance issues
+- Firefox performance issues.
 
 ## Changed
 
@@ -20,6 +35,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 
+- Liveness transaction support for mobile devices.
+- Language strings for Liveness transactions:
+    - `progress_assessing_liveness`
+    - `prompt_liveness_align_face`
+    - `prompt_liveness_no_face`
+    - `prompt_liveness_scan_completed`
 - The "interrupted" event and slot have been added, which allow users to retry should a fast exit from fullscreen occur.
   This rarely happens but can be caused by software launched automatically as a result of webcam usage.
 - Two new language strings, `prompt_kiosk_align_face` and `prompt_kiosk_keep_still` have been added. See iproov-en.json for English translations.

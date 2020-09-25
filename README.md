@@ -1,4 +1,4 @@
-# iProov Web SDK v3.0.0
+# iProov Biometrics Web SDK v3.0.1
 
 ## 📖 Table of contents
 
@@ -19,9 +19,9 @@
 
 ## 🤳 Introduction
 
-The iProov Web SDK is the client for web browser based authentication. It can be integrated in a number of ways to support your web journeys for onboarding and authentication. You can find out more about how to use iProov Web in your [User Journeys](https://portal.iproov.com/documentation) and create [API Keys](https://portal.iproov.com/service-providers/create) on the [iProov Portal](https://portal.iproov.com/).
+The iProov Biometrics Web SDK is the client for web browser based authentication. It can be integrated in a number of ways to support your web journeys for onboarding and authentication. You can find out more about how to use iProov Web in your [User Journeys](https://portal.iproov.com/documentation) and create [API Keys](https://portal.iproov.com/service-providers/create) on the [iProov Portal](https://portal.iproov.com/).
 
-You will need to generate a token from your back-end to use with the iProov Web SDK. You can use the [REST API](https://eu.rp.secure.iproov.me/docs.html) to make the relevant calls and return the token to your front-end. See the [backend section](#backend) for more details.
+You will need to generate a token from your back-end to use with the iProov Biometrics Web SDK. You can use the [REST API](https://eu.rp.secure.iproov.me/docs.html) to make the relevant calls and return the token to your front-end. See the [backend section](#backend) for more details.
 
 ## 📖 Contents
 
@@ -46,7 +46,7 @@ You can obtain API credentials by registering on the [iProov Portal](https://por
 
 ### Script Tag
 
-The simplest and fastest method of integrating with the iProov Web SDK is to reference it in a script tag using our [NPM package](https://www.npmjs.com/package/@iproov/web) hosted on a CDN such as [jsDelivr](https://www.jsdelivr.com/package/npm/@iproov/web) or [UNPKG](https://unpkg.com/browse/@iproov/web/).
+The simplest and fastest method of integrating with the iProov Biometrics Web SDK is to reference it in a script tag using our [NPM package](https://www.npmjs.com/package/@iproov/web) hosted on a CDN such as [jsDelivr](https://www.jsdelivr.com/package/npm/@iproov/web) or [UNPKG](https://unpkg.com/browse/@iproov/web/).
 
 #### jsDelivr
 
@@ -62,7 +62,7 @@ The simplest and fastest method of integrating with the iProov Web SDK is to ref
 
 ### NPM Package
 
-The npm package `@iproov/web` allows for integration of the iProov Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
+The npm package `@iproov/web` allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
 
 #### Setup
 
@@ -82,7 +82,7 @@ After you have installed the `@iproov/web` package, you must then include the co
 require("@iproov/web")
 ```
 
-It's as simple as that to include the iProov Web SDK. You now need to inject the web component by one of the [integration methods](#frontend) shown below.
+It's as simple as that to include the iProov Biometrics Web SDK. You now need to inject the web component by one of the [integration methods](#frontend) shown below.
 
 ## 🚀 Get started
 
@@ -90,7 +90,7 @@ It's as simple as that to include the iProov Web SDK. You now need to inject the
 
 To make use of this SDK you will require integration with the back-end iProov service. To access credentials and an integration guide, please visit [portal.iproov.com](https://portal.iproov.com).
 
-When starting an iProov transaction (or claim), you would first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be done as part of the page load or with AJAX. You would then need to pass the token to your frontend to initialise the iProov Web SDK.
+When starting an iProov transaction (or claim), you would first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be done as part of the page load or with AJAX. You would then need to pass the token to your frontend to initialise the iProov Biometrics Web SDK.
 
 After receiving the result from the SDK, you must then confirm its authenticity by validating the [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolValidate) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyValidate) token _before_ escalating the user's privileges. This must be done from your backend and is typically invoked with a redirect, form submission or AJAX call triggered by the `passed` [event](#-events).
 
@@ -141,7 +141,7 @@ There are also the following framework specific example integrations available o
 
 ## ⚙ Options
 
-The behaviour of the iProov Web SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
+The behaviour of the iProov Biometrics Web SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
 
 #### Base URL
 
@@ -153,11 +153,11 @@ You can change the backend server you are attempting to iProov against by passin
 
 #### Assets URL
 
-Currently, external resources are loaded from our CDN at iproov.app. This may cause issues with firewall rules and custom reverse proxy configurations and therefore this option is available to use.
+External fonts will be loaded from our CDN at cdn.iproov.app. Versions prior to 3.0 also loaded workers and WASM files from this host. From 3.0, this has been simplified.
 
-These resources include WASM files, UI assets, animations, and web workers relevant to encoding and face finding on the client side.
+From 3.0, all constituent workers and WASM files are bundled together as part of our main file. The remaining resources are non-volatile such as fonts and UI files, which are better off loaded in parallel.
 
-Some of these files cannot be packaged as part of a JS bundle, and in some cases it makes sense for us to be able to ship updates without requiring code changes the integrator's end.
+These external files loaded from our CDN at cdn.iproov.app. In scenarios with custom firewalls or reverse proxy configurations, this option is available to customise and set config accordingly.
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" assets_url="https://cdn.iproov.app/assets"></iproov-me>
@@ -520,7 +520,7 @@ iProov's Web SDK makes use of the following technologies:
 - [WebAssembly](https://webassembly.org/)
 - [WebComponents](https://www.webcomponents.org/introduction)
 
-iProov Web SDK requires access to a front facing camera, WebGL, WebAssembly and the ability to enter full screen. A network connection is required that allows WebSockets. Provided there's a suitable webcam available, most modern desktop browsers fall within these criteria.
+iProov Biometrics Web SDK requires access to a front facing camera, WebGL, WebAssembly and the ability to enter full screen. A network connection is required that allows WebSockets. Provided there's a suitable webcam available, most modern desktop browsers fall within these criteria.
 
 Browsers that have rolling update schedules ("evergreen browsers") are generally supported back to the **last two releases**, such as Google Chrome, Mozilla Firefox and the Chromium based version of Microsoft Edge (Anaheim and later). Mobile browsers are more nuanced, because permissions and camera access vary depending on the browser and host operating system.
 
@@ -703,7 +703,3 @@ For further help with integrating the SDK, please contact [support@iproov.com](m
 ### Known issues
 
 - Title exceeds header on some small screens, a workaround is to use a Custom Title or hide the title completely.
-- Microsoft Edge Mobile v42 on Android user interface not scaling to screen size correctly.
-- The kiosk mode UI is being revamped and is currently unfinished in 3.0.0 beta.
-- MacOS Safari, the camera isn't turning off after a claim or on a error. This is currently being looked at and will be fixed in v3.0.1.
-- Kiosk mode snap to face smoothing still requires improvement and will be fixed in v3.0.1.
