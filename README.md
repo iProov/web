@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.0.1
+# iProov Biometrics Web SDK v3.0.2
 
 ## 📖 Table of contents
 
@@ -197,6 +197,7 @@ You can customise the look and feel of the main layout by changing the following
 loading_tint_color = "#5c5c5c" // The app is connecting to the server or no face found. Default: grey (#5c5c5c)
 not_ready_tint_color = "#f5a623" // Cannot start iProoving until the user takes action (e.g. move closer, etc). Default: orange (#f5a623)
 ready_tint_color = "#01bf46" // Ready to start iProoving. Default: green (#01bf46)
+liveness_tint_color = "#1756e5" // Liveness tint colour. Default: blue (#1756e5)
 ```
 
 The example below changes the default grey no face to `#4293f5` (blue), giving feedback like "Move Closer" to red `rgb(245, 66, 66)` and starting to `purple`.
