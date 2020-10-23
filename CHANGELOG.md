@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 23.10.2020 3.0.3
+
+## Fixed
+
+- Liveness: UX issues with Android devices
+- Interrupted event: occasional issues when retrying when the interrupted event was fired have been resolved.
+- Kiosk mode: Missing overlay during scanning has been restored.
+
+## Changed
+
+- Kiosk mode: face position smoothing is slightly faster.
+- Alignment experience: rendering is no longer limited to 30 FPS across all browsers.
+- Imagery quality: Safari now sends 720p if available, falling back to VGA.
+- Dependencies: we no longer list dependencies in our distributed package.json, as they are already bundled and optimized as part of the build.
+
 ## 01.10.2020 3.0.2
 
 ## Fixed
