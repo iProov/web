@@ -5,46 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## XX.10.2020 3.1.0
+## XX.11.2020 3.1.0
 
 ## Added
 
+- Desktop device support for Liveness. We no longer require a mobile device for Liveness transactions.
 - `iProovSupport` is a separate export to facilitate a smaller critical bundle size for integrators.
-    - Using a module bundler you can run `import { iProovSupport } from "@iproov/web/iProovSupport"`
-    - Script tag integrations can still access `window.IProov.IProovSupport` for the time being.
+  - Using a module bundler you can run `import { iProovSupport } from "@iproov/web/iProovSupport"`
+  - Script tag integrations can still access `window.IProov.IProovSupport` for the time being.
 - `version` property on the `iProovMe` component.
-    - This is also accessible on `window.IProov.version`.
+  - This is also accessible on `window.IProov.version`.
 - External dependencies are now loaded with `<link rel=preload>` for non-blocking parallel loading.
-- `sideEffects` and `type` props have been added to the distribution's `package.json`.
-    - This adds a hint to bundlers like Webpack and Rollup to make tree shaking easier, resulting in smaller bundle sizes.
-    - In the long term, once Webpack 5 is released, we intend to provide an ESM build for maximum tree shaking!
+- Our feature detector now runs the latest Tensorflow release which supports WebAssembly threads and SIMD.
+
+## Fixed
+
+- Further performance improvements targeted at lower end machines which have a net-positive effect across the board.
 
 ## Changed
 
 - Bundling and modularisation upgrades.
-    - Dependencies are once again modular, and will be loaded as needed.
-    - This reduces the bundle size from 4MB (plus dependencies) to around 1.3MB gzipped (including dependencies).
-    - With the iProovSupport change, the pre-gzip impact to an integration's critical bundle is 16KB raw (was 4MB).
-    - With that, `assets_url`'s meaning is changing again, we're afraid...
-    - Customers now have a choice to either serve Web SDK assets "on premises", use our CDN, or reverse proxy.
-    - This affects CDN and reverse proxy configurations; we do hope this is the last change to asset loading for a long time.
-    - Please see the upgrade guide for steps needed.
+  - Dependencies are once again modular, and will be loaded as needed.
+  - This reduces the bundle size from 4MB (plus dependencies) to around 1.3MB gzipped (including dependencies).
+  - With the iProovSupport change, the pre-gzip impact to an integration's critical bundle is 16KB raw (was 4MB).
+  - With that, `assets_url`'s meaning is changing again, we're afraid...
+  - Customers now have a choice to either serve Web SDK assets "on premises", use our CDN, or reverse proxy.
+  - This affects CDN and reverse proxy configurations; we do hope this is the last change to asset loading for a long time.
+  - Please see the upgrade guide for steps needed.
 - The main entry file for the npm package is now `iProovMe.js`.
 - Improved our encoder for better speed and the latest bugfixes.
 
 ## Removed
 
 - Automatic transpilation for the following outdated browsers:
-    - Blackberry < 10
-    - Edge < 84
-    - Firefox < 80
-    - IE < 11
-    - IE Mobile (all)
-    - iOS Safari < 13.4
-    - Opera < 70
-    - Safari < 13.1
-    - Please see `.browserslistrc` for the current targeted browsers.
-    - If your app must support older browsers, simply transpile the standalone `iProovSupport.js` checker as needed.
+  - Blackberry < 10
+  - Edge < 84
+  - Firefox < 80
+  - IE < 11
+  - IE Mobile (all)
+  - iOS Safari < 13.4
+  - Opera < 70
+  - Safari < 13.1
+  - Please see `.browserslistrc` for the current targeted browsers.
+  - If your app must support older browsers, simply transpile the standalone `iProovSupport.js` checker as needed.
+
+## 23.10.2020 3.0.3
+
+## Fixed
+
+- Liveness: UX issues with Android devices
+- Interrupted event: occasional issues when retrying when the interrupted event was fired have been resolved.
+- Kiosk mode: Missing overlay during scanning has been restored.
+
+## Changed
+
+- Kiosk mode: face position smoothing is slightly faster.
+- Alignment experience: rendering is no longer limited to 30 FPS across all browsers.
+- Imagery quality: Safari now sends 720p if available, falling back to VGA.
+- Dependencies: we no longer list dependencies in our distributed package.json, as they are already bundled and optimized as part of the build.
 
 ## 01.10.2020 3.0.2
 
@@ -84,10 +102,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Liveness transaction support for mobile devices.
 - Language strings for Liveness transactions:
-    - `progress_assessing_liveness`
-    - `prompt_liveness_align_face`
-    - `prompt_liveness_no_face`
-    - `prompt_liveness_scan_completed`
+  - `progress_assessing_liveness`
+  - `prompt_liveness_align_face`
+  - `prompt_liveness_no_face`
+  - `prompt_liveness_scan_completed`
 - The "interrupted" event and slot have been added, which allow users to retry should a fast exit from fullscreen occur.
   This rarely happens but can be caused by software launched automatically as a result of webcam usage.
 - Two new language strings, `prompt_kiosk_align_face` and `prompt_kiosk_keep_still` have been added. See iproov-en.json for English translations.

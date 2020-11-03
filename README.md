@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.0-alpha.0
+# iProov Biometrics Web SDK v3.1.0-beta.0
 
 ## 📖 Table of contents
 
@@ -114,7 +114,7 @@ The simplest way to pass the token to iProov is to include it as an attribute to
 The `<iproov-me>` element can also be injected into the page with the token:
 
 ```javascript
-window.addEventListener("WebComponentsReady", function(event) {
+window.addEventListener("WebComponentsReady", function (event) {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
   document.getElementById("your-container-id").appendChild(iProovMe)
@@ -126,7 +126,7 @@ window.addEventListener("WebComponentsReady", function(event) {
 The HTML can also be injected directly onto the page as in this jQuery example:
 
 ```javascript
-window.addEventListener("WebComponentsReady", function(event) {
+window.addEventListener("WebComponentsReady", function (event) {
   $("#your-container-id").append($('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>'))
 })
 ```
@@ -213,10 +213,10 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
 
 #### Allow Landscape
 
-Mobile devices are by default prevented from iProoving while in landscape. This feature can be disabled by passing `allow_landscape` `true` with your component as shown below.
+Handheld devices except Android Tablets are prevented from iProoving while in landscape orientation by displaying the `rotate_portrait` slot. All other devices by default are allowed in landscape orientation. This logic can be altered by passing `allow_landscape` as `false` with your component. See [slots](#-slots) for details on how to override the `rotate_portrait` slot. The example below would prevent all devices from being able to iProov while in landscape orientation.
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="true"></iproov-me>
+<iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="false"></iproov-me>
 ```
 
 #### Show Countdown
@@ -267,7 +267,7 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
 You can also build up the slots with JavaScript before injecting the Web Component:
 
 ```javascript
-window.addEventListener("WebComponentsReady", function(event) {
+window.addEventListener("WebComponentsReady", function (event) {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
   const ready = document.createElement("div")
@@ -287,7 +287,7 @@ window.addEventListener("WebComponentsReady", function(event) {
 With [jQuery](https://jquery.com), the entire Web Component can be injected with slots using HTML syntax, for example:
 
 ```javascript
-window.addEventListener("WebComponentsReady", function(event) {
+window.addEventListener("WebComponentsReady", function (event) {
   const iProovMe = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
 
   iProovMe.append('<div slot="ready"><h1 class="iproov-lang-heading">Register your face</h1></div>')
@@ -312,21 +312,24 @@ To allow language keys to be dynamically applied to slots, special class names m
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 
-| Slot                  | Description                                                                                   |
-| --------------------- | --------------------------------------------------------------------------------------------- |
-| **button**            | Element that a user taps or clicks on to launch into fullscreen and start iProov              |
-| **ready**             | State displayed to the user when the component is ready to start the main iProov user journey |
-| **cancelled**         | State displayed to the user when they exit fullscreen before iProoving                        |
-| **interrupted**       | State displayed to the user when fullscreen quickly exits after launch, maybe due to software |
-| **progress**          | State displayed to the user when streaming has completed and iProov is processing the result  |
-| **passed**            | State displayed to the user when the user passed iProov                                       |
-| **failed**            | State displayed to the user when the user failed iProov                                       |
-| **error**             | State displayed to the user in the event of an error                                          |
-| **unsupported**       | State displayed to the user when their browser is not supported                               |
-| **permission_denied** | State displayed to the user when camera permission has been blocked                           |
-| **grant_permission**  | State displayed to the user when camera permission is unknown and not blocked                 |
-| **grant_button**      | Element that user taps or clicks to grant camera permission                                   |
-| **no_camera**         | State displayed to the user when there is no camera                                           |
+| Slot                  | Description                                                                                                                 |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **button**            | Element that a user taps or clicks on to launch into fullscreen and start iProov                                            |
+| **cancelled**         | State displayed to the user when they exit fullscreen before iProoving                                                      |
+| **error**             | State displayed to the user in the event of an error                                                                        |
+| **failed**            | State displayed to the user when the user failed iProov                                                                     |
+| **grant_button**      | Element that user taps or clicks to grant camera permission                                                                 |
+| **grant_permission**  | State displayed to the user when camera permission is unknown and not blocked                                               |
+| **interrupted**       | State displayed to the user when fullscreen quickly exits after launch, maybe due to software                               |
+| **no_camera**         | State displayed to the user when there is no camera                                                                         |
+| **passed**            | State displayed to the user when the user passed iProov                                                                     |
+| **permission_denied** | State displayed to the user when camera permission has been blocked                                                         |
+| **progress**          | State displayed to the user when streaming has completed and iProov is processing the result                                |
+| **ready**             | State displayed to the user when the component is ready to start the main iProov user journey                               |
+| **rotate_portrait** *  | State displayed to the user when a handheld device is not in portrait orientation |
+| **unsupported**       | State displayed to the user when their browser is not supported                                                             |
+
+> \* See [allow landscape](#-allow-landscape) option which controls the behaviour of the `rotate_portrait` slot and details on how to override.
 
 Slots can be embedded as HTML or injected with JavaScript.
 
@@ -407,10 +410,10 @@ In the case of the **cancelled**, **interrupted**, **failed**, **error** and **u
 We recommend the integrator listens for at least the **ready** and **unsupported** events because one of them will always be called, so you can determine if iProov is supported or not:
 
 ```javascript
-document.querySelector("iproov-me").addEventListener("ready", function(event) {
+document.querySelector("iproov-me").addEventListener("ready", function (event) {
   console.log("iProov is ready")
 })
-document.querySelector("iproov-me").addEventListener("unsupported", function(event) {
+document.querySelector("iproov-me").addEventListener("unsupported", function (event) {
   console.warn("iProov is not supported: " + event.detail.reason)
 })
 ```
@@ -465,14 +468,14 @@ $("iproov-me").on("ready started cancelled interrupted streamed progress passed 
 
 The Web SDK ships with English strings only. If you wish to customise the strings in the app or localize them into a different language, you can do this by supplying language overrides as JSON configurations. All language files have the same keys and only the values of those keys will be shown.
 
-- [View the default language file with all keys and langauge striengs](https://github.com/iProov/web/blob/master/iproov-en.json)
+- [View the default language file with all keys and language strings](https://github.com/iProov/web/blob/master/iproov-en.json)
 
 You can customise the language by supplying the `language` key as an attribute to your iProov component. The keys value must be valid JSON and passed as a string. This is then converted and merged with the default language overriding any given keys. See below for some examples.
 
 ### Override language strings
 
 ```javascript
-window.addEventListener("WebComponentsReady", event => {
+window.addEventListener("WebComponentsReady", (event) => {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
@@ -490,7 +493,7 @@ window.addEventListener("WebComponentsReady", event => {
 #### Load language file
 
 ```javascript
-window.addEventListener("WebComponentsReady", async event => {
+window.addEventListener("WebComponentsReady", async (event) => {
   async function getLanguage(path) {
     const response = await fetch(path)
     const language = await response.text()
