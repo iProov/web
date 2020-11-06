@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.0-beta.0
+# iProov Biometrics Web SDK v3.1.0-beta.1
 
 ## 📖 Table of contents
 
@@ -349,20 +349,20 @@ Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/Cust
 
 The available events are detailed below with any extra properties that are supplied:
 
-| Event                 | Extra Properties                 | Description                                                       |
-| --------------------- | -------------------------------- | ----------------------------------------------------------------- |
-| **ready**             | None                             | iProov has initialised successfully and has camera permission     |
-| **started**           | None                             | User has started iProov by launching into fullscreen              |
-| **cancelled**         | _feedback, reason_               | User has cancelled iProov by exiting fullscreen                   |
-| **interrupted**       | _feedback, reason_               | Fast fullscreen exit possible due to software. Retry is possible. |
-| **streamed**          | None                             | User has finished streaming and the client has exited fullscreen  |
-| **progress**          | _percentage, message_            | iProov has published a progress update for the authentication     |
-| **passed**            | _type, passed_                   | Authentication was successful, the result can now be validated    |
-| **failed**            | _type, passed, feedback, reason_ | Authentication was unsuccessful, the user needs to try again      |
-| **error**             | _feedback, reason_               | iProov encountered an error while processing the authentication   |
-| **unsupported**       | _feedback, reason_               | Browser does not support using iProov                             |
-| **permission**        | None                             | Camera permission is unknown & not blocked, show permission       |
-| **permission_denied** | None                             | User has blocked access to the camera                             |
+| Event                 | Extra Properties                          | Description                                                       |
+| --------------------- | ----------------------------------------- | ----------------------------------------------------------------- |
+| **ready**             | None                                      | iProov has initialised successfully and has camera permission     |
+| **started**           | None                                      | User has started iProov by launching into fullscreen              |
+| **cancelled**         | _feedback, reason_                        | User has cancelled iProov by exiting fullscreen                   |
+| **interrupted**       | _feedback, reason_                        | Fast fullscreen exit possible due to software. Retry is possible. |
+| **streamed**          | None                                      | User has finished streaming and the client has exited fullscreen  |
+| **progress**          | _percentage, message_                     | iProov has published a progress update for the authentication     |
+| **passed**            | _type, passed, frame_                     | Authentication was successful, the result can now be validated    |
+| **failed**            | _type, passed, feedback, reason, frame_   | Authentication was unsuccessful, the user needs to try again      |
+| **error**             | _feedback, reason_                        | iProov encountered an error while processing the authentication   |
+| **unsupported**       | _feedback, reason_                        | Browser does not support using iProov                             |
+| **permission**        | None                                      | Camera permission is unknown & not blocked, show permission       |
+| **permission_denied** | None                                      | User has blocked access to the camera                             |
 
 All possible properties of the event's **detail** property are described below:
 
@@ -371,13 +371,15 @@ All possible properties of the event's **detail** property are described below:
 | **token**            | All                                                  | The token associated with the authentication attempt       |
 | **type** (†)         | _passed, failed_                                     | The type of authentication (enrol, verify or id_match)     |
 | **passed**           | _passed, failed_                                     | Boolean value whether the result passed or failed          |
+| **frame** (†) (*)    | _passed, failed_                                     | An `ImageData` from the scanning process                   |
 | **percentage**       | _progress_                                           | A percentage (between 0 and 100) representing the progress |
 | **message**          | _progress_                                           | A user-friendly description of the current progress stage  |
 | **feedback**         | _cancelled, interrupted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
 | **reason**           | _cancelled, interrupted, failed, error, unsupported_ | An English description of the reason for the event         |
 | **is_native_bridge** | All                                                  | Boolean value if event originates from the native bridge   |
 
-> † - The **type** property is not available when running in Native Bridge mode.
+> * - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
+> † - The **type** and **frame** properties are not available when running in Native Bridge mode.
 
 In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 

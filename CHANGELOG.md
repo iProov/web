@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 
 - Desktop device support for Liveness. We no longer require a mobile device for Liveness transactions.
+- The SDK can now optionally return a selfie frame from the scanning process for both GPA and Liveness transactions.
+  - If this is enabled for your service provider, this will be present in the passed and failed callback payloads.
 - `iProovSupport` is a separate export to facilitate a smaller critical bundle size for integrators.
   - Using a module bundler you can run `import { iProovSupport } from "@iproov/web/iProovSupport"`
   - Script tag integrations can still access `window.IProov.IProovSupport` for the time being.
