@@ -17,11 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Script tag integrations can still access `window.IProov.IProovSupport` for the time being.
 - `version` property on the `iProovMe` component.
   - This is also accessible on `window.IProov.version`.
+- Multiple camera device support on desktop, including ability to customise.
+- Added the `csp_nonce` option. See [Content Security Policy](https://github.com/iProov/web/wiki/Content-Security-Policy).
 - External dependencies are now loaded with `<link rel=preload>` for non-blocking parallel loading.
-- Our feature detector now runs the latest Tensorflow release which supports WebAssembly threads and SIMD.
+- Our feature detector now runs the latest Tensorflow release which includes support for WebAssembly threads and SIMD.
 
 ## Fixed
 
+- Various CSP warnings have been resolved. See [Content Security Policy](https://github.com/iProov/web/wiki/Content-Security-Policy).
+- Firefox and Safari no longer display the grant button unless required.
 - Further performance improvements targeted at lower end machines which have a net-positive effect across the board.
 
 ## Changed
@@ -35,6 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This affects CDN and reverse proxy configurations; we do hope this is the last change to asset loading for a long time.
   - Please see the upgrade guide for steps needed.
 - The main entry file for the npm package is now `iProovMe.js`.
+- Language files have been updated to be brought into line with native SDKs.
+- Tweaks to UI to bring the UI experience inline with native SDKs.
 - Improved our encoder for better speed and the latest bugfixes.
 
 ## Removed
@@ -50,6 +56,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Safari < 13.1
   - Please see `.browserslistrc` for the current targeted browsers.
   - If your app must support older browsers, simply transpile the standalone `iProovSupport.js` checker as needed.
+
+## 19.11.2020 3.0.4
+
+## Fixed
+
+- Kiosk mode feature detection and alignment is now even smoother
 
 ## 23.10.2020 3.0.3
 

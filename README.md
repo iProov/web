@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.0-beta.2
+# iProov Biometrics Web SDK v3.1.0-beta.3
 
 ## 📖 Table of contents
 
@@ -211,9 +211,19 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
 ></iproov-me>
 ```
 
+#### CSP Nonce
+
+Set the `csp_nonce` option to a random string to avoid requiring `unsafe-inline` in your style-src CSP.
+
+Note that inline CSS _is_ needed to provide critical styles for `<iproov-me>` for immediate user interaction.
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" csp_nonce="P5wB82PFZt"></iproov-me>
+```
+
 #### Allow Landscape
 
-Handheld devices except Android Tablets are prevented from iProoving while in landscape orientation by displaying the `rotate_portrait` slot. All other devices by default are allowed in landscape orientation. This logic can be altered by passing `allow_landscape` as `false` with your component. See [slots](#-slots) for details on how to override the `rotate_portrait` slot. The example below would prevent all devices from being able to iProov while in landscape orientation.
+Handheld devices except Android Tablets will be prevented from starting in landscape orientation by displaying the `rotate_portrait` slot. All other devices by default are allowed in landscape orientation. This logic can be altered by passing `allow_landscape` as `false` with your component. See [slots](#-slots) for details on how to override the `rotate_portrait` slot. The example below would prevent all devices from being able to iProov while in landscape orientation.
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="false"></iproov-me>
@@ -226,6 +236,10 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" show_countdown="true"></iproov-me>
 ```
+
+#### Enable camera selector
+
+By setting `enable_camera_selector` to `true`, the `camera_selector` slot and `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customisation options. This feature is only available on desktop devices (laptops, PCs etc).
 
 #### Kiosk Mode
 
@@ -312,24 +326,27 @@ To allow language keys to be dynamically applied to slots, special class names m
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 
-| Slot                  | Description                                                                                                                 |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| **button**            | Element that a user taps or clicks on to launch into fullscreen and start iProov                                            |
-| **cancelled**         | State displayed to the user when they exit fullscreen before iProoving                                                      |
-| **error**             | State displayed to the user in the event of an error                                                                        |
-| **failed**            | State displayed to the user when the user failed iProov                                                                     |
-| **grant_button**      | Element that user taps or clicks to grant camera permission                                                                 |
-| **grant_permission**  | State displayed to the user when camera permission is unknown and not blocked                                               |
-| **interrupted**       | State displayed to the user when fullscreen quickly exits after launch, maybe due to software                               |
-| **no_camera**         | State displayed to the user when there is no camera                                                                         |
-| **passed**            | State displayed to the user when the user passed iProov                                                                     |
-| **permission_denied** | State displayed to the user when camera permission has been blocked                                                         |
-| **progress**          | State displayed to the user when streaming has completed and iProov is processing the result                                |
-| **ready**             | State displayed to the user when the component is ready to start the main iProov user journey                               |
-| **rotate_portrait** *  | State displayed to the user when a handheld device is not in portrait orientation |
-| **unsupported**       | State displayed to the user when their browser is not supported                                                             |
+| Slot                     | Description                                                                                   |
+| ------------------------ | --------------------------------------------------------------------------------------------- |
+| **button**               | Element that a user taps or clicks on to launch into fullscreen and start iProov              |
+| **camera_selector** \*   | Label and dropdown populated with available cameras, if multiple cameras are detected.        |
+| **cancelled**            | State displayed to the user when they exit fullscreen before iProoving                        |
+| **error**                | State displayed to the user in the event of an error                                          |
+| **failed**               | State displayed to the user when the user failed iProov                                       |
+| **grant_button**         | Element that user taps or clicks to grant camera permission                                   |
+| **grant_permission**     | State displayed to the user when camera permission is unknown and not blocked                 |
+| **interrupted**          | State displayed to the user when fullscreen quickly exits after launch, maybe due to software |
+| **no_camera**            | State displayed to the user when there is no camera                                           |
+| **passed**               | State displayed to the user when the user passed iProov                                       |
+| **permission_denied**    | State displayed to the user when camera permission has been blocked                           |
+| **progress**             | State displayed to the user when streaming has completed and iProov is processing the result  |
+| **ready**                | State displayed to the user when the component is ready to start the main iProov user journey |
+| **rotate_portrait** \*\* | State displayed to the user when a handheld device is not in portrait orientation             |
+| **unsupported**          | State displayed to the user when their browser is not supported                               |
 
-> \* See [allow landscape](#-allow-landscape) option which controls the behaviour of the `rotate_portrait` slot and details on how to override.
+> \* Visible and managed when [camera selection](#enable-camera-selector) is enabled. A select menu with the class `iproov-camera-selector` must be present within your slots markup. An error will be thrown if this cannot be found.
+
+> \*\* See [allow landscape](#-allow-landscape) option which controls the behaviour of the `rotate_portrait` slot and details on how to override.
 
 Slots can be embedded as HTML or injected with JavaScript.
 
@@ -349,37 +366,43 @@ Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/Cust
 
 The available events are detailed below with any extra properties that are supplied:
 
-| Event                 | Extra Properties                          | Description                                                       |
-| --------------------- | ----------------------------------------- | ----------------------------------------------------------------- |
-| **ready**             | None                                      | iProov has initialised successfully and has camera permission     |
-| **started**           | None                                      | User has started iProov by launching into fullscreen              |
-| **cancelled**         | _feedback, reason_                        | User has cancelled iProov by exiting fullscreen                   |
-| **interrupted**       | _feedback, reason_                        | Fast fullscreen exit possible due to software. Retry is possible. |
-| **streamed**          | None                                      | User has finished streaming and the client has exited fullscreen  |
-| **progress**          | _percentage, message_                     | iProov has published a progress update for the authentication     |
-| **passed**            | _type, passed, frame_                     | Authentication was successful, the result can now be validated    |
-| **failed**            | _type, passed, feedback, reason, frame_   | Authentication was unsuccessful, the user needs to try again      |
-| **error**             | _feedback, reason_                        | iProov encountered an error while processing the authentication   |
-| **unsupported**       | _feedback, reason_                        | Browser does not support using iProov                             |
-| **permission**        | None                                      | Camera permission is unknown & not blocked, show permission       |
-| **permission_denied** | None                                      | User has blocked access to the camera                             |
+| Event                   | Extra Properties                 | Description                                                                                               |
+| ----------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **cancelled**           | _feedback, reason_               | User has cancelled iProov by exiting fullscreen                                                           |
+| **error**               | _feedback, reason_               | iProov encountered an error while processing the authentication                                           |
+| **failed**              | _type, passed, feedback, reason_ | Authentication was unsuccessful, the user needs to try again                                              |
+| **interrupted**         | _feedback, reason_               | Fast fullscreen exit possible due to software. Retry is possible.                                         |
+| **multiple_cameras** \* | _devices, device_selector, slot_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected |
+| **passed**              | _type, passed_                   | Authentication was successful, the result can now be validated                                            |
+| **permission**          | None                             | Camera permission is unknown & not blocked, show permission                                               |
+| **permission_denied**   | None                             | User has blocked access to the camera                                                                     |
+| **progress**            | _percentage, message_            | iProov has published a progress update for the authentication                                             |
+| **ready**               | None                             | iProov has initialised successfully and has camera permission                                             |
+| **started**             | None                             | User has started iProov by launching into fullscreen                                                      |
+| **streamed**            | None                             | User has finished streaming and the client has exited fullscreen                                          |
+| **unsupported**         | _feedback, reason_               | Browser does not support using iProov                                                                     |
 
-All possible properties of the event's **detail** property are described below:
+> \* See [Multiple Camera Example](https://github.com/iProov/web/wiki/Camera-Selection-Example) for an example demonstrating how a camera selection feature could be implemented.
+
+Properties of the event's **detail** payload:
 
 | Property             | Events                                               | Description                                                |
 | -------------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
 | **token**            | All                                                  | The token associated with the authentication attempt       |
 | **type** (†)         | _passed, failed_                                     | The type of authentication (enrol, verify or id_match)     |
 | **passed**           | _passed, failed_                                     | Boolean value whether the result passed or failed          |
-| **frame** (†) (*)    | _passed, failed_                                     | An `ImageData` from the scanning process                   |
+| **frame** (†) (\*)   | _passed, failed_                                     | An `ImageData` from the scanning process                   |
 | **percentage**       | _progress_                                           | A percentage (between 0 and 100) representing the progress |
 | **message**          | _progress_                                           | A user-friendly description of the current progress stage  |
 | **feedback**         | _cancelled, interrupted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
 | **reason**           | _cancelled, interrupted, failed, error, unsupported_ | An English description of the reason for the event         |
+| **slot**             | _multiple_cameras_                                   | The relevant slot for the event, for ease of use           |
+| **devices**          | _multiple_cameras_                                   | Array of suitable `InputDevice`s for imagery capture       |
+| **device_selector**  | _multiple_cameras_                                   | The multiple camera selection `<select>` element           |
 | **is_native_bridge** | All                                                  | Boolean value if event originates from the native bridge   |
 
-> * - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
-> † - The **type** and **frame** properties are not available when running in Native Bridge mode.
+> - - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
+>     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
 
 In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 
