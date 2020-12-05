@@ -16,11 +16,11 @@ Set the `$api_key` and `$secret` variables in [index.php](./index.php) with the 
 From the command line, change directory into the root of this project (containing [index.html](../index.html)) and run the following command:
 
 ```bash
-php -S 127.0.0.1:8000
+php -S localhost:8000
 ```
 
 Now you can load the demo in a browser at the following URL:
 
-[http://127.0.0.1:8000](http://127.0.0.1:8000)
+[http://localhost:8000](http://localhost:8000)
 
 
