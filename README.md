@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.0-beta.3
+# iProov Biometrics Web SDK v3.1.0-beta.4
 
 ## 📖 Table of contents
 
@@ -237,9 +237,26 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 <iproov-me token="***YOUR_TOKEN_HERE***" show_countdown="true"></iproov-me>
 ```
 
-#### Enable camera selector
+#### Enable Camera Selector
 
 By setting `enable_camera_selector` to `true`, the `camera_selector` slot and `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customisation options. This feature is only available on desktop devices (laptops, PCs etc).
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" enable_camera_selector="true"></iproov-me>
+```
+
+#### Debug Logs
+
+Logs at level info or lower are hidden, but can be exposed to the console by setting `debug` to `true`.
+Warnings and errors will always be emitted to the console.
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" debug="true"></iproov-me>
+```
+
+This setting has no effect on the support checker if it is deployed standalone.
+
+The checker itself accepts a logger argument which could be `console`, or any common logging library which you are free to configure to your own requirements.
 
 #### Kiosk Mode
 
@@ -322,7 +339,7 @@ To allow language keys to be dynamically applied to slots, special class names m
 </div>
 ```
 
-> ⚠️ When customising any slots with button elements, the type must be set to button.
+> ⚠️ When customising any slots with button elements, the type must be set to button. The `button` and `grant_button` must be passed as a `<button>` element and are initially disabled until a preflight async check is made where the button will be enabled.
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 

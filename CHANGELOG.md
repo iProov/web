@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## XX.11.2020 3.1.0
+## XX.12.2020 3.1.0
 
 ## Added
 
@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Various CSP warnings have been resolved. See [Content Security Policy](https://github.com/iProov/web/wiki/Content-Security-Policy).
 - Firefox and Safari no longer display the grant button unless required.
 - Further performance improvements targeted at lower end machines which have a net-positive effect across the board.
+- UX improvements for Liveness on mobile devices
 
 ## Changed
 
@@ -42,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Language files have been updated to be brought into line with native SDKs.
 - Tweaks to UI to bring the UI experience inline with native SDKs.
 - Improved our encoder for better speed and the latest bugfixes.
+- Bandwidth usage reduced
 
 ## Removed
 
