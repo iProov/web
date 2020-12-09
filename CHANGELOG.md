@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the `csp_nonce` option. See [Content Security Policy](https://github.com/iProov/web/wiki/Content-Security-Policy).
 - External dependencies are now loaded with `<link rel=preload>` for non-blocking parallel loading.
 - Our feature detector now runs the latest Tensorflow release which includes support for WebAssembly threads and SIMD.
+- New `streamed` event to accommodate the original documented functionality.
 
 ## Fixed
 
@@ -44,13 +45,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tweaks to UI to bring the UI experience inline with native SDKs.
 - Improved our encoder for better speed and the latest bugfixes.
 - Bandwidth usage reduced
+- The `streamed` event now emits at the correct time, which may break integrations that rely upon it.
+  - To upgrade, replace `streamed` with `streaming` which takes its place.
 
 ## Removed
 
+- Bundled Web Component support. Polyfills are now loaded on an as-needed basis.
 - Automatic transpilation for the following outdated browsers:
   - Blackberry < 10
-  - Edge < 84
-  - Firefox < 80
+  - Edge < 85
+  - Firefox < 82
   - IE < 11
   - IE Mobile (all)
   - iOS Safari < 13.4

@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.0-beta.4
+# iProov Biometrics Web SDK v3.1.0-beta.5
 
 ## 📖 Table of contents
 
@@ -396,6 +396,7 @@ The available events are detailed below with any extra properties that are suppl
 | **progress**            | _percentage, message_            | iProov has published a progress update for the authentication                                             |
 | **ready**               | None                             | iProov has initialised successfully and has camera permission                                             |
 | **started**             | None                             | User has started iProov by launching into fullscreen                                                      |
+| **streaming**           | None                             | User has started streaming. The client remains in fullscreen.                                             |
 | **streamed**            | None                             | User has finished streaming and the client has exited fullscreen                                          |
 | **unsupported**         | _feedback, reason_               | Browser does not support using iProov                                                                     |
 
@@ -468,6 +469,7 @@ iProovMe.addEventListener("ready", iProovEvent)
 iProovMe.addEventListener("started", iProovEvent)
 iProovMe.addEventListener("cancelled", iProovEvent)
 iProovMe.addEventListener("interrupted", iProovEvent)
+iProovMe.addEventListener("streaming", iProovEvent)
 iProovMe.addEventListener("streamed", iProovEvent)
 iProovMe.addEventListener("progress", iProovEvent)
 iProovMe.addEventListener("passed", iProovEvent)
