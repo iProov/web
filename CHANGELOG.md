@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - External dependencies are now loaded with `<link rel=preload>` for non-blocking parallel loading.
 - Our feature detector now runs the latest Tensorflow release which includes support for WebAssembly threads and SIMD.
 - New `streamed` event to accommodate the original documented functionality.
+- Support added from iOS 14.3 for WKWebView based browsers on iOS such as Chrome, Firefox, MS Edge, etc.
 
 ## Fixed
 
@@ -29,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Firefox and Safari no longer display the grant button unless required.
 - Further performance improvements targeted at lower end machines which have a net-positive effect across the board.
 - UX improvements for Liveness on mobile devices
+- Kiosk mode performance issues on Safari
+- Progress bar animation
 
 ## Changed
 
@@ -42,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Please see the upgrade guide for steps needed.
 - The main entry file for the npm package is now `iProovMe.js`.
 - Language files have been updated to be brought into line with native SDKs.
-- Tweaks to UI to bring the UI experience inline with native SDKs.
+- Minor tweaks to UI to bring the UI experience inline with native SDKs.
+- Improved resolution management for less capable or hardware constrained devices.
 - Improved our encoder for better speed and the latest bugfixes.
 - Bandwidth usage reduced
 - The `streamed` event now emits at the correct time, which may break integrations that rely upon it.
