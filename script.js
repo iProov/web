@@ -58,7 +58,7 @@ function injectIproov(data){
         $('.loading').removeClass('show');
     });
 
-    $(component).on('ready permission started aborted streamed progress passed failed error unsupported', iProovEvent);
+    $(component).on('ready permission started aborted streaming progress passed failed error unsupported', iProovEvent);
 }
 
 function iProovProgress(event) {
