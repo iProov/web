@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.0-beta.6
+# iProov Biometrics Web SDK v3.1.0
 
 ## 📖 Table of contents
 
@@ -223,11 +223,17 @@ Note that inline CSS _is_ needed to provide critical styles for `<iproov-me>` fo
 
 #### Allow Landscape
 
-Handheld devices except Android Tablets will be prevented from starting in landscape orientation by displaying the `rotate_portrait` slot. All other devices by default are allowed in landscape orientation. This logic can be altered by passing `allow_landscape` as `false` with your component. See [slots](#-slots) for details on how to override the `rotate_portrait` slot. The example below would prevent all devices from being able to iProov while in landscape orientation.
+When `allow_landscape` is set to `false`, all handheld devices except Android tablets will be prevented from starting in landscape orientation. The iProov component will display the `rotate_portrait` slot when in landscape.
+
+By default, all devices are allowed in landscape orientation.
+
+See [slots](#-slots) for details on how to override the `rotate_portrait` slot. The example below would prevent all devices from being able to iProov while in landscape orientation.
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="false"></iproov-me>
 ```
+
+Note that desktop devices are unaffected by `allow_landscape`. Android based tablet devices are exempt due to the common position of their camera.
 
 #### Show Countdown
 
