@@ -595,29 +595,31 @@ For known issues, [see here](#known-issues).
 
 ### Support checker
 
-Developers can use the `IProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an alternative journey.
+Developers can use the `iProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an alternative journey.
 
-`IProovSupport` is a slim and separate component to the main `IProovMe` web component.
+`iProovSupport` is a slim and separate component to the main `IProovMe` web component.
 
-To benefit from tree-shaking in a module-based build environment you can use the named import:
+To benefit from tree-shaking in a module-based build environment you can use the named import from a separate file:
 
 ```javascript
 // Just load the support component:
-import { IProovSupport } from "@iproov/web"
+import { iProovSupport } from "@iproov/web/iProovSupport.js"
 const optionalLogger = console
-const supportChecker = new IProovSupport(optionalLogger)
+const supportChecker = new iProovSupport(optionalLogger)
 ```
 
-For script tag integrations, `IProovSupport` is available on the window object once included:
+Importing in this way means you can use the support checker on your site or app without downloading the full component, saving precious bytes.
+
+For script tag integrations, `iProovSupport` is available on the window object via `window.IProov` once included:
 
 ```javascript
-const supportChecker = new IProov.IProovSupport()
+const supportChecker = new window.IProov.IProovSupport()
 ```
 
-`IProovSupport` can check just for the required APIs on the user's browser, using either event or Promise based APIs:
+`iProovSupport` can check for the required APIs on the user's browser, using either event or Promise based APIs:
 
 ```javascript
-const supportChecker = new IProovSupport()
+const supportChecker = new iProovSupport()
 supportChecker.addEventListener("check", ({ supported, granted, is_native_bridge }) => {
   if (supported === false) {
     // go to fallback UX
@@ -642,7 +644,7 @@ const { supported, granted, is_native_bridge } = await supportChecker.check()
 permissions for iProoving, save some bandwidth, and provide a cleaner user journey if camera access isn't possible:
 
 ```javascript
-const supportChecker = new IProovSupport()
+const supportChecker = new iProovSupport()
 document.querySelector("#check-button").addEventListener("click", async () => {
   const { supported, granted } = await supportChecker.checkWithPermission()
 })
@@ -657,10 +659,10 @@ can return inaccurate results. Our advice is therefore to avoid running multiple
 same page. Therefore, please avoid automatic or accidental repeat calls to `check` or `checkWithPermission`, especially
 without user interaction.
 
-The following events can be emitted from `IProovSupport`:
+The following events can be emitted from `iProovSupport`:
 
 ```javascript
-const supportChecker = new IProovSupport()
+const supportChecker = new iProovSupport()
 function onCheckResult({
   /** @var boolean */
   supported,
