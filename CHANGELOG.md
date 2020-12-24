@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 24.12.2020 3.1.1
+
+## Fixed
+
+- Assets which contained `//` caused 403 issues when hosting assets on Amazon S3. The paths have now been fixed.
+- When starting iProov on a bezel-free phone, the layout appeared misaligned. This has now been fixed.
+- Disabled underlying TensorflowJS WASM threads due to instability. SIMD remains available.
+
 ## 23.12.2020 3.1.0
 
 ## Added
