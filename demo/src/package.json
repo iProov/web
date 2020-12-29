@@ -9,6 +9,7 @@
   "type": "module",
   "dependencies": {
     "@hapi/hapi": "^20.0.3",
+    "@hapi/inert": "^6.0.3",
     "prettier": "^2.2.1",
     "superagent": "^6.1.0"
   }

@@ -1,7 +1,12 @@
 import Hapi from "@hapi/hapi"
+import Inert from "@hapi/inert"
+import { fileURLToPath } from "url"
+import { dirname, resolve } from "path"
 import { PlatformAPI, requestToAPIMapper } from "./platform.js"
 
 import { configure } from "./config.js"
+
+const __dirname = fileURLToPath(dirname(import.meta.url))
 
 async function init() {
   const { BASE_URL, API_KEY, API_SECRET } = configure(process.env)
@@ -11,14 +16,19 @@ async function init() {
     host: "0.0.0.0", // listen on all interfaces so Docker can bind
   })
 
+  await server.register(Inert)
+
   let platform
 
   server.route({
     method: "GET",
-    path: "/",
-    handler: (request, h) => {
-      return "Hello World!"
-    },
+    path: "/{param*}",
+    handler: {
+      directory: {
+        path: resolve(__dirname, "static"),
+        index: "index.html",
+      }
+    }
   })
 
   server.route({
