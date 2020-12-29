@@ -1,41 +1,71 @@
-<!doctype html>
-<html class="no-js" lang="">
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>iProov Web SDK Demo</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="favicon.png" />
+    <link rel="icon" href="favicon.png" />
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+    <meta name="theme-color" content="#fafafa" />
+  </head>
 
-  <meta name="theme-color" content="#fafafa">
-</head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>
+          <img class="logo" src="img/iproov_logo.svg" width="100" alt="iProov" />
+          Web SDK Demo</h1>
+      </header>
+      <p>Demo page for iProov Web integrators. Enter your email address, select claim mode, and iProov!</p>
+      <form id="token_config">
+        <div class="form__field">
+          <label for="user_id">Enter your email address</label>
+          <input type="email" name="user_id" id="user_id" placeholder="Email address (user_id)" />
+        </div>
+        <div class="form__field">
+          <fieldset>
+            <legend>Claim Mode</legend>
+            <label class="mode mode--enrol">
+              <input type="radio" name="mode" value="enrol" checked />
+              <span>Enrol</span>
+            </label>
+            <label class="mode mode--verify">
+              <input type="radio" name="mode" value="verify" />
+              <span>Verify</span>
+            </label>
+          </fieldset>
+        </div>
 
-<body>
-
-  <!-- Add your site or application content here -->
-  <p>Hello world! This is HTML5 Boilerplate.</p>
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
-
+        <div class="form__field">
+          <fieldset>
+            <legend>Assurance Type</legend>
+            <label class="assurance assurance--genuine_presence">
+              <input type="radio" name="assurance_type" value="genuine_presence" checked />
+              <span>Genuine Presence</span>
+            </label>
+            <label class="assurance assurance--liveness">
+              <input type="radio" name="assurance_type" value="liveness" />
+              <span>Liveness</span>
+            </label>
+          </fieldset>
+        </div>
+        <button type="button">Create Token</button>
+      </form>
+      <footer>
+        <p>By using iProov, you agree to the <a href="https://www.iproov.com/terms-and-conditions">Terms of Use</a> &amp; <a href="https://www.iproov.com/privacy-policy">Privacy Policy</a></p>
+      </footer>
+    </div>
+    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
