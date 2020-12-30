@@ -30,7 +30,7 @@
         <h4>Create Token</h4>
         <div class="form__field">
           <label for="user_id">Enter your email address</label>
-          <input type="email" name="user_id" id="user_id" placeholder="Email address (user_id)" />
+          <input type="email" name="user_id" id="user_id" placeholder="Email address (user_id)" required="required" />
         </div>
         <div class="form__field">
           <fieldset>
@@ -45,7 +45,6 @@
             </label>
           </fieldset>
         </div>
-
         <div class="form__field">
           <fieldset>
             <legend>Assurance Type</legend>
@@ -60,6 +59,7 @@
           </fieldset>
         </div>
         <button type="submit">Create Token</button>
+        <div class="error-container hidden"></div>
       </form>
       <div id="iproov_wrapper" class="card hidden">
         <template id="iproov_template">
@@ -90,6 +90,11 @@
             <p>Either you're a cyber criminal, or we couldn't quite match you. Care to try again?</p>
             <pre class="detail iproov-lang-term"></pre>
             <button class="ipbutton--lozenge action-restart">Try again</button>
+          </div>
+          <div slot="cancelled" class="state state--cancelled">
+            <h3>Cancelled</h3>
+            <p>User exited out of iProov</p>
+            <button class="ipbutton--lozenge action-restart">Restart iProov</button>
           </div>
           <div slot="passed" class="state state--passed">
             <h3>Passed</h3>

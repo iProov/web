@@ -15,7 +15,14 @@ async function submitTokenRequest() {
   if (body.error) {
     return handleError(body)
   }
+  document.querySelector("#token_config .error-container").classList.add("hidden")
   return initializeSDK(body)
+}
+
+async function resetTokenCreationForm() {
+  document.querySelector("#token_config").classList.remove("collapsed")
+  document.querySelector("#iproov_wrapper").classList.add("hidden")
+  document.querySelector("#user_id").focus()
 }
 
 async function initializeSDK(body) {
@@ -27,21 +34,32 @@ async function initializeSDK(body) {
   if (!initializeSDK.imported) {
     await import("../node_modules/@iproov/web/iProovMe.js")
     initializeSDK.imported = true
-    document.querySelector("#iproov_wrapper").classList.remove("hidden")
   }
+  document.querySelector("#iproov_wrapper").classList.remove("hidden")
+  iProov.addEventListener("ready", () => {
+    iProov.querySelector("[slot=button] button").focus()
+  })
+  document.querySelector("#token_config").classList.add("collapsed")
 }
 
 initializeSDK.imported = false
 
 function handleError(body) {
+  const errorContainer = document.querySelector("#token_config .error-container")
+  errorContainer.innerHTML = `<h4>Error</h4><p><b>${body.error}</b>: ${body.error_description}</p>`
+  errorContainer.classList.remove("hidden")
   console.error(body)
 }
 
 const main = async () => {
-  const d = document
-  d.querySelector("#token_config button").addEventListener("click", function onTokenSubmit(event) {
+  document.querySelector("#token_config").addEventListener("submit", function onTokenSubmit(event) {
     event.preventDefault()
     submitTokenRequest()
+  })
+  document.body.addEventListener("click", function onRestartDelegate(event) {
+    if (event.target.classList.contains("action-restart")) {
+      resetTokenCreationForm()
+    }
   })
 }
 

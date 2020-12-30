@@ -146,6 +146,13 @@ textarea {
   border: 1px solid var(--c-mercury);
   padding: 1rem;
   margin-bottom: 1rem;
+  transition: filter, opacity linear .5s;
+}
+
+.card.collapsed {
+  opacity: .25;
+  filter: grayscale(50%);
+  pointer-events: none;
 }
 
 .card :first-of-type {
@@ -395,10 +402,24 @@ footer a {
   background-image: url(../img/gpa-tick.png);
 }
 
+.state--cancelled,
 .state--error,
 .state--failed {
   background-image: url('../img/No-not-worked-woman-yellow.png');
   padding-right: calc(1rem + 80px);
+}
+
+.error-container {
+  background-color: var(--c-egg-sour);
+  color: var(--c-torch-red);
+  border-radius: 4px;
+  border: 1px solid var(--c-torch-red);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.error-container h4, .error-container p {
+  margin-bottom: 0;
 }
 
 /* ==========================================================================
