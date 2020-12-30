@@ -20,14 +20,15 @@ async function submitTokenRequest() {
 
 async function initializeSDK(body) {
   const { token, base_url } = body
+  const iProov = createSDK(console, token, base_url)
   const container = document.querySelector("#iproovme_container")
   container.innerHTML = ""
+  container.appendChild(iProov)
   if (!initializeSDK.imported) {
     await import("../node_modules/@iproov/web/iProovMe.js")
     initializeSDK.imported = true
+    document.querySelector("#iproov_wrapper").classList.remove("hidden")
   }
-  const iProov = createSDK(console, token, base_url)
-  container.appendChild(iProov)
 }
 
 initializeSDK.imported = false

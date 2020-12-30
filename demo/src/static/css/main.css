@@ -12,8 +12,8 @@
    ========================================================================== */
 
 :root {
-
   --w-standard: 80rem;
+  --w-example-wrapped: 600px;
 
   --block-margin-vertical: 3.75rem;
   --block-padding-vertical: 1.875rem;
@@ -22,22 +22,22 @@
   --c-alto: #dfdfdf;
   --c-athens-gray: #f8f8f9;
   --c-black: #000;
-  --c-black-o2: rgba(0, 0, 0, .2);
-  --c-black-o4: rgba(0, 0, 0, .4);
-  --c-black-o8: rgba(0, 0, 0, .8);
+  --c-black-o2: rgba(0, 0, 0, 0.2);
+  --c-black-o4: rgba(0, 0, 0, 0.4);
+  --c-black-o8: rgba(0, 0, 0, 0.8);
   --c-deep-cove: #061a40;
-  --c-deep-cove-o2: rgba(6, 26, 64, .2);
-  --c-deep-cove-o3: rgba(6, 26, 64, .3);
-  --c-deep-cove-o6: rgba(6, 26, 64, .6);
-  --c-deep-cove-o8: rgba(6, 26, 64, .8);
+  --c-deep-cove-o2: rgba(6, 26, 64, 0.2);
+  --c-deep-cove-o3: rgba(6, 26, 64, 0.3);
+  --c-deep-cove-o6: rgba(6, 26, 64, 0.6);
+  --c-deep-cove-o8: rgba(6, 26, 64, 0.8);
   --c-dove-gray: #636363;
   --c-egg-sour: #fff3dd;
   --c-gallery: #eeeeee;
   --c-jacarta: #2f285b;
   --c-matisse: #1c5298;
   --c-matisse-darker: #03397f;
-  --c-matisse-o1: rgba(28, 82, 152, .1);
-  --c-matisse-o2: rgba(28, 82, 152, .2);
+  --c-matisse-o1: rgba(28, 82, 152, 0.1);
+  --c-matisse-o2: rgba(28, 82, 152, 0.2);
   --c-mercury: #e9e9e9;
   --c-mine-shaft: #272727;
   --c-ocean-green: #46bc86;
@@ -56,7 +56,7 @@
   --c-white-o6: rgba(255, 255, 255, 0.6);
 
   --f-default-size: 1rem;
-  --f-regular: 'Inter', sans-serif;
+  --f-regular: "Inter", sans-serif;
 }
 
 html {
@@ -138,7 +138,18 @@ textarea {
 
 .wrapper {
   margin: 0 auto;
-  max-width: var(--w-standard);
+  max-width: var(--w-example-wrapped);
+  padding: 1rem;
+}
+
+.card {
+  border: 1px solid var(--c-mercury);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card :first-of-type {
+  margin-top: 0;
 }
 
 form {
@@ -154,30 +165,50 @@ h1 {
   font-family: var(--f-regular);
   font-size: 3.125rem;
   font-weight: bold;
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
   line-height: 1em;
 }
 
-.logo {
+h3 {
+  color: var(--c-deep-cove);
+  letter-spacing: -0.02em;
+  font-family: var(--f-regular);
+  margin-bottom: 0;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.3em;
+}
 
+a {
+  color: var(--c-matisse);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+a:focus, a:hover {
+  color: var(--c-deep-cove);
+}
+
+.logo {
 }
 
 legend {
   font-family: var(--f-regular);
   font-size: 1.25rem;
   font-weight: bold;
-  letter-spacing: -.01em;
+  letter-spacing: -0.01em;
   line-height: 1.3em;
 }
 
-label, legend {
+label,
+legend {
   display: block;
   color: var(--c-matisse);
   font-family: var(--f-regular);
-  font-size: .625rem;
+  font-size: 0.625rem;
   font-style: normal;
   font-weight: 600;
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
   line-height: 1.5em;
   margin: 0;
   text-transform: uppercase;
@@ -190,7 +221,8 @@ fieldset label {
   letter-spacing: normal;
 }
 
-input[type=text], input[type=email] {
+input[type="text"],
+input[type="email"] {
   border-color: var(--c-black-o4);
   border-style: solid;
   border-width: 0 0 1px;
@@ -210,7 +242,8 @@ input[type=text], input[type=email] {
   width: 100%;
 }
 
-.assurance, .mode {
+.assurance,
+.mode {
   padding-left: 50px;
   min-height: 50px;
   line-height: 50px;
@@ -236,12 +269,12 @@ input[type=text], input[type=email] {
   background-image: url(../img/liveness-side--woman.png);
 }
 
-
+.ipbutton,
 button {
-  background: var(--c-matisse);
+  background-color: var(--c-matisse);
   color: var(--c-white);
   border-radius: 4px;
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.25em;
   padding: 1rem 1.3rem;
@@ -258,18 +291,58 @@ button {
   outline: 0;
   text-align: center;
   text-decoration: none;
-  transition: background-color .3s ease-in-out, border-color .3s ease-in-out, color .3s ease-in-out, opacity .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
 
-button:hover, button:focus {
+.ipbutton--lozenge {
+  border-radius: 5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3em;
+  padding: 0.4rem 0.7rem;
+  text-transform: none;
+}
+
+.ipbutton--texas-rose {
+  background-color: var(--c-texas-rose);
+  border-color: var(--c-texas-rose);
+  color: var(--c-deep-cove);
+}
+
+.ipbutton--texas-rose:focus,
+.ipbutton--texas-rose:hover {
+  background-color: var(--c-texas-rose-darker);
+  border-color: var(--c-texas-rose-darker);
+}
+
+button.action-restart {
+  padding-right: 40px;
+  background-image: url(../img/arrow-right.svg);
+  background-repeat: no-repeat;
+  /*   background-size: 40px; */
+  background-position: 90% 50%;
+}
+
+button:hover,
+button:focus {
   background-color: var(--c-matisse-darker);
   border-color: var(--c-matisse-darker);
   color: var(--c-white);
 }
 
+pre {
+  background: var(--c-silver);
+  color: var(--c-mine-shaft);
+  font-size: 0.8em;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
 footer {
   color: var(--c-dove-gray);
-  font-size: .875rem;
+  font-size: 0.875rem;
 }
 
 footer a {
@@ -278,6 +351,55 @@ footer a {
   text-decoration: none;
 }
 
+/* iProov Web SDK overrides */
+.progress {
+  margin: 2rem 0;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 100%;
+  height: 3rem;
+  background: var(--c-slate-gray);
+}
+
+.progress__inner {
+  position: absolute;
+  transition: width cubic-bezier(0.75, 0.02, 1, 0.27) 0.3s;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--c-matisse);
+}
+
+.progress__text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  line-height: 3rem;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.state {
+  background-size: 80px;
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  margin-bottom: 1rem;
+}
+
+
+.state--passed {
+  background-image: url(../img/gpa-tick.png);
+}
+
+.state--error,
+.state--failed {
+  background-image: url('../img/No-not-worked-woman-yellow.png');
+  padding-right: calc(1rem + 80px);
+}
 
 /* ==========================================================================
    Helper classes
@@ -371,10 +493,7 @@ footer a {
   /* Style adjustments for viewports that meet the condition */
 }
 
-@media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */
 }
 
@@ -452,4 +571,3 @@ footer a {
     page-break-after: avoid;
   }
 }
-
