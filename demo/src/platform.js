@@ -39,7 +39,7 @@ export class PlatformAPI {
   async unpack(request) {
     try {
       const response = await request
-      return response.body
+      return { ...response.body, base_url: this.baseUrl }
     } catch (e) {
       // @todo: indicate this is an error - currently we just pass through
       if (e.status === 400) {
