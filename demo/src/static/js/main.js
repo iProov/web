@@ -35,9 +35,11 @@ async function initializeSDK(body) {
     await import("../node_modules/@iproov/web/iProovMe.js")
     initializeSDK.imported = true
   }
-  document.querySelector("#iproov_wrapper").classList.remove("hidden")
+  const wrapper = document.querySelector("#iproov_wrapper")
+  wrapper.classList.remove("hidden")
   iProov.addEventListener("ready", () => {
     iProov.querySelector("[slot=button] button").focus()
+    wrapper.scrollIntoView({ behavior: "smooth", block: "end" })
   })
   document.querySelector("#token_config").classList.add("collapsed")
 }
@@ -48,7 +50,8 @@ function handleError(body) {
   const errorContainer = document.querySelector("#token_config .error-container")
   errorContainer.innerHTML = `<h4>Error</h4><p><b>${body.error}</b>: ${body.error_description}</p>`
   errorContainer.classList.remove("hidden")
-  console.error(body)
+  errorContainer.scrollIntoView({ behavior: "smooth", block: "end" })
+  console.error("Error:", body.error, body)
 }
 
 const main = async () => {

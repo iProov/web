@@ -176,6 +176,31 @@ h1 {
   line-height: 1em;
 }
 
+header h1 {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  grid-template-columns: 50% 50%;
+}
+
+header span {
+  font-size: 1.95rem;
+  line-height: 1;
+}
+
+@media screen and (min-width: 1024px) {
+  header span {
+    font-size: 2.6rem;
+  }
+}
+
+
+
+header .logo {
+  margin-right: 1rem;
+}
+
 h3 {
   color: var(--c-deep-cove);
   letter-spacing: -0.02em;
@@ -186,6 +211,17 @@ h3 {
   line-height: 1.3em;
 }
 
+h4 {
+  color: var(--c-deep-cove);
+  font-size: 1.2em;
+  letter-spacing: -0.04em;
+  margin-bottom: 0;
+}
+
+header + p {
+  font-size: .9rem;
+}
+
 a {
   color: var(--c-matisse);
   text-decoration: none;
@@ -194,9 +230,6 @@ a {
 
 a:focus, a:hover {
   color: var(--c-deep-cove);
-}
-
-.logo {
 }
 
 legend {
@@ -395,6 +428,7 @@ footer a {
   background-repeat: no-repeat;
   background-position: 100% 0;
   margin-bottom: 1rem;
+  padding-right: calc(80px + 1rem);
 }
 
 
@@ -409,6 +443,10 @@ footer a {
   padding-right: calc(1rem + 80px);
 }
 
+[slot=ready] h3 {
+  font-size: 1.5rem;
+}
+
 .error-container {
   background-color: var(--c-egg-sour);
   color: var(--c-torch-red);
@@ -419,6 +457,7 @@ footer a {
 }
 
 .error-container h4, .error-container p {
+  color: inherit;
   margin-bottom: 0;
 }
 

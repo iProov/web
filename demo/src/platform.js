@@ -52,6 +52,13 @@ export class PlatformAPI {
 
   async token(mode, options = {}) {
     const { userId, assuranceType } = options
+    if (!userId) {
+      this.logger.warn(`Couldn't create a token because user_id is empty`)
+      return {
+        error: "Missing User ID",
+        error_description: "You must provide a user_id to create a token.",
+      }
+    }
     this.logger.info(`Creating ${assuranceType} ${mode} token for ${userId}`)
     return this.unpack(
       superagent
