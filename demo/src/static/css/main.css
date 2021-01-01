@@ -365,6 +365,10 @@ button.action-restart {
   background-position: 90% 50%;
 }
 
+button.action-check-permission {
+  margin-left: 1em;
+}
+
 button:hover,
 button:focus {
   background-color: var(--c-matisse-darker);
@@ -459,6 +463,25 @@ footer a {
 .error-container h4, .error-container p {
   color: inherit;
   margin-bottom: 0;
+}
+
+.support-container {
+  margin: 1rem 0 0;
+  font-size: .8rem;
+  background-repeat: no-repeat;
+  padding-left: 2rem;
+  background-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.support-container--ok {
+  background-image: url(../img/thumbs-up.png);
+  color: var(--c-ocean-green);
+}
+
+.support-container--error {
+  background-image: url(../img/thumbs-down.png);
+  color: var(--c-torch-red);
 }
 
 /* ==========================================================================

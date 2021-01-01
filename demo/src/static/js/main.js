@@ -1,3 +1,5 @@
+import "./vendor/prod/iProovSupport.js"
+
 import { createSDK } from "./iproov-integration.js"
 
 async function submitTokenRequest() {
@@ -25,6 +27,34 @@ async function resetTokenCreationForm() {
   document.querySelector("#user_id").focus()
 }
 
+function createSupportChecker() {
+  const checker = new iProovSupport.iProovSupport() // vanilla JS with no webpack/UMD
+  const output = document.querySelector(".support-container")
+  checker.addEventListener("granted", (event) => {
+    console.log("Permission is granted")
+  })
+  checker.addEventListener("denied", (event) => {
+    console.warn("Permission denied", event)
+    handleError(createError("permission_denied", "Device permission was denied"))
+  })
+  checker.addEventListener("check", (event) => {
+    const { supported, granted } = event.detail
+    output.innerHTML = `Device supported: ${supported.toString()}; permission granted: ${granted}`
+
+    if (!supported || granted === false) {
+      output.classList.remove("support-container--ok")
+      output.classList.add("support-container--error")
+    } else if (supported) {
+      output.classList.add("support-container--ok")
+      output.classList.remove("support-container--error")
+    }
+
+    output.classList.remove("hidden")
+  })
+  checker.check()
+  return checker
+}
+
 async function initializeSDK(body) {
   const { token, base_url } = body
   const iProov = createSDK(console, token, base_url)
@@ -46,6 +76,10 @@ async function initializeSDK(body) {
 
 initializeSDK.imported = false
 
+function createError(title, description) {
+  return { error: title, error_description: description }
+}
+
 function handleError(body) {
   const errorContainer = document.querySelector("#token_config .error-container")
   errorContainer.innerHTML = `<h4>Error</h4><p><b>${body.error}</b>: ${body.error_description}</p>`
@@ -55,13 +89,16 @@ function handleError(body) {
 }
 
 const main = async () => {
+  const support = createSupportChecker()
   document.querySelector("#token_config").addEventListener("submit", function onTokenSubmit(event) {
     event.preventDefault()
     submitTokenRequest()
   })
-  document.body.addEventListener("click", function onRestartDelegate(event) {
+  document.body.addEventListener("click", function onButtonClickDelegate(event) {
     if (event.target.classList.contains("action-restart")) {
       resetTokenCreationForm()
+    } else if (event.target.classList.contains("action-check-permission")) {
+      support.checkWithPermission()
     }
   })
 }
