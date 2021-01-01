@@ -14,4 +14,4 @@ if [ ! -r "$ENV_FILE" ]
 fi
 
 docker build . -t iproov-web-example
-docker run --env-file "$ENV_FILE" -e EXAMPLE_SERVER_PORT="$EXAMPLE_SERVER_PORT" -p "127.0.0.1:$EXAMPLE_SERVER_PORT":80 --rm iproov-web-example
+docker run --env-file "$ENV_FILE" -e EXAMPLE_SERVER_PORT="$EXAMPLE_SERVER_PORT" -e IS_DOCKER=1 -p "0.0.0.0:$EXAMPLE_SERVER_PORT":80 --rm iproov-web-example
