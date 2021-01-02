@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The console object is no longer overridden. Sorry about that.
 - Documentation updates and inaccuracies:
-  - Various iProovSupport documentation relating to payloads and availability on th.e global object
+  - Various iProovSupport documentation relating to payloads and availability on the global object
   - Documentation relating to the payload of the progress event has been corrected.
 - iProovSupport can now be loaded standalone without a bundler; regeneratorRuntime is now defined.
 - Language strings can now be customised on slotted elements. Previously this didn't work.

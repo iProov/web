@@ -3,8 +3,6 @@
 ## 📖 Table of contents
 
 - [Introduction](#-introduction)
-- [Contents](#-contents)
-- [Upgrading from earlier versions](#-upgrading-from-earlier-versions)
 - [Registration](#-registration)
 - [Installation](#-installation)
 - [Get started](#-get-started)
