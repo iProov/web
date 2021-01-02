@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.2021 3.1.2
+
+## Fixed
+
+- The console object is no longer overridden. Sorry about that.
+- Documentation updates and inaccuracies:
+  - Various iProovSupport documentation relating to payloads and availability on th.e global object
+  - Documentation relating to the payload of the progress event has been corrected.
+- iProovSupport can now be loaded standalone without a bundler; regeneratorRuntime is now defined.
+- Language strings can now be customised on slotted elements. Previously this didn't work.
+- Fixed double checking for videoInput. Just once is enough.
+- iProovSupport prompting in Chrome prompts instantly, previously it delayed.
+- Fixed SDK crashing if passing a token not associated with a `user_id`. Unlikely, but displays a clean error instead.
+
 ## 24.12.2020 3.1.1
 
 ## Fixed

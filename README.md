@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.1
+# iProov Biometrics Web SDK v3.1.2
 
 ## 📖 Table of contents
 
@@ -23,20 +23,7 @@ The iProov Biometrics Web SDK is the client for web browser based authentication
 
 You will need to generate a token from your back-end to use with the iProov Biometrics Web SDK. You can use the [REST API](https://eu.rp.secure.iproov.me/docs.html) to make the relevant calls and return the token to your front-end. See the [backend section](#backend) for more details.
 
-## 📖 Contents
-
-This repository contains a demo showing an example of a backend and frontend integration. In these examples, the token is generated and validated using AJAX (in the register/login demo) and form submission (for the integration examples) by passing the following data to the backend:
-
-- **user_id** - the email address provided by the user
-- **action** - the specific endpoint to call:
-  - _token_ - generate a unique 64 character token for the client
-  - _validate_ - check the validity of the result provided by the client
-
-## ⬆ Upgrading from earlier versions
-
-Please note that there is new name for the NPM package and URL for the script tag. If you are upgrading from v1 or v2-beta, please ensure that you update your integration to use the new name or URL as described in the [installation](#-installation) section below.
-
-A few of the options have changed from earlier versions so be sure to check the current supported [list of options](#-options) when upgrading.
+Check out our [example](./demo), which can be spun up with a single command, which demonstrates an example backend/frontend integration.
 
 ## ✍ Registration
 
@@ -44,17 +31,19 @@ You can obtain API credentials by registering on the [iProov Portal](https://por
 
 ## 📲 Installation
 
+The npm package `@iproov/web` allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
+
 ### Script Tag
 
-The simplest and fastest method of integrating with the iProov Biometrics Web SDK is to reference it in a script tag using our [NPM package](https://www.npmjs.com/package/@iproov/web) hosted on a CDN such as [jsDelivr](https://www.jsdelivr.com/package/npm/@iproov/web) or [UNPKG](https://unpkg.com/browse/@iproov/web/).
+For a fast proof of concept, the simplest way to integrate iProov Web to include with a script tag using our [NPM package](https://www.npmjs.com/package/@iproov/web) hosted on a CDN such as [jsDelivr](https://www.jsdelivr.com/package/npm/@iproov/web) or [UNPKG](https://unpkg.com/browse/@iproov/web/).
 
-#### jsDelivr
+**jsDelivr**:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@iproov/web"></script>
 ```
 
-#### UNPKG
+**UNPKG**:
 
 ```html
 <script src="https://unpkg.com/@iproov/web"></script>
@@ -62,7 +51,7 @@ The simplest and fastest method of integrating with the iProov Biometrics Web SD
 
 ### NPM Package
 
-The npm package `@iproov/web` allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
+Installing locally with npm is recommended for production installations, and works best with a bundler like Webpack, Parcel or Rollup.
 
 #### Setup
 
@@ -76,21 +65,26 @@ yarn add @iproov/web
 npm i @iproov/web --save
 ```
 
-After you have installed the `@iproov/web` package, you must then include the code into your project ideally at the root of your application:
+After you have installed the `@iproov/web` package, you can require or import it into your codebase:
 
 ```javascript
+// ESM or Module Bundler:
+import "@iproov/web"
+
+// CJS style:
 require("@iproov/web")
 ```
 
-It's as simple as that to include the iProov Biometrics Web SDK. You now need to inject the web component by one of the [integration methods](#frontend) shown below.
+It's as simple as that to include the iProov Biometrics Web SDK with your project.
+Now you can inject the web component where you need it using one of the [integration methods](#frontend) shown below.
 
 ## 🚀 Get started
 
 ### Backend
 
-To make use of this SDK you will require integration with the back-end iProov service. To access credentials and an integration guide, please visit [portal.iproov.com](https://portal.iproov.com).
+To make use of this SDK you will require integration with the iProov backend service. You can obtain platform credentials and read our integration guide on [portal.iproov.com](https://portal.iproov.com).
 
-When starting an iProov transaction (or claim), you would first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be done as part of the page load or with AJAX. You would then need to pass the token to your frontend to initialise the iProov Biometrics Web SDK.
+When starting an iProov transaction (or claim), you first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be passed on page load or fetched with AJAX, then used to initialise the iProov Biometrics Web SDK on the frontend.
 
 After receiving the result from the SDK, you must then confirm its authenticity by validating the [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolValidate) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyValidate) token _before_ escalating the user's privileges. This must be done from your backend and is typically invoked with a redirect, form submission or AJAX call triggered by the `passed` [event](#-events).
 
@@ -99,14 +93,14 @@ After receiving the result from the SDK, you must then confirm its authenticity 
 
 ### Frontend
 
-Once an iProov token has been generated by your backend, you should pass it as an attribute to the custom element using one of the integration methods described below. After a successful iProov, the result must be validated by the backend before granting the user any privileges.
+Once an iProov token has been generated by your backend, you should pass it as an attribute to the `<iproov-me>` element using one of the integration methods described below. After a successful iProov, the result must be validated by the backend before granting the user any privileges.
 
 #### HTML
 
 The simplest way to pass the token to iProov is to include it as an attribute to the `<iproov-me>` HTML tag as shown here:
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>
+<iproov-me token="***YOUR_TOKEN_HERE***" base_url="***IPROOV_PLATFORM_URL_HERE***"></iproov-me>
 ```
 
 #### JavaScript
@@ -153,19 +147,17 @@ You can change the backend server you are attempting to iProov against by passin
 
 #### Assets URL
 
-External fonts will be loaded from our CDN at cdn.iproov.app. Versions prior to 3.0 also loaded workers and WASM files from this host. From 3.0, this has been simplified.
-
-From 3.0, all constituent workers and WASM files are bundled together as part of our main file. The remaining resources are non-volatile such as fonts and UI files, which are better off loaded in parallel.
-
-These external files loaded from our CDN at cdn.iproov.app. In scenarios with custom firewalls or reverse proxy configurations, this option is available to customise and set config accordingly.
+Dependencies such as fonts and web workers are loaded from our CDN at cdn.iproov.app. We recommend in production that you self-host these, and set the assets_url to reflect this:
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" assets_url="https://cdn.iproov.app/assets"></iproov-me>
 ```
 
+> ℹ️ [Full wiki page on assets_url and hosting assets](https://github.com/iProov/web/wiki/Serving-Assets-And-CORS)
+
 #### Logo
 
-You can use a custom logo by simply passing a relative link or absolute path to your logo. Ideally, the logo would be in an SVG format for scaling but you can use any web safe image format. If you don't pass a logo, the iProov logo will be shown by default. If you do not want a logo to show pass the `logo` attribute as `null`.
+You can use a custom logo by simply passing a relative link, absolute path or data URI to your logo. We recommend providing a logo in SVG format, but any web format is supported. If you don't pass a logo, the iProov logo will be shown by default. If you do not want a logo to show pass the `logo` attribute as `null`.
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" logo="https://www.iproov.com/images/iproov_logo.svg"></iproov-me>
@@ -175,7 +167,7 @@ You can use a custom logo by simply passing a relative link or absolute path to 
 
 Specify a custom title to be shown. Defaults to show an iProov-generated message. Set to empty string "" to hide the message entirely. You can also pass in `%@` characters which will be mapped in this order to `type` (Enrol or Verify), `user_name` (the user_name you passed when generating the token), `sp_name` (the service provider you used to generate the token).
 
-> ⚠️ iProov-generated messages are passed through our translators. Passing a custom title will prevent this and you will need to provide the translated version.
+> ⚠️ iProov-generated messages are passed through our translators. If you pass a custom title, you must provide the translated version.
 
 ```html
 <!-- Set the title to a plain string -->
@@ -245,7 +237,9 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 
 #### Enable Camera Selector
 
-By setting `enable_camera_selector` to `true`, the `camera_selector` slot and `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customisation options. This feature is only available on desktop devices (laptops, PCs etc).
+Support multiple camera selection on desktop devices by setting `enable_camera_selector` to `true`.
+
+When enabled, the `camera_selector` slot and `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customisation options. This feature is only available on desktop devices (laptops, PCs etc).
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" enable_camera_selector="true"></iproov-me>
@@ -260,27 +254,26 @@ Warnings and errors will always be emitted to the console.
 <iproov-me token="***YOUR_TOKEN_HERE***" debug="true"></iproov-me>
 ```
 
-This setting has no effect on the support checker if it is deployed standalone.
+This setting has no effect on any `iProovSupport` instance that's been initialised separately to the main component.
 
 The checker itself accepts a logger argument which could be `console`, or any common logging library which you are free to configure to your own requirements.
 
 #### Kiosk Mode
 
-Note this setting enables a feature which is in alpha and still under active development.
-
-For deploying iProov on tablets or fixed hardware such as laptops and desktop devices. Enables snap to face and increases matchable range.
-
-Set to true to enable; omit the setting to keep disabled.
-
-A known issue is that kiosk mode currently has display issues in portrait mode, this will be resolved in a later release.
+When deploying iProov on physically secured hardware such as laptops and desktop devices, you can enable the kiosk mode UI.
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" kiosk_mode="true"></iproov-me>
 ```
 
+> ℹ️ Kiosk mode will only activate on tablets and desktops. It is automatically disabled on mobile devices.
+
 ## 📥 Slots
 
-Slots allow the HTML content shown before and after the iProov fullscreen experience to be customised and styled for a more seamless visual integration. The following examples show different ways to include some of the most commonly used slots.
+Customise the markup, styling and automatically inherit your app's styles by [using slots](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots).
+You can customise the preparation and result stages of iProov to seamlessly integrate it into your application.
+
+The following examples show different ways to customise some commonly used slots.
 
 ### HTML
 
@@ -301,22 +294,27 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
 
 #### JavaScript
 
-You can also build up the slots with JavaScript before injecting the Web Component:
+You can also build up the slots with the `<template>` element and JavaScript before injecting the Web Component:
 
+Template to be placed anywhere in your page:
+```html
+<template id="iproov_template">
+  <div slot="ready">
+    <h1 class="iproov-lang-heading">Register your face</h1>
+  </div>
+  <div slot="button">
+    <button>Start face scan...</button>
+  </div>
+</template>
+```
+
+JavaScript:
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-  const ready = document.createElement("div")
-  ready.setAttribute("slot", "ready")
-  ready.innerHTML = '<h1 class="iproov-lang-heading">Register your face</h1>'
-  iProovMe.appendChild(ready)
-
-  const button = document.createElement("button")
-  button.setAttribute("slot", "button")
-  button.innerText = "Start face scan..."
-  iProovMe.appendChild(button)
-
+  const templateContent = document.querySelector("#iproov_template").content.cloneNode(true)
+  iProovMe.append(templateContent)
   document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
@@ -334,10 +332,11 @@ window.addEventListener("WebComponentsReady", function (event) {
 })
 ```
 
-To allow language keys to be dynamically applied to slots, special class names must be applied to your slots when customising. Headings must have `.iproov-lang-heading` and terms (message, reason etc) must have `.iproov-lang-term`.
+To integrate with our localization feature, use special class names in your slotted content:
+* Headings must use `.iproov-lang-heading`
+* Supplementary terms (message, reason etc) must have `.iproov-lang-term`
 
-> ⚠️ The ability to use localized `h3` tags and the `div` elements without these special classes was removed in `2.1.0`.
-
+**Example:** The below text will be swapped with the correctly localized strings when displayed:
 ```html
 <div slot="passed">
   <h3 class="iproov-lang-heading">Passed</h3>
@@ -345,7 +344,7 @@ To allow language keys to be dynamically applied to slots, special class names m
 </div>
 ```
 
-> ⚠️ When customising any slots with button elements, the type must be set to button. The `button` and `grant_button` must be passed as a `<button>` element and are initially disabled until a preflight async check is made where the button will be enabled.
+> ⚠️ When customising any the `button` and `grant_button` slots, the slot must contain a `<button>` element to ensure interactivity. These buttons may be disabled by the SDK on component load while we configure according to the passed in token.
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 
@@ -370,8 +369,6 @@ The following is the complete list of slots can be used with the `<iproov-me>` w
 > \* Visible and managed when [camera selection](#enable-camera-selector) is enabled. A select menu with the class `iproov-camera-selector` must be present within your slots markup. An error will be thrown if this cannot be found.
 
 > \*\* See [allow landscape](#-allow-landscape) option which controls the behaviour of the `rotate_portrait` slot and details on how to override.
-
-Slots can be embedded as HTML or injected with JavaScript.
 
 ## 📆 Events
 
@@ -399,7 +396,7 @@ The available events are detailed below with any extra properties that are suppl
 | **passed**              | _type, passed_                   | Authentication was successful, the result can now be validated                                            |
 | **permission**          | None                             | Camera permission is unknown & not blocked, show permission                                               |
 | **permission_denied**   | None                             | User has blocked access to the camera                                                                     |
-| **progress**            | _percentage, message_            | iProov has published a progress update for the authentication                                             |
+| **progress**            | _progress, message_              | iProov has published a progress update for the authentication                                             |
 | **ready**               | None                             | iProov has initialised successfully and has camera permission                                             |
 | **started**             | None                             | User has started iProov by launching into fullscreen                                                      |
 | **streaming**           | None                             | User has started streaming. The client remains in fullscreen.                                             |
@@ -416,7 +413,7 @@ Properties of the event's **detail** payload:
 | **type** (†)         | _passed, failed_                                     | The type of authentication (enrol, verify or id_match)     |
 | **passed**           | _passed, failed_                                     | Boolean value whether the result passed or failed          |
 | **frame** (†) (\*)   | _passed, failed_                                     | An `ImageData` from the scanning process                   |
-| **percentage**       | _progress_                                           | A percentage (between 0 and 100) representing the progress |
+| **progress**         | _progress_                                           | A percentage (between 0 and 100) representing the progress |
 | **message**          | _progress_                                           | A user-friendly description of the current progress stage  |
 | **feedback**         | _cancelled, interrupted, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
 | **reason**           | _cancelled, interrupted, failed, error, unsupported_ | An English description of the reason for the event         |
@@ -516,11 +513,13 @@ $("iproov-me").on("ready started cancelled interrupted streamed progress passed 
 
 ## 🌎 Localization
 
-The Web SDK ships with English strings only. If you wish to customise the strings in the app or localize them into a different language, you can do this by supplying language overrides as JSON configurations. All language files have the same keys and only the values of those keys will be shown.
+The Web SDK ships with English strings by default. To provide strings in another language, you can supply `language` overrides as JSON. Language files use the same structure.
 
 - [View the default language file with all keys and language strings](https://github.com/iProov/web/blob/master/iproov-en.json)
 
-You can customise the language by supplying the `language` key as an attribute to your iProov component. The keys value must be valid JSON and passed as a string. This is then converted and merged with the default language overriding any given keys. See below for some examples.
+You can customise the language by supplying the `language` attribute to your iProov component. The `language` value must be valid JSON and passed as a string.
+
+Any value not supplied will fall back to the English default.
 
 ### Override language strings
 
@@ -529,11 +528,11 @@ window.addEventListener("WebComponentsReady", (event) => {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
-  const customLanguage = `{
+  const customLanguage = {
     "passed": "You passed!",
     "prompt_connecting": "It's loading..."
-  }`
-  element.setAttribute("language", customLanguage)
+  }
+  element.setAttribute("language", JSON.stringify(customLanguage))
 
   // inject iproov element into page
   document.getElementById("your-container-id").appendChild(iProovMe)
@@ -576,9 +575,7 @@ iProov's Web SDK makes use of the following technologies:
 
 iProov Biometrics Web SDK requires access to a front facing camera, WebGL, WebAssembly and the ability to enter full screen. A network connection is required that allows WebSockets. Provided there's a suitable webcam available, most modern desktop browsers fall within these criteria.
 
-Browsers that have rolling update schedules ("evergreen browsers") are generally supported back to the **last two releases**, such as Google Chrome, Mozilla Firefox and the Chromium based version of Microsoft Edge (Anaheim and later). Mobile browsers are more nuanced, because permissions and camera access vary depending on the browser and host operating system.
-
-In iOS, **only Safari running as a standalone browser is supported** at this time. This is because `UIWebView` / `WKWebView` do not work correctly with respect to the Web Standard `getUserMedia`, which seems to be a deliberate decision in iOS's implementation. We are tracking the various issues and are waiting for this to change.
+Of the mainstream browsers that support the above technologies, we support the **last two releases**. We feature detect capabilities and provide reasonable fallbacks for older or less mainstream browsers, and only mark them as `unsupported` if we're confident that the experience won't work.
 
 For known issues, [see here](#known-issues).
 
@@ -586,7 +583,7 @@ For known issues, [see here](#known-issues).
 | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Windows**                                                                                                                   | N/A                                                                                                                                                       | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark:                                                                                                                                     | :heavy_check_mark:                                                                                                                                            | :heavy_check_mark:                                                                                                                                    | N/A                                                                                                                                                                             |
 | **MacOS**                                                                                                                     | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark:                                                                                                                                     | :heavy_check_mark: \*                                                                                                                                         | :heavy_check_mark:                                                                                                                                    | N/A                                                                                                                                                                             |
-| **iOS**                                                                                                                       | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark:                                                                                                                                     | :heavy_check_mark: \*                                                                                                                                         | :x:                                                                                                                                                   | N/A                                                                                                                                                                             |
+| **iOS**                                                                                                                       | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark: On iOS 14.3+                                                                                                                           | :heavy_check_mark: On iOS 14.3+                                                                                                                        | :heavy_check_mark: \*                                                                                                                                         | :x:                                                                                                                                                   | N/A                                                                                                                                                                             |
 | **Android**                                                                                                                   | N/A                                                                                                                                                       | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark:                                                                                                                                     | :heavy_check_mark: \*                                                                                                                                         | :heavy_check_mark:                                                                                                                                    | :heavy_check_mark:                                                                                                                                                              |
 
 > \* See [known issues](#known-issues) for more details
@@ -597,20 +594,29 @@ For known issues, [see here](#known-issues).
 
 Developers can use the `iProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an alternative journey.
 
-`iProovSupport` is a slim and separate component to the main `IProovMe` web component.
+`iProovSupport` is a lightweight, separate component from the main `IProovMe` web component.
+Using `iProovSupport` on a standalone basis means that consumers can code split their bundle so that users don't need to download an entrypoint that contains the full component until device support has been established.
 
-To benefit from tree-shaking in a module-based build environment you can use the named import from a separate file:
+We recommend using this pattern and splitting entrypoints on your app so that iProov is downloaded only when necessary to ensure a quick UX.
 
+**Example usage when using a bundler that treats UMD like ESM:**
 ```javascript
-// Just load the support component:
 import { iProovSupport } from "@iproov/web/iProovSupport.js"
 const optionalLogger = console
 const supportChecker = new iProovSupport(optionalLogger)
 ```
 
-Importing in this way means you can use the support checker on your site or app without downloading the full component, saving precious bytes.
+**Example usage without a bundler, inside a vanilla ES6 / ESM environment:**
 
-For script tag integrations, `iProovSupport` is available on the window object via `window.IProov` once included:
+```javascript
+// ESM without a bundler:
+import "@iproov/web/iProovSupport.js
+const supportChecker = new window.iProovSupport.default()
+```
+
+**Example usage for script tag integrators in test:**
+
+`iProovSupport` is available on the window object via `window.IProov` once included:
 
 ```javascript
 const supportChecker = new window.IProov.IProovSupport()
@@ -618,9 +624,13 @@ const supportChecker = new window.IProov.IProovSupport()
 
 `iProovSupport` can check for the required APIs on the user's browser, using either event or Promise based APIs:
 
+#### How to use iProovSupport:
+
 ```javascript
 const supportChecker = new iProovSupport()
-supportChecker.addEventListener("check", ({ supported, granted, is_native_bridge }) => {
+// Event based:
+supportChecker.addEventListener("check", (event) => {
+  const { supported, granted, is_native_bridge } = event.detail
   if (supported === false) {
     // go to fallback UX
   }
@@ -637,6 +647,8 @@ supportChecker.addEventListener("check", ({ supported, granted, is_native_bridge
     // browser API support, but camera access denied - try again or advise user before proceeding
   }
 })
+
+// Promise based:
 const { supported, granted, is_native_bridge } = await supportChecker.check()
 ```
 
@@ -663,16 +675,17 @@ The following events can be emitted from `iProovSupport`:
 
 ```javascript
 const supportChecker = new iProovSupport()
-function onCheckResult({
-  /** @var boolean */
-  supported,
-  /** @var boolean */
-  granted,
-  /** @var array */
-  tests,
-  /** @var boolean|undefined */
-  is_native_bridge,
-}) {
+function onCheckResult(event) {
+  const {
+    /** @var boolean */
+    supported,
+    /** @var boolean */
+    granted,
+    /** @var array */
+    tests,
+    /** @var boolean|undefined */
+    is_native_bridge,
+  } = event.detail
   console.debug("Checks run:", tests)
   if (supported) {
     if (is_native_bridge) {

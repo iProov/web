@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>iProov Web SDK Demo</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="favicon.png" />
+    <link rel="icon" href="favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
+
+    <meta name="theme-color" content="#fafafa" />
+  </head>
+
+  <body>
+  <!-- This template is cloned and appended into the iproov-me component when it's ready: -->
+  <template id="iproov_template">
+    <div slot="ready">
+      <h3>Ready to iProov</h3>
+    </div>
+    <div slot="grant_permission">
+      <h3 class="iproov-lang-heading">Camera permission required</h3>
+      <p>We only need your webcam for a few seconds.</p>
+    </div>
+    <div slot="grant_button">
+      <p><button>Grant Camera Permission</button></p>
+      <p>For full details, see our <a href="https://www.iproov.com/privacy-policy">Privacy Policy</a>.</p>
+    </div>
+    <div slot="button">
+      <p>Click below to start the iProov process:</p>
+      <button class="ipbutton--lozenge">Scan face</button>
+    </div>
+    <div slot="error" class="state state--error">
+      <h3>Error</h3>
+      <p>Something went wrong with iProov. If this keeps happening, <a href="mailto:support@iproov.com">let us know</a> so we can take a look and make things right.</p>
+      <pre class="detail iproov-lang-term"></pre>
+      <button class="ipbutton--lozenge action-restart">Try again</button>
+      <a class="ipbutton ipbutton--texas-rose ipbutton--lozenge" href="mailto:support@iproov.com">Contact support</a>
+    </div>
+    <div slot="failed" class="state state--failed">
+      <h3>Failed</h3>
+      <p>Either you're a cyber criminal, or we couldn't quite match you. Care to try again?</p>
+      <pre class="detail iproov-lang-term"></pre>
+      <button class="ipbutton--lozenge action-restart">Try again</button>
+    </div>
+    <div slot="cancelled" class="state state--cancelled">
+      <h3>Cancelled</h3>
+      <p>User exited out of iProov</p>
+      <button class="ipbutton--lozenge action-restart">Restart iProov</button>
+    </div>
+    <div slot="passed" class="state state--passed">
+      <h3>Passed</h3>
+      <p>You have iProoved successfully.</p>
+      <button class="ipbutton--lozenge action-restart">Scan again</button>
+    </div>
+    <div slot="progress" class="progress" aria-roledescription="progress">
+      <div class="progress__inner"></div>
+      <span class="progress__text">Progressing</span>
+    </div>
+  </template>
+    <div class="wrapper">
+      <header>
+        <h1>
+          <img class="logo" src="img/iproov_logo.svg" width="100" alt="iProov" />
+          <span>Web SDK Demo</span>
+        </h1>
+      </header>
+      <p>Demo page for iProov Web integrators. Enter your email address, select claim mode, and iProov!</p>
+      <form id="token_config" class="card">
+        <h4>Create Token</h4>
+        <div class="form__field">
+          <label for="user_id">Enter your email address</label>
+          <input type="email" name="user_id" id="user_id" placeholder="Email address (user_id)" />
+        </div>
+        <div class="form__field">
+          <fieldset>
+            <legend>Claim Mode</legend>
+            <label class="mode mode--enrol">
+              <input type="radio" name="mode" value="enrol" checked />
+              <span>Enrol</span>
+            </label>
+            <label class="mode mode--verify">
+              <input type="radio" name="mode" value="verify" />
+              <span>Verify</span>
+            </label>
+          </fieldset>
+        </div>
+        <div class="form__field">
+          <fieldset>
+            <legend>Assurance Type</legend>
+            <label class="assurance assurance--genuine_presence">
+              <input type="radio" name="assurance_type" value="genuine_presence" checked />
+              <span>Genuine Presence</span>
+            </label>
+            <label class="assurance assurance--liveness">
+              <input type="radio" name="assurance_type" value="liveness" />
+              <span>Liveness</span>
+            </label>
+          </fieldset>
+        </div>
+        <button type="submit">Create Token</button> <button type="button" class="action-check-permission ipbutton--texas-rose">Check Permission</button>
+        <div class="support-container hidden"></div>
+        <div class="error-container hidden"></div>
+      </form>
+      <div id="iproov_wrapper" class="card hidden">
+        <div id="iproovme_container"></div>
+      </div>
+      <footer>
+        <p>By using iProov, you agree to the <a href="https://www.iproov.com/terms-and-conditions">Terms of Use</a> &amp; <a href="https://www.iproov.com/privacy-policy">Privacy Policy</a></p>
+      </footer>
+    </div>
+    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

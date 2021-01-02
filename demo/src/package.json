@@ -1,0 +1,16 @@
+{
+  "name": "@iproov/web-example",
+  "version": "1.0.0",
+  "description": "An example of iProov's Web SDK integration",
+  "main": "server.js",
+  "author": "iProov Team",
+  "license": "GPL",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@hapi/hapi": "^20.0.3",
+    "@hapi/inert": "^6.0.3",
+    "prettier": "^2.2.1",
+    "superagent": "^6.1.0"
+  }
+}
