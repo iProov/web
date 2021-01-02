@@ -2,6 +2,10 @@ import "./vendor/prod/iProovSupport.js"
 
 import { createSDK } from "./iproov-integration.js"
 
+/**
+ * Dispatch a request to the demo backend to create a new token.
+ * Initialize a new SDK instance or handle any errors.
+ */
 async function submitTokenRequest() {
   const formData = new FormData(document.querySelector("#token_config"))
   const payload = {}
@@ -21,12 +25,36 @@ async function submitTokenRequest() {
   return initializeSDK(body)
 }
 
+/**
+ * Prepare the form for another submission.
+ */
 async function resetTokenCreationForm() {
   document.querySelector("#token_config").classList.remove("collapsed")
   document.querySelector("#iproov_wrapper").classList.add("hidden")
   document.querySelector("#user_id").focus()
 }
 
+/**
+ * On load, restore any cached user_id. If a user_id exists, automatically set the mode to verify.
+ * On change, cache the user_id to localStorage.
+ */
+function primeForm() {
+  const userIDField = document.querySelector("#user_id")
+  const verifyRadio = document.querySelector("input[name=mode][value=verify]")
+  let cachedUserId = localStorage.getItem("user_id")
+  if (cachedUserId) {
+    userIDField.value = cachedUserId
+    verifyRadio.setAttribute("checked", true)
+  }
+  userIDField.addEventListener("change", function cacheUserId() {
+    localStorage.setItem("user_id", userIDField.value)
+  })
+}
+
+/**
+ * Create a standalone support checker instance and configure the page to respond to basic checks.
+ * @return {iProovSupport}
+ */
 function createSupportChecker() {
   const checker = new iProovSupport.iProovSupport() // vanilla JS with no webpack/UMD
   const output = document.querySelector(".support-container")
@@ -55,6 +83,10 @@ function createSupportChecker() {
   return checker
 }
 
+/**
+ * Create a new SDK instance, customise it (see iproov-integration.js) and append to the page.
+ * @param body
+ */
 async function initializeSDK(body) {
   const { token, base_url } = body
   const iProov = createSDK(console, token, base_url)
@@ -101,6 +133,7 @@ const main = async () => {
       support.checkWithPermission()
     }
   })
+  primeForm()
 }
 
 main()
