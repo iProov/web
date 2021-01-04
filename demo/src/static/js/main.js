@@ -1,4 +1,4 @@
-import "./vendor/prod/iProovSupport.js"
+import "../node_modules/@iproov/web/iProovSupport.js"
 
 import { createSDK } from "./iproov-integration.js"
 
