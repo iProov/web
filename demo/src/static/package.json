@@ -7,6 +7,6 @@
   "author": "",
   "devDependencies": {},
   "dependencies": {
-    "@iproov/web": "^3.1.2"
+    "@iproov/web": "^3.1.3"
   }
 }

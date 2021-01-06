@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.2
+# iProov Biometrics Web SDK v3.1.3
 
 ## 📖 Table of contents
 
