@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@iproov/web@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@iproov/web/-/web-3.1.2.tgz#c05d2582d976bff74464b46ac5cfeae64f9a924d"
-  integrity sha512-hvw0767mLEHNZvEhppH+5aaDeWzUMHp5h58zJtMqFR3GwmGiFr+4USEUeHFXOg3r1n+ESCGcaDKz2Qabsg8URw==
+"@iproov/web@latest":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@iproov/web/-/web-3.1.4.tgz#bb8b0c7507303f348b899c76d79875c14f977d1e"
+  integrity sha512-B9Bw/yKX0HhktPDjkQWnCSNTQaMqfIopxUvfaBFMUuDSanCHV0s+3Kk3tz7rNdM65JY4BbE/oIu40M5Az+ug4Q==

@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 12.2.2021 3.1.4
+
+## Fixed
+
+- Fixed an issue where the progress bar would not display if `show_countdown` is enabled.
+- Fixed `kiosk_mode` issue on iPads where the camera is drawn partly off screen.
+- Fixed an issue where the camera remains active after a timeout occurs.
+- Fixed an issue where multiple cameras broadcasts multiple times. It now broadcasts once.
+- Fixed an issue where slot encapsulation was broken and events may be bound to slots outside the component.
+- Fixed iPads on iOS < 14 showing as unsupported in 3.1.x.
+- Fixed an issue where specifying a path with base_url was not respected.
+- Fixed an issue where iframed Web SDK components time out waiting for gyro information in mobile Safari.
+   - This is a WebKit issue: https://bugs.webkit.org/show_bug.cgi?id=221399
+   - Until this is fixed, iframed components in mobile Safari will immediately fire the unsupported event when using Liveness.
+
+## Changed
+
+- Internals: changed Web Component attachment mode to closed.
+- Internals: the Web SDK will now connect and emit console warnings and errors to our Socket.IO server for quality improvement and crash analysis.
+- Bundle size: the main Web SDK entrypoint no longer includes Baidu and KaiOS build targets
+    - These browsers currently do not support our minimum requirements
+    - The iProovSupport component is still built to target these browsers so you can still establish support
+    - The main package size has reduced by 18% with no material change to browser support
+
+## Added
+
+- 20% more π
 
 ## 6.1.2021 3.1.3
 

@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.3
+# iProov Biometrics Web SDK v3.1.4
 
 ## 📖 Table of contents
 
@@ -295,6 +295,7 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
 You can also build up the slots with the `<template>` element and JavaScript before injecting the Web Component:
 
 Template to be placed anywhere in your page:
+
 ```html
 <template id="iproov_template">
   <div slot="ready">
@@ -307,6 +308,7 @@ Template to be placed anywhere in your page:
 ```
 
 JavaScript:
+
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
   const iProovMe = document.createElement("iproov-me")
@@ -331,10 +333,12 @@ window.addEventListener("WebComponentsReady", function (event) {
 ```
 
 To integrate with our localization feature, use special class names in your slotted content:
-* Headings must use `.iproov-lang-heading`
-* Supplementary terms (message, reason etc) must have `.iproov-lang-term`
+
+- Headings must use `.iproov-lang-heading`
+- Supplementary terms (message, reason etc) must have `.iproov-lang-term`
 
 **Example:** The below text will be swapped with the correctly localized strings when displayed:
+
 ```html
 <div slot="passed">
   <h3 class="iproov-lang-heading">Passed</h3>
@@ -384,22 +388,24 @@ Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/Cust
 
 The available events are detailed below with any extra properties that are supplied:
 
-| Event                   | Extra Properties                 | Description                                                                                               |
-| ----------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| **cancelled**           | _feedback, reason_               | User has cancelled iProov by exiting fullscreen                                                           |
-| **error**               | _feedback, reason_               | iProov encountered an error while processing the authentication                                           |
-| **failed**              | _type, passed, feedback, reason_ | Authentication was unsuccessful, the user needs to try again                                              |
-| **interrupted**         | _feedback, reason_               | Fast fullscreen exit possible due to software. Retry is possible.                                         |
-| **multiple_cameras** \* | _devices, device_selector, slot_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected |
-| **passed**              | _type, passed_                   | Authentication was successful, the result can now be validated                                            |
-| **permission**          | None                             | Camera permission is unknown & not blocked, show permission                                               |
-| **permission_denied**   | None                             | User has blocked access to the camera                                                                     |
-| **progress**            | _progress, message_              | iProov has published a progress update for the authentication                                             |
-| **ready**               | None                             | iProov has initialised successfully and has camera permission                                             |
-| **started**             | None                             | User has started iProov by launching into fullscreen                                                      |
-| **streaming**           | None                             | User has started streaming. The client remains in fullscreen.                                             |
-| **streamed**            | None                             | User has finished streaming and the client has exited fullscreen                                          |
-| **unsupported**         | _feedback, reason_               | Browser does not support using iProov                                                                     |
+| Event                   | Extra Properties                 | Description                                                                                                                                           |
+| ----------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **cancelled**           | _feedback, reason_               | User has cancelled iProov by exiting fullscreen                                                                                                       |
+| **connecting**          | None                             | The SDK is connecting to the server. You should provide an indeterminate progress indicator to let the user know that the connection is taking place. |
+| **connected**           | None                             | The SDK has connected. You should hide any progress indication at this point.                                                                         |
+| **error**               | _feedback, reason_               | iProov encountered an error while processing the authentication                                                                                       |
+| **failed**              | _type, passed, feedback, reason_ | Authentication was unsuccessful, the user needs to try again                                                                                          |
+| **interrupted**         | _feedback, reason_               | Fast fullscreen exit possible due to software. Retry is possible.                                                                                     |
+| **multiple_cameras** \* | _devices, device_selector, slot_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected                                             |
+| **passed**              | _type, passed_                   | Authentication was successful, the result can now be validated                                                                                        |
+| **permission**          | None                             | Camera permission is unknown & not blocked, show permission                                                                                           |
+| **permission_denied**   | None                             | User has blocked access to the camera                                                                                                                 |
+| **progress**            | _progress, message_              | iProov has published a progress update for the authentication                                                                                         |
+| **ready**               | None                             | iProov has initialised successfully and has camera permission                                                                                         |
+| **started**             | None                             | User has started iProov by launching into fullscreen                                                                                                  |
+| **streaming**           | None                             | User has started streaming. The client remains in fullscreen.                                                                                         |
+| **streamed**            | None                             | User has finished streaming and the client has exited fullscreen                                                                                      |
+| **unsupported**         | _feedback, reason_               | Browser does not support using iProov                                                                                                                 |
 
 > \* See [Multiple Camera Example](https://github.com/iProov/web/wiki/Camera-Selection-Example) for an example demonstrating how a camera selection feature could be implemented.
 
@@ -527,8 +533,8 @@ window.addEventListener("WebComponentsReady", (event) => {
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
   const customLanguage = {
-    "passed": "You passed!",
-    "prompt_connecting": "It's loading..."
+    passed: "You passed!",
+    prompt_connecting: "It's loading...",
   }
   element.setAttribute("language", JSON.stringify(customLanguage))
 
@@ -598,6 +604,7 @@ Using `iProovSupport` on a standalone basis means that consumers can code split 
 We recommend using this pattern and splitting entrypoints on your app so that iProov is downloaded only when necessary to ensure a quick UX.
 
 **Example usage when using a bundler that treats UMD like ESM:**
+
 ```javascript
 import { iProovSupport } from "@iproov/web/iProovSupport.js"
 const optionalLogger = console
