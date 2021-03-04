@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.3.2021 3.1.5
+
+## Fixed
+
+- Fixed starting in landscape orientation then rotating to portrait UI issues
+- Improved GPA flash timing, particularly on Android
+- Improved low FPS detection
+- Added missing `feedback` property from some error events
+- Fixed documentation to correctly reflect `error_fullscreen_change` and `error_no_face_found` event names
+- Fixed instances when rare Android Native SDK crashes may take the Web SDK with them, too
+- Fixed occasional `.emit` function not found errors
+- Fixed issues when lower end Android cameras were unable to request a video feed in a useful aspect ratio
+
+## Added
+
+- Added `error_no_face_found` to public documentation
+
 ## 12.2.2021 3.1.4
 
 ## Fixed

@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.4
+# iProov Biometrics Web SDK v3.1.5
 
 ## 📖 Table of contents
 
@@ -213,17 +213,21 @@ Note that inline CSS _is_ needed to provide critical styles for `<iproov-me>` fo
 
 #### Allow Landscape
 
-When `allow_landscape` is set to `false`, all handheld devices except Android tablets will be prevented from starting in landscape orientation. The iProov component will display the `rotate_portrait` slot when in landscape.
+When `allow_landscape` is set to `true`, handheld devices will be able to start in landscape orientation.
 
-By default, all devices are allowed in landscape orientation.
+Here is the behaviour:
+* For GPA and Liveness, landscape orientation is blocked in most handheld devices.
+* For Liveness, no handheld device will be able to start in landscape mode, regardless of this setting.
+* This blocking behaviour is not enforced Android tablets due to the varying position of their camera.
+* When in landscape mode in an affected UX, the iProov component will display the `rotate_portrait` slot.
+* Desktop devices are unaffected by `allow_landscape`.
 
-See [slots](#-slots) for details on how to override the `rotate_portrait` slot. The example below would prevent all devices from being able to iProov while in landscape orientation.
+See [slots](#-slots) for details on how to override the `rotate_portrait` slot.
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="false"></iproov-me>
+<iproov-me token="***YOUR_TOKEN_HERE***" allow_landscape="true"></iproov-me>
 ```
 
-Note that desktop devices are unaffected by `allow_landscape`. Android based tablet devices are exempt due to the common position of their camera.
 
 #### Show Countdown
 
@@ -404,7 +408,7 @@ The available events are detailed below with any extra properties that are suppl
 | **ready**               | None                             | iProov has initialised successfully and has camera permission                                                                                         |
 | **started**             | None                             | User has started iProov by launching into fullscreen                                                                                                  |
 | **streaming**           | None                             | User has started streaming. The client remains in fullscreen.                                                                                         |
-| **streamed**            | None                             | User has finished streaming and the client has exited fullscreen                                                                                      |
+| **streamed**            | None                             | User has finished streaming and the client has exited fullscreen _(Not guaranteed to fire every time due to a possible fast failure or any errors that can occur and should be handled within your event handlers accordingly)_                                                                                    |
 | **unsupported**         | _feedback, reason_               | Browser does not support using iProov                                                                                                                 |
 
 > \* See [Multiple Camera Example](https://github.com/iProov/web/wiki/Camera-Selection-Example) for an example demonstrating how a camera selection feature could be implemented.
@@ -434,10 +438,11 @@ In the case of the **cancelled**, **interrupted**, **failed**, **error** and **u
 | Feedback                              | Reason                                                    |                    Event |
 | ------------------------------------- | --------------------------------------------------------- | -----------------------: |
 | **client_browser**                    | The browser is not supported                              |            _unsupported_ |
-| **fullscreen_change**                 | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
+| **error_fullscreen_change**                 | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
 | **ambiguous_outcome**                 | Sorry, ambiguous outcome                                  |                 _failed_ |
 | **error_camera_in_use**               | The camera is already in use and cannot be accessed       |                  _error_ |
 | **error_expired_token**               | The token has already been used or has expired            |                  _error_ |
+| **error_no_face_found**               | No face could be found            |                  _error_ |
 | **error_invalid_token**               | The token is invalid                                      |                  _error_ |
 | **lighting_backlit**                  | Strong light source detected behind you                   |                 _failed_ |
 | **lighting_face_too_bright**          | Too much light detected on your face                      |                 _failed_ |
