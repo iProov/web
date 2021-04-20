@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 20.4.2021 3.1.8
+
+## Fixed
+
+- Native bridge cancelled event now correctly cancels the SDK
+- UI text overflow is now elegantly managed, rather than clipping
+- Speculative fix to some Android webview environments crashing due to an undefined browser name
+- Invalid tokens passed to the SDK now throw an InvalidTokenError rather than ServerError
+- Liveness transactions no longer break when rotating the device back to portrait
+
 ## 14.4.2021 3.1.7
 
 ## Fixed
@@ -53,17 +63,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed iPads on iOS < 14 showing as unsupported in 3.1.x.
 - Fixed an issue where specifying a path with base_url was not respected.
 - Fixed an issue where iframed Web SDK components time out waiting for gyro information in mobile Safari.
-   - This is a WebKit issue: https://bugs.webkit.org/show_bug.cgi?id=221399
-   - Until this is fixed, iframed components in mobile Safari will immediately fire the unsupported event when using Liveness.
+  - This is a WebKit issue: https://bugs.webkit.org/show_bug.cgi?id=221399
+  - Until this is fixed, iframed components in mobile Safari will immediately fire the unsupported event when using Liveness.
 
 ## Changed
 
 - Internals: changed Web Component attachment mode to closed.
 - Internals: the Web SDK will now connect and emit console warnings and errors to our Socket.IO server for quality improvement and crash analysis.
 - Bundle size: the main Web SDK entrypoint no longer includes Baidu and KaiOS build targets
-    - These browsers currently do not support our minimum requirements
-    - The iProovSupport component is still built to target these browsers so you can still establish support
-    - The main package size has reduced by 18% with no material change to browser support
+  - These browsers currently do not support our minimum requirements
+  - The iProovSupport component is still built to target these browsers so you can still establish support
+  - The main package size has reduced by 18% with no material change to browser support
 
 ## Added
 
