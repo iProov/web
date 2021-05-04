@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.5.2021 3.1.9
+
+## Fixed
+
+- Problems entering fullscreen will no longer abort the transaction. In these rare cases, transactions will be allowed to continue.
+- Opera Touch is now a supported browser after working around a WebKit issue.
+- When running Web SDK inside a react-native-webview, it no longer flags the environment as unsupported.
+
+## Internals
+
+- The following are now sent to the backend to improve telemetry and customer support:
+  - When Web SDK detects it's within an iframe, the window innerWidth and innerHeight are sent.
+  - Fullscreen status is sent.
+
 ## 20.4.2021 3.1.8
 
 ## Fixed
