@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 14.5.2021 3.1.10
+
+## Fixed
+
+- Stability: internal resource lifecycle management has been improved to reduce crashes due to memory leakage.
+- UX: touch scrolling is now blocked between the started event and exiting fullscreen.
+- UX: Page jank when entering fullscreen, particularly in Chrome, has been fixed - see _changes_.
+- Allow landscape: an issue causing broken images in the rotate slot has been fixed.
+- Cameras: An issue where mobile devices could choose the environment facing camera has been fixed.
+- Safari Desktop: `AbortError` is now handled. These cases remain subject to video data timeout checks.
+
+## Changed
+
+- `started` event behaviour has been changed in a BC-safe way to reduce page jank:
+  - The `started` event is now sent *after* entering fullscreen rather than in parallel
+  - The `started` slot manager callback no longer hides all slots when entering fullscreen.
+  - The `streaming` event is the soonest event that all slots are hidden.
+- Internal UI lifecycle management has been tidied which may yield a slight improvement in UI performance.
+
 ## 4.5.2021 3.1.9
 
 ## Fixed

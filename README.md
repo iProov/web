@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.9
+# iProov Biometrics Web SDK v3.1.10
 
 ## 📖 Table of contents
 
@@ -107,9 +107,9 @@ The `<iproov-me>` element can also be injected into the page with the token:
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-  const iProovMe = document.createElement("iproov-me")
-  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-  document.getElementById("your-container-id").appendChild(iProovMe)
+    const iProovMe = document.createElement("iproov-me")
+    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+    document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -119,7 +119,7 @@ The HTML can also be injected directly onto the page as in this jQuery example:
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-  $("#your-container-id").append($('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>'))
+    $("#your-container-id").append($('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>'))
 })
 ```
 
@@ -194,10 +194,10 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
 
 ```html
 <iproov-me
-  token="***YOUR_TOKEN_HERE***"
-  loading_tint_color="#4293f5"
-  not_ready_tint_color="rgb(245, 66, 66)"
-  ready_tint_color="purple"
+        token="***YOUR_TOKEN_HERE***"
+        loading_tint_color="#4293f5"
+        not_ready_tint_color="rgb(245, 66, 66)"
+        ready_tint_color="purple"
 ></iproov-me>
 ```
 
@@ -283,12 +283,12 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***">
-  <div slot="ready">
-    <h1 class="iproov-lang-heading">Ready to iProov</h1>
-  </div>
-  <div slot="button">
-    <button type="button">Scan Face</button>
-  </div>
+    <div slot="ready">
+        <h1 class="iproov-lang-heading">Ready to iProov</h1>
+    </div>
+    <div slot="button">
+        <button type="button">Scan Face</button>
+    </div>
 </iproov-me>
 ```
 
@@ -302,12 +302,12 @@ Template to be placed anywhere in your page:
 
 ```html
 <template id="iproov_template">
-  <div slot="ready">
-    <h1 class="iproov-lang-heading">Register your face</h1>
-  </div>
-  <div slot="button">
-    <button>Start face scan...</button>
-  </div>
+    <div slot="ready">
+        <h1 class="iproov-lang-heading">Register your face</h1>
+    </div>
+    <div slot="button">
+        <button>Start face scan...</button>
+    </div>
 </template>
 ```
 
@@ -315,11 +315,11 @@ JavaScript:
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-  const iProovMe = document.createElement("iproov-me")
-  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-  const templateContent = document.querySelector("#iproov_template").content.cloneNode(true)
-  iProovMe.append(templateContent)
-  document.getElementById("your-container-id").appendChild(iProovMe)
+    const iProovMe = document.createElement("iproov-me")
+    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+    const templateContent = document.querySelector("#iproov_template").content.cloneNode(true)
+    iProovMe.append(templateContent)
+    document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -327,12 +327,12 @@ With [jQuery](https://jquery.com), the entire Web Component can be injected with
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-  const iProovMe = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
+    const iProovMe = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
 
-  iProovMe.append('<div slot="ready"><h1 class="iproov-lang-heading">Register your face</h1></div>')
-  iProovMe.append('<button type="button" slot="button">Start face scan...</button>')
+    iProovMe.append('<div slot="ready"><h1 class="iproov-lang-heading">Register your face</h1></div>')
+    iProovMe.append('<button type="button" slot="button">Start face scan...</button>')
 
-  $("#your-container-id").append(iProovMe)
+    $("#your-container-id").append(iProovMe)
 })
 ```
 
@@ -345,8 +345,8 @@ To integrate with our localization feature, use special class names in your slot
 
 ```html
 <div slot="passed">
-  <h3 class="iproov-lang-heading">Passed</h3>
-  <div class="iproov-lang-term">You have iProoved successfully</div>
+    <h3 class="iproov-lang-heading">Passed</h3>
+    <div class="iproov-lang-term">You have iProoved successfully</div>
 </div>
 ```
 
@@ -431,7 +431,7 @@ Properties of the event's **detail** payload:
 | **is_native_bridge** | All                                                  | Boolean value if event originates from the native bridge   |
 
 > - - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
->     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
+      >     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
 
 In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 
@@ -466,10 +466,10 @@ We recommend the integrator listens for at least the **ready** and **unsupported
 
 ```javascript
 document.querySelector("iproov-me").addEventListener("ready", function (event) {
-  console.log("iProov is ready")
+    console.log("iProov is ready")
 })
 document.querySelector("iproov-me").addEventListener("unsupported", function (event) {
-  console.warn("iProov is not supported: " + event.detail.reason)
+    console.warn("iProov is not supported: " + event.detail.reason)
 })
 ```
 
@@ -492,25 +492,25 @@ iProovMe.addEventListener("permission", iProovEvent)
 iProovMe.addEventListener("permission_denied", iProovEvent)
 
 function iProovEvent(event) {
-  switch (event.type) {
-    case "cancelled":
-    case "interrupted":
-    case "error":
-    case "unsupported":
-    case "permission":
-    case "permission_denied":
-      console.warn("iProov " + event.type + " - " + event.detail.reason)
-      break
-    case "progress":
-      console.info(event.detail.message + " (" + event.detail.progress + "%)")
-      break
-    case "passed":
-    case "failed":
-      console.log("iProov " + event.detail.type + " " + event.type)
-      break
-    default:
-      console.log("iProov " + event.type)
-  }
+    switch (event.type) {
+        case "cancelled":
+        case "interrupted":
+        case "error":
+        case "unsupported":
+        case "permission":
+        case "permission_denied":
+            console.warn("iProov " + event.type + " - " + event.detail.reason)
+            break
+        case "progress":
+            console.info(event.detail.message + " (" + event.detail.progress + "%)")
+            break
+        case "passed":
+        case "failed":
+            console.log("iProov " + event.detail.type + " " + event.type)
+            break
+        default:
+            console.log("iProov " + event.type)
+    }
 }
 ```
 
@@ -534,17 +534,17 @@ Any value not supplied will fall back to the English default.
 
 ```javascript
 window.addEventListener("WebComponentsReady", (event) => {
-  const iProovMe = document.createElement("iproov-me")
-  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+    const iProovMe = document.createElement("iproov-me")
+    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
-  const customLanguage = {
-    passed: "You passed!",
-    prompt_connecting: "It's loading...",
-  }
-  element.setAttribute("language", JSON.stringify(customLanguage))
+    const customLanguage = {
+        passed: "You passed!",
+        prompt_connecting: "It's loading...",
+    }
+    element.setAttribute("language", JSON.stringify(customLanguage))
 
-  // inject iproov element into page
-  document.getElementById("your-container-id").appendChild(iProovMe)
+    // inject iproov element into page
+    document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -552,22 +552,22 @@ window.addEventListener("WebComponentsReady", (event) => {
 
 ```javascript
 window.addEventListener("WebComponentsReady", async (event) => {
-  async function getLanguage(path) {
-    const response = await fetch(path)
-    const language = await response.text()
+    async function getLanguage(path) {
+        const response = await fetch(path)
+        const language = await response.text()
 
-    return language
-  }
+        return language
+    }
 
-  const iProovMe = document.createElement("iproov-me")
-  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+    const iProovMe = document.createElement("iproov-me")
+    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
-  const languageFile = "" // local or external path to language file
-  const customLanguage = await getLanguage(languageFile)
-  element.setAttribute("language", customLanguage)
+    const languageFile = "" // local or external path to language file
+    const customLanguage = await getLanguage(languageFile)
+    element.setAttribute("language", customLanguage)
 
-  // inject iproov element into page
-  document.getElementById("your-container-id").appendChild(iProovMe)
+    // inject iproov element into page
+    document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -640,22 +640,22 @@ const supportChecker = new window.IProov.IProovSupport()
 const supportChecker = new iProovSupport()
 // Event based:
 supportChecker.addEventListener("check", (event) => {
-  const { supported, granted, is_native_bridge } = event.detail
-  if (supported === false) {
-    // go to fallback UX
-  }
-  if (supported && granted) {
-    // full permission and granted, we can definitely iProov!
-    if (is_native_bridge) {
-      // if native bridge mode has been detected then permission checks have been circumvented as they aren't needed
+    const { supported, granted, is_native_bridge } = event.detail
+    if (supported === false) {
+        // go to fallback UX
     }
-  }
-  if (supported && granted === null) {
-    // browser API support, but we haven't run a permission check (see checkWithPermission)
-  }
-  if (supported && granted === false) {
-    // browser API support, but camera access denied - try again or advise user before proceeding
-  }
+    if (supported && granted) {
+        // full permission and granted, we can definitely iProov!
+        if (is_native_bridge) {
+            // if native bridge mode has been detected then permission checks have been circumvented as they aren't needed
+        }
+    }
+    if (supported && granted === null) {
+        // browser API support, but we haven't run a permission check (see checkWithPermission)
+    }
+    if (supported && granted === false) {
+        // browser API support, but camera access denied - try again or advise user before proceeding
+    }
 })
 
 // Promise based:
@@ -668,7 +668,7 @@ permissions for iProoving, save some bandwidth, and provide a cleaner user journ
 ```javascript
 const supportChecker = new iProovSupport()
 document.querySelector("#check-button").addEventListener("click", async () => {
-  const { supported, granted } = await supportChecker.checkWithPermission()
+    const { supported, granted } = await supportChecker.checkWithPermission()
 })
 ```
 
@@ -686,31 +686,31 @@ The following events can be emitted from `iProovSupport`:
 ```javascript
 const supportChecker = new iProovSupport()
 function onCheckResult(event) {
-  const {
-    /** @var boolean */
-    supported,
-    /** @var boolean */
-    granted,
-    /** @var array */
-    tests,
-    /** @var boolean|undefined */
-    is_native_bridge,
-  } = event.detail
-  console.debug("Checks run:", tests)
-  if (supported) {
-    if (is_native_bridge) {
-      console.debug("User can iProov with the Native SDK")
+    const {
+        /** @var boolean */
+        supported,
+        /** @var boolean */
+        granted,
+        /** @var array */
+        tests,
+        /** @var boolean|undefined */
+        is_native_bridge,
+    } = event.detail
+    console.debug("Checks run:", tests)
+    if (supported) {
+        if (is_native_bridge) {
+            console.debug("User can iProov with the Native SDK")
+        } else {
+            console.debug("User can iProov with the Web SDK")
+        }
+        if (granted) {
+            console.debug("User has granted permission for camera access")
+        } else {
+            console.debug("Prompt the user for camera access permission")
+        }
     } else {
-      console.debug("User can iProov with the Web SDK")
+        console.error("Browser does not support the Web SDK")
     }
-    if (granted) {
-      console.debug("User has granted permission for camera access")
-    } else {
-      console.debug("Prompt the user for camera access permission")
-    }
-  } else {
-    console.error("Browser does not support the Web SDK")
-  }
 }
 const onUnsupported = ({ supported, tests }) => ({})
 const onPermissionWasGranted = ({ tests }) => ({})
@@ -722,13 +722,13 @@ supportChecker.addEventListener("denied", onPermissionWasDenied)
 // The `tests` object consists of the following options:
 // null if unchecked, true if supported, false if not supported:
 const possibleTests = {
-  videoInput: null,
-  wasm: null,
-  userMedia: null,
-  mediaStreamTrack: null,
-  frontCamera: null,
-  fullScreen: null,
-  webgl: null,
+    videoInput: null,
+    wasm: null,
+    userMedia: null,
+    mediaStreamTrack: null,
+    frontCamera: null,
+    fullScreen: null,
+    webgl: null,
 }
 ```
 
