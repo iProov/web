@@ -2,6 +2,7 @@
   "language_file": "en-GB",
   "authenticate": "Authenticate",
   "client_error": "An unknown error occurred",
+  "client_camera": "There was an error getting video from the camera",
   "enrol": "Enrol",
   "error": "Error",
   "error_asset_fetch": "Unable to fetch assets",
@@ -13,6 +14,7 @@
   "error_fullscreen_change": "Exited full-screen without completing iProov",
   "error_expired_token": "The token has already been used or has expired",
   "error_invalid_token": "The token is invalid",
+  "error_network": "Network error",
   "error_no_camera": "No Camera Detected",
   "error_no_camera_message": "A camera must be available to use iProov",
   "error_no_face_found": "No face could be found",
@@ -31,6 +33,8 @@
   "failure_user_timeout": "Your session has expired",
   "iproov_success": "You have iProoved successfully",
   "label_camera_selector": "Choose camera:",
+  "iframe_bridge_title": "Ready to iProov",
+  "iframe_bridge_button": "Begin in new window",
   "message_format": "%@ to %@",
   "message_format_with_username": "%@ as %@ to %@",
   "passed": "Passed",
@@ -60,5 +64,9 @@
   "prompt_too_high": "Move down",
   "prompt_too_left": "Move right",
   "prompt_too_low": "Move up",
-  "prompt_too_right": "Move left"
+  "prompt_too_right": "Move left",
+  "prompt_increase_screen_brightness": "Increase screen brightness",
+  "prompt_poor_lighting_conditions": "Move away from bright light",
+  "prompt_calibrating": "Calibrating…",
+  "sdk_unsupported": "The SDK has passed end of life and is no longer supported"
 }
