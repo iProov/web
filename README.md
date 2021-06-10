@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.1.10
+# iProov Biometrics Web SDK v3.2.0
 
 ## 📖 Table of contents
 
@@ -13,6 +13,7 @@
 - [Browser support](#-browser-support)
 - [WebViews](#-webviews)
 - [Native bridge](#-native-bridge)
+- [Mobile Safari Iframe bridge](#iframe-bridge-for-mobile-safari)
 - [Help & support](#-help--support)
 
 ## 🤳 Introduction
@@ -107,9 +108,9 @@ The `<iproov-me>` element can also be injected into the page with the token:
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-    const iProovMe = document.createElement("iproov-me")
-    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-    document.getElementById("your-container-id").appendChild(iProovMe)
+  const iProovMe = document.createElement("iproov-me")
+  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+  document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -119,7 +120,7 @@ The HTML can also be injected directly onto the page as in this jQuery example:
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-    $("#your-container-id").append($('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>'))
+  $("#your-container-id").append($('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>'))
 })
 ```
 
@@ -134,6 +135,17 @@ There are also the following framework specific example integrations available o
 ## ⚙ Options
 
 The behaviour of the iProov Biometrics Web SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
+
+#### Network Timeout
+Time in seconds for the backend to ack a message we send. In the event of the timeout being exceeded, the error event will fire with the feedback code [error_network](#Details).
+
+The default value is 10 seconds. To set the timeout to 15 seconds you would pass the following option:
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" network_timeout="15"></iproov-me>
+```
+
+Setting this option lower than the defaults may increase error rates, so please be mindful when changing this.
 
 #### Base URL
 
@@ -161,6 +173,16 @@ You can use a custom logo by simply passing a relative link, absolute path or da
 <iproov-me token="***YOUR_TOKEN_HERE***" logo="https://www.iproov.com/images/iproov_logo.svg"></iproov-me>
 ```
 
+#### Close Button
+
+You can set a custom close button by setting a valid URI as below:
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" close_button="https://www.materialui.co/materialIcons/navigation/close_black_72x72.png"></iproov-me>
+```
+
+SVG is recommended.
+
 #### Custom Title
 
 Specify a custom title to be shown. Defaults to show an iProov-generated message. Set to empty string "" to hide the message entirely. You can also pass in `%@` characters which will be mapped in this order to `type` (Enrol or Verify), `user_name` (the user_name you passed when generating the token), `sp_name` (the service provider you used to generate the token).
@@ -181,23 +203,33 @@ Specify a custom title to be shown. Defaults to show an iProov-generated message
 
 #### Colours
 
-You can customise the look and feel of the main layout by changing the following options. You can pass a literal value i.e. `red`, RGB i.e. `rgb(230, 245, 66)` or a hex value i.e. `#e6f542`.
+You can customise the look and feel of the main layout by changing the following options. You can pass a literal value `red`, RGB `rgb(230, 245, 66)` or a hex value `#e6f542`.
 
 ```javascript
-loading_tint_color = "#5c5c5c" // The app is connecting to the server or no face found. Default: grey (#5c5c5c)
-not_ready_tint_color = "#f5a623" // Cannot start iProoving until the user takes action (e.g. move closer, etc). Default: orange (#f5a623)
-ready_tint_color = "#01bf46" // Ready to start iProoving. Default: green (#01bf46)
-liveness_tint_color = "#1756e5" // Liveness tint colour. Default: blue (#1756e5)
+{
+  header_background_color: "rgba(0, 0, 0, .68)", // Header area - usually grey, encloses title and close button
+  header_text_color: "#fff", // Header text
+  footer_background_color: "rgba(0, 0, 0, .68)", // Footer area
+  footer_text_color: "#fff", // Footer text
+  progress_bar_color: "#000", // GPA progress bar. Positioned above the footer and behind the text.
+  loading_tint_color: "#5c5c5c", // The app is connecting to the server or no face found. Default: grey.
+  not_ready_tint_color: "#f5a623", // Cannot start iProoving until the user takes action (e.g. move closer, etc). Default: orange.
+  ready_tint_color: "#01bf46", // Ready to start iProoving. Default: green.
+  oval_scanning_color: "#fff", // The colour of the oval while scanning in GPA.
+  liveness_tint_color: "#1756e5", // Liveness tint colour. Default: blue.
+  liveness_scanning_tint_color: "#5c5c5c", // Liveness is scanning. Default: lightGrey.
+}
+
 ```
 
 The example below changes the default grey no face to `#4293f5` (blue), giving feedback like "Move Closer" to red `rgb(245, 66, 66)` and starting to `purple`.
 
 ```html
 <iproov-me
-        token="***YOUR_TOKEN_HERE***"
-        loading_tint_color="#4293f5"
-        not_ready_tint_color="rgb(245, 66, 66)"
-        ready_tint_color="purple"
+  token="***YOUR_TOKEN_HERE***"
+  loading_tint_color="#4293f5"
+  not_ready_tint_color="rgb(245, 66, 66)"
+  ready_tint_color="purple"
 ></iproov-me>
 ```
 
@@ -283,12 +315,12 @@ The simplest way to add a slot is to include it within the `<iproov-me>` HTML ta
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***">
-    <div slot="ready">
-        <h1 class="iproov-lang-heading">Ready to iProov</h1>
-    </div>
-    <div slot="button">
-        <button type="button">Scan Face</button>
-    </div>
+  <div slot="ready">
+    <h1 class="iproov-lang-heading">Ready to iProov</h1>
+  </div>
+  <div slot="button">
+    <button type="button">Scan Face</button>
+  </div>
 </iproov-me>
 ```
 
@@ -302,12 +334,12 @@ Template to be placed anywhere in your page:
 
 ```html
 <template id="iproov_template">
-    <div slot="ready">
-        <h1 class="iproov-lang-heading">Register your face</h1>
-    </div>
-    <div slot="button">
-        <button>Start face scan...</button>
-    </div>
+  <div slot="ready">
+    <h1 class="iproov-lang-heading">Register your face</h1>
+  </div>
+  <div slot="button">
+    <button>Start face scan...</button>
+  </div>
 </template>
 ```
 
@@ -315,11 +347,11 @@ JavaScript:
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-    const iProovMe = document.createElement("iproov-me")
-    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
-    const templateContent = document.querySelector("#iproov_template").content.cloneNode(true)
-    iProovMe.append(templateContent)
-    document.getElementById("your-container-id").appendChild(iProovMe)
+  const iProovMe = document.createElement("iproov-me")
+  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+  const templateContent = document.querySelector("#iproov_template").content.cloneNode(true)
+  iProovMe.append(templateContent)
+  document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -327,12 +359,12 @@ With [jQuery](https://jquery.com), the entire Web Component can be injected with
 
 ```javascript
 window.addEventListener("WebComponentsReady", function (event) {
-    const iProovMe = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
+  const iProovMe = $('<iproov-me token="***YOUR_TOKEN_HERE***"></iproov-me>')
 
-    iProovMe.append('<div slot="ready"><h1 class="iproov-lang-heading">Register your face</h1></div>')
-    iProovMe.append('<button type="button" slot="button">Start face scan...</button>')
+  iProovMe.append('<div slot="ready"><h1 class="iproov-lang-heading">Register your face</h1></div>')
+  iProovMe.append('<button type="button" slot="button">Start face scan...</button>')
 
-    $("#your-container-id").append(iProovMe)
+  $("#your-container-id").append(iProovMe)
 })
 ```
 
@@ -345,8 +377,8 @@ To integrate with our localization feature, use special class names in your slot
 
 ```html
 <div slot="passed">
-    <h3 class="iproov-lang-heading">Passed</h3>
-    <div class="iproov-lang-term">You have iProoved successfully</div>
+  <h3 class="iproov-lang-heading">Passed</h3>
+  <div class="iproov-lang-term">You have iProoved successfully</div>
 </div>
 ```
 
@@ -431,32 +463,34 @@ Properties of the event's **detail** payload:
 | **is_native_bridge** | All                                                  | Boolean value if event originates from the native bridge   |
 
 > - - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
-      >     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
+>     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
 
 In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 
 | Feedback                              | Reason                                                    |                    Event |
 | ------------------------------------- | --------------------------------------------------------- | -----------------------: |
-| **client_browser**                    | The browser is not supported                              |            _unsupported_ |
-| **error_fullscreen_change**           | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
 | **ambiguous_outcome**                 | Sorry, ambiguous outcome                                  |                 _failed_ |
+| **client_api**                        | There was an error calling the API                        |                  _error_ |
+| **client_browser**                    | The browser is not supported                              |            _unsupported_ |
+| **client_camera**                     | There was an error getting video from the camera          |                  _error_ |
+| **client_config**                     | There was an error with the client configuration          |                  _error_ |
+| **client_error**                      | An unknown error occurred                                 |                  _error_ |
+| **client_stream**                     | There was an error streaming the video                    |                  _error_ |
+| **error_asset_fetch**                 | Unable to fetch assets                                    |                  _error_ |
 | **error_camera_in_use**               | The camera is already in use and cannot be accessed       |                  _error_ |
+| **error_device_motion_unsupported**   | Your device does not seem to fully report device motion   |                  _error_ |
 | **error_expired_token**               | The token has already been used or has expired            |                  _error_ |
-| **error_no_face_found**               | No face could be found                                    |                  _error_ |
+| **error_fullscreen_change**           | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
 | **error_invalid_token**               | The token is invalid                                      |                  _error_ |
+| **error_network**               | Network error                                   |                  _error_ |
+| **error_no_face_found**               | No face could be found                                    |                  _error_ |
+| **error_server**                      | Server error                                              |                  _error_ |
 | **lighting_backlit**                  | Strong light source detected behind you                   |                 _failed_ |
 | **lighting_face_too_bright**          | Too much light detected on your face                      |                 _failed_ |
 | **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low     |                 _failed_ |
 | **lighting_too_dark**                 | Your environment appears too dark                         |                 _failed_ |
 | **motion_too_much_mouth_movement**    | Please do not talk while iProoving                        |                 _failed_ |
 | **motion_too_much_movement**          | Please keep still                                         |                 _failed_ |
-| **user_timeout**                      | Sorry, your session has timed out                         |                 _failed_ |
-| **client_api**                        | There was an error calling the API                        |                  _error_ |
-| **client_camera**                     | There was an error getting video from the camera          |                  _error_ |
-| **client_config**                     | There was an error with the client configuration          |                  _error_ |
-| **client_error**                      | An unknown error occurred                                 |                  _error_ |
-| **client_stream**                     | There was an error streaming the video                    |                  _error_ |
-| **server_abort**                      | The server aborted the claim before iProov completed      |                  _error_ |
 | **network_problem**                   | Sorry, network problem                                    |                  _error_ |
 | **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported |                  _error_ |
 
@@ -466,10 +500,10 @@ We recommend the integrator listens for at least the **ready** and **unsupported
 
 ```javascript
 document.querySelector("iproov-me").addEventListener("ready", function (event) {
-    console.log("iProov is ready")
+  console.log("iProov is ready")
 })
 document.querySelector("iproov-me").addEventListener("unsupported", function (event) {
-    console.warn("iProov is not supported: " + event.detail.reason)
+  console.warn("iProov is not supported: " + event.detail.reason)
 })
 ```
 
@@ -492,25 +526,25 @@ iProovMe.addEventListener("permission", iProovEvent)
 iProovMe.addEventListener("permission_denied", iProovEvent)
 
 function iProovEvent(event) {
-    switch (event.type) {
-        case "cancelled":
-        case "interrupted":
-        case "error":
-        case "unsupported":
-        case "permission":
-        case "permission_denied":
-            console.warn("iProov " + event.type + " - " + event.detail.reason)
-            break
-        case "progress":
-            console.info(event.detail.message + " (" + event.detail.progress + "%)")
-            break
-        case "passed":
-        case "failed":
-            console.log("iProov " + event.detail.type + " " + event.type)
-            break
-        default:
-            console.log("iProov " + event.type)
-    }
+  switch (event.type) {
+    case "cancelled":
+    case "interrupted":
+    case "error":
+    case "unsupported":
+    case "permission":
+    case "permission_denied":
+      console.warn("iProov " + event.type + " - " + event.detail.reason)
+      break
+    case "progress":
+      console.info(event.detail.message + " (" + event.detail.progress + "%)")
+      break
+    case "passed":
+    case "failed":
+      console.log("iProov " + event.detail.type + " " + event.type)
+      break
+    default:
+      console.log("iProov " + event.type)
+  }
 }
 ```
 
@@ -534,17 +568,17 @@ Any value not supplied will fall back to the English default.
 
 ```javascript
 window.addEventListener("WebComponentsReady", (event) => {
-    const iProovMe = document.createElement("iproov-me")
-    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+  const iProovMe = document.createElement("iproov-me")
+  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
-    const customLanguage = {
-        passed: "You passed!",
-        prompt_connecting: "It's loading...",
-    }
-    element.setAttribute("language", JSON.stringify(customLanguage))
+  const customLanguage = {
+    passed: "You passed!",
+    prompt_connecting: "It's loading...",
+  }
+  element.setAttribute("language", JSON.stringify(customLanguage))
 
-    // inject iproov element into page
-    document.getElementById("your-container-id").appendChild(iProovMe)
+  // inject iproov element into page
+  document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -552,22 +586,22 @@ window.addEventListener("WebComponentsReady", (event) => {
 
 ```javascript
 window.addEventListener("WebComponentsReady", async (event) => {
-    async function getLanguage(path) {
-        const response = await fetch(path)
-        const language = await response.text()
+  async function getLanguage(path) {
+    const response = await fetch(path)
+    const language = await response.text()
 
-        return language
-    }
+    return language
+  }
 
-    const iProovMe = document.createElement("iproov-me")
-    iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
+  const iProovMe = document.createElement("iproov-me")
+  iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
-    const languageFile = "" // local or external path to language file
-    const customLanguage = await getLanguage(languageFile)
-    element.setAttribute("language", customLanguage)
+  const languageFile = "" // local or external path to language file
+  const customLanguage = await getLanguage(languageFile)
+  element.setAttribute("language", customLanguage)
 
-    // inject iproov element into page
-    document.getElementById("your-container-id").appendChild(iProovMe)
+  // inject iproov element into page
+  document.getElementById("your-container-id").appendChild(iProovMe)
 })
 ```
 
@@ -640,22 +674,22 @@ const supportChecker = new window.IProov.IProovSupport()
 const supportChecker = new iProovSupport()
 // Event based:
 supportChecker.addEventListener("check", (event) => {
-    const { supported, granted, is_native_bridge } = event.detail
-    if (supported === false) {
-        // go to fallback UX
+  const { supported, granted, is_native_bridge } = event.detail
+  if (supported === false) {
+    // go to fallback UX
+  }
+  if (supported && granted) {
+    // full permission and granted, we can definitely iProov!
+    if (is_native_bridge) {
+      // if native bridge mode has been detected then permission checks have been circumvented as they aren't needed
     }
-    if (supported && granted) {
-        // full permission and granted, we can definitely iProov!
-        if (is_native_bridge) {
-            // if native bridge mode has been detected then permission checks have been circumvented as they aren't needed
-        }
-    }
-    if (supported && granted === null) {
-        // browser API support, but we haven't run a permission check (see checkWithPermission)
-    }
-    if (supported && granted === false) {
-        // browser API support, but camera access denied - try again or advise user before proceeding
-    }
+  }
+  if (supported && granted === null) {
+    // browser API support, but we haven't run a permission check (see checkWithPermission)
+  }
+  if (supported && granted === false) {
+    // browser API support, but camera access denied - try again or advise user before proceeding
+  }
 })
 
 // Promise based:
@@ -668,7 +702,7 @@ permissions for iProoving, save some bandwidth, and provide a cleaner user journ
 ```javascript
 const supportChecker = new iProovSupport()
 document.querySelector("#check-button").addEventListener("click", async () => {
-    const { supported, granted } = await supportChecker.checkWithPermission()
+  const { supported, granted } = await supportChecker.checkWithPermission()
 })
 ```
 
@@ -686,31 +720,31 @@ The following events can be emitted from `iProovSupport`:
 ```javascript
 const supportChecker = new iProovSupport()
 function onCheckResult(event) {
-    const {
-        /** @var boolean */
-        supported,
-        /** @var boolean */
-        granted,
-        /** @var array */
-        tests,
-        /** @var boolean|undefined */
-        is_native_bridge,
-    } = event.detail
-    console.debug("Checks run:", tests)
-    if (supported) {
-        if (is_native_bridge) {
-            console.debug("User can iProov with the Native SDK")
-        } else {
-            console.debug("User can iProov with the Web SDK")
-        }
-        if (granted) {
-            console.debug("User has granted permission for camera access")
-        } else {
-            console.debug("Prompt the user for camera access permission")
-        }
+  const {
+    /** @var boolean */
+    supported,
+    /** @var boolean */
+    granted,
+    /** @var array */
+    tests,
+    /** @var boolean|undefined */
+    is_native_bridge,
+  } = event.detail
+  console.debug("Checks run:", tests)
+  if (supported) {
+    if (is_native_bridge) {
+      console.debug("User can iProov with the Native SDK")
     } else {
-        console.error("Browser does not support the Web SDK")
+      console.debug("User can iProov with the Web SDK")
     }
+    if (granted) {
+      console.debug("User has granted permission for camera access")
+    } else {
+      console.debug("Prompt the user for camera access permission")
+    }
+  } else {
+    console.error("Browser does not support the Web SDK")
+  }
 }
 const onUnsupported = ({ supported, tests }) => ({})
 const onPermissionWasGranted = ({ tests }) => ({})
@@ -722,13 +756,13 @@ supportChecker.addEventListener("denied", onPermissionWasDenied)
 // The `tests` object consists of the following options:
 // null if unchecked, true if supported, false if not supported:
 const possibleTests = {
-    videoInput: null,
-    wasm: null,
-    userMedia: null,
-    mediaStreamTrack: null,
-    frontCamera: null,
-    fullScreen: null,
-    webgl: null,
+  videoInput: null,
+  wasm: null,
+  userMedia: null,
+  mediaStreamTrack: null,
+  frontCamera: null,
+  fullScreen: null,
+  webgl: null,
 }
 ```
 
@@ -772,6 +806,15 @@ The `native_sdk_options` setting accepts a base64 encoded JSON object of iProov 
 ```js
 iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ ui: { scanLineDisabled: true, filter: "classic" } })))
 ```
+
+### Iframe bridge for mobile Safari
+
+If integrating iProov Liveness into an iframed document, you must use Iframe Bridge to support Safari on iOS versions prior to iOS 15. For more details see our [Wiki](https://github.com/iProov/web/wiki/Iframe-Bridge-for-Mobile-Safari).
+
+### Iframe bridge support checker
+
+`IProovSupport.check` returns a `flags` object. The presence of `requires_iframe_bridge` in `flags` will indicate that
+Iframe Bridge will be used if a user proceeds. No further tests are made on the host window if this is detected.
 
 ## ❓ Help & support
 
