@@ -5,6 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 10.06.2021 3.2.0
+
+## Fixed
+
+- Fixed "Keep still" message from disappearing while streaming when `show_countdown` is set to `true`.
+- Fix rotate portrait issues on Android devices.
+- Fix various fullscreen flicker issues.
+- Fix race condition when exiting fullscreen where the UI may not hand control back to the host page.
+
+## Added
+
+**UI Customisation**
+
+- New options have been added to customise the UI colours:
+  - `header_background_color`
+  - `header_text_color`
+  - `footer_background_color`
+  - `footer_text_color`
+  - `progress_bar_color`
+  - `loading_tint_color`
+  - `not_ready_tint_color`
+  - `ready_tint_color`
+  - `oval_scanning_color`
+  - `liveness_tint_color`
+  - `liveness_scanning_tint_color`
+- A new `close_button` URL option has been added to customise the close button.
+
+**Timeout Logic**
+
+- The `network_timeout` option has been added, defaulting to 10 seconds. See the docs for more details.
+- If we don't receive a response from our backend in this time, we error with `error_network`.
+
+**Iframe Bridge**
+
+- Iframe Bridge for Mobile Safari has been added in order to support Liveness transactions, where the device would otherwise report `unsupported`.
+  - New events:
+    - `iframe_bridge`
+  - New slots:
+    - `iframe_bridge_title`
+    - `iframe_bridge_button`
+  - New language strings:
+    - `iframe_bridge_title`
+    - `iframe_bridge_button`
+
+**General**
+
+- Added missing errors `error_asset_fetch` and `error_device_motion_unsupported` to readme.
+- Added `client_camera` and `sdk_unsupported` to default English language file: https://github.com/iProov/web/blob/master/iproov-en.json.
+
+## Changed
+
+- Various changes have been made to _feedback_ and _reason_ values within the `error` and `failure` event details that are passed back to match the documentation.
+  - `user_timeout` is now `failure_user_timeout` and only passed within the `failed` event. This was being triggered as an `error` event when the token had been used before or was invalid which has now been replaced with `error_expired_token`.
+  - `error_camera` is now `client_camera` which is fired when the device camera does not provide video for 8 seconds.
+- The SDK has been split out into constituent chunks which are lazy loaded on demand. This increases page speed.
+
+
 ## 14.5.2021 3.1.10
 
 ## Fixed
@@ -19,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 
 - `started` event behaviour has been changed in a BC-safe way to reduce page jank:
-  - The `started` event is now sent *after* entering fullscreen rather than in parallel
+  - The `started` event is now sent _after_ entering fullscreen rather than in parallel
   - The `started` slot manager callback no longer hides all slots when entering fullscreen.
   - The `streaming` event is the soonest event that all slots are hidden.
 - Internal UI lifecycle management has been tidied which may yield a slight improvement in UI performance.
