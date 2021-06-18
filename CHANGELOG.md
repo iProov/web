@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 18.06.2021 3.2.1
+
+## Fixed
+
+- Fixed `cancelled` or `interrupted` events not firing if the back button is pressed on single page apps using popstate.
+- Fixed bug in how the UI scales in size to fit the whole screen.
+- Fixed cases when `abort` events were fired twice due to an internal API race condition.
+
+## Added
+
+- Added `error_too_many_requests` language string which is displayed when rate limiting is enforced at the client side.
+
+## Removed
+
+- Removed face positional alignment instructions `Move Left` and `Move Right` on mobile devices.
+
 ## 10.06.2021 3.2.0
 
 ## Fixed

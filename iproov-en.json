@@ -21,6 +21,7 @@
   "error_not_supported": "Unsupported",
   "error_not_supported_message": "Your device is not supported",
   "error_server": "Server error",
+  "error_too_many_requests": "Sorry, this service is exceptionally busy right now; please try again later.",
   "failed": "Failed",
   "failure_ambiguous_outcome": "Ambiguous outcome",
   "failure_lighting_backlit": "Strong light source detected behind you",
