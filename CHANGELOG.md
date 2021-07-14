@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 14.07.2021 3.2.2
+
+## Fixed
+
+- Fixed crashing issue found in some JavaScript libraries.
+- Fixed missing `connecting` event.
+- Fixed missing `feedback` property from `interrupted` and `cancelled` events.
+
+## Deprecation Notice
+The `code` property which is returned within `event.details` has been deprecated and will be removed in future versions. This was unintentionally added. If you are using `code` please switch to the `feedback` property. For more details on the correct way to use event data please see our [docs](https://github.com/iProov/web#-events).
+
 ## 18.06.2021 3.2.1
 
 ## Fixed
