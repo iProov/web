@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 04.08.2021 3.3.0
+
+## New
+
+- **Camera selection** - in multi camera environments, where browser support allows it, we have improved camera selection logic to prioritise user facing and higher resolution devices.
+
+## Fixed
+
+- **Camera selection** - multiple camera selection no longer blocks fullscreen.
+- **Camera selection** - we have fixed a regression where programmatically setting the camera device in slotted content failed.
+- **Safari on macOS Catalina** - we have worked around Safari's lack of fullscreen event support for this OS.
+
+Please note our Browserslist database has been updated to `1.0.30001248`.
+
 ## 14.07.2021 3.2.2
 
 ## Fixed
@@ -14,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed missing `feedback` property from `interrupted` and `cancelled` events.
 
 ## Deprecation Notice
+
 The `code` property which is returned within `event.details` has been deprecated and will be removed in future versions. This was unintentionally added. If you are using `code` please switch to the `feedback` property. For more details on the correct way to use event data please see our [docs](https://github.com/iProov/web#-events).
 
 ## 18.06.2021 3.2.1
