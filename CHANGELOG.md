@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 12.08.2021 3.3.1
+
+## Fixed
+
+- **Safari on iOS** - Worked around circumstances when Safari provides corrupt imagery.
+- **Safari on iOS** - Liveness is now supported in an iframe on iOS 15 without the use of Iframe Bridge.
+
+## Changes
+
+- **Face detection** - Blazeface + TFJS upgraded to 0.0.7 and 3.8.0 respectively, enabling SIMD support, making things faster.
+- **UI** - Minor optimisations and simplified our shaders to reduce the WebGL load where possible.
+- **UI** - Low FPS Mode no longer presents an overpixellated UI. This should improve completion rates.
+- **Crash handling** - Improved detection of face detector crashes.
+- **Performance Analysis** - Improved distinction between the user clicking the exit button or exiting fullscreen.
+
 ## 04.08.2021 3.3.0
 
 ## New
@@ -102,7 +117,6 @@ The `code` property which is returned within `event.details` has been deprecated
   - `user_timeout` is now `failure_user_timeout` and only passed within the `failed` event. This was being triggered as an `error` event when the token had been used before or was invalid which has now been replaced with `error_expired_token`.
   - `error_camera` is now `client_camera` which is fired when the device camera does not provide video for 8 seconds.
 - The SDK has been split out into constituent chunks which are lazy loaded on demand. This increases page speed.
-
 
 ## 14.5.2021 3.1.10
 

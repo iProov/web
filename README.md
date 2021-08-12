@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.3.0
+# iProov Biometrics Web SDK v3.3.1
 
 ## 📖 Table of contents
 
@@ -137,6 +137,7 @@ There are also the following framework specific example integrations available o
 The behaviour of the iProov Biometrics Web SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
 
 #### Network Timeout
+
 Time in seconds for the backend to ack a message we send. In the event of the timeout being exceeded, the error event will fire with the feedback code [error_network](#Details).
 
 The default value is 10 seconds. To set the timeout to 15 seconds you would pass the following option:
@@ -178,7 +179,10 @@ You can use a custom logo by simply passing a relative link, absolute path or da
 You can set a custom close button by setting a valid URI as below:
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***" close_button="https://www.materialui.co/materialIcons/navigation/close_black_72x72.png"></iproov-me>
+<iproov-me
+  token="***YOUR_TOKEN_HERE***"
+  close_button="https://www.materialui.co/materialIcons/navigation/close_black_72x72.png"
+></iproov-me>
 ```
 
 SVG is recommended.
@@ -482,7 +486,7 @@ In the case of the **cancelled**, **interrupted**, **failed**, **error** and **u
 | **error_expired_token**               | The token has already been used or has expired            |                  _error_ |
 | **error_fullscreen_change**           | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
 | **error_invalid_token**               | The token is invalid                                      |                  _error_ |
-| **error_network**               | Network error                                   |                  _error_ |
+| **error_network**                     | Network error                                             |                  _error_ |
 | **error_no_face_found**               | No face could be found                                    |                  _error_ |
 | **error_server**                      | Server error                                              |                  _error_ |
 | **lighting_backlit**                  | Strong light source detected behind you                   |                 _failed_ |
