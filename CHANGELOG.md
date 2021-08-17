@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 17.08.2021 3.3.2
+
+## Fixed
+
+- **Liveness** - We have worked around instances where devices do not send orientation events. These previously triggered `device_motion_unsupported` errors.
+
+## Changes
+
+- **Performance analysis** - We have further tweaked our logging to enhance performance analysis in the long term.
+
 ## 12.08.2021 3.3.1
 
 ## Fixed
