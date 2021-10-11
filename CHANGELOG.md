@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 11.10.2021 3.3.3
+
+## Fixed
+
+- **Safari fullscreen issues** - Handle `Safari 13-14.1` not reporting fullscreen enter/exit events correctly.
+- **Safari permission issues** - We fixed an issue where permission could be blocked on certain devices.
+- **Progress event** - Progress event returned messages weren't being localised.
+
+## Changes
+
+- **Unsupported video feeds** - Detect very low resolutions and attempt to use a different video device if possible.
+- **Safari 15.0 desktop** - Regrettably, this browser is now blocked until Apple releases a version that fixes various regressions.
+- **Native Bridge** - Inside iframes, iOS Native Bridge now works on iOS versions <= 14.0. Older versions are unsupported.
+- **WebGL** - THREE.js upgraded to 0.133.1.
+
 ## 17.08.2021 3.3.2
 
 ## Fixed

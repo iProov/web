@@ -8,6 +8,7 @@
   "error_asset_fetch": "Unable to fetch assets",
   "error_camera": "Camera error",
   "error_camera_in_use": "The camera is already in use and cannot be accessed",
+  "error_camera_not_supported": "The camera you are using isn't supported",
   "error_camera_permission_denied": "Camera permission denied",
   "error_camera_permission_denied_message": "Permission to access the camera has been denied. Please allow camera access to use iProov. If you have already allowed access, please reload the page.",
   "error_device_motion_unsupported": "Your device does not seem to fully report device motion",
