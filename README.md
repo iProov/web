@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.3.3
+# iProov Biometrics Web SDK v3.3.4
 
 ## 📖 Table of contents
 
@@ -810,6 +810,12 @@ The `native_sdk_options` setting accepts a base64 encoded JSON object of iProov 
 
 ```js
 iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ ui: { scanLineDisabled: true, filter: "classic" } })))
+```
+
+### Iframe integrations
+Integrations via iframes are supported by the Web SDK but please note that you must declare that camera and fullscreen permissions are allowed. Any additional permissions you may require must be separated by a semi-colon `;`. Please note: `accelerometer;gyroscope;magnetometer;` are only required if you are intending to complete LA claims.
+```html
+<iframe src="https://your-iframe-target.example" allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"></iframe>
 ```
 
 ### Iframe bridge for mobile Safari
