@@ -5,9 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 26.11.2021 3.3.5
+
+## Fixed
+
+- **Supported Devices** - Block custom webview user agents where we can't test if supported.
+  - [More info here.](https://github.com/iProov/web/wiki/Frequently-Asked-Questions#can-i-customise-my-webview-apps-useragent)
+- **Interrupted Event** - If exiting fullscreen, handle when there's no video feed.
+- **Unsupported video feeds** - Further improve handling of very low resolutions.
+- **Permission button** - the grant button delay has been fixed
+
+## Internal Additions
+
+- **Telemetry** - Collects state of the SDK during various events, and in the case of incomplete transactions.
+- **Socket.io dependency** - We've upgraded our socket.io client dependency to version 4 to match the server.
+
 ## 10.11.2021 3.3.4
 
 ## Fixed
+
 - **a11y** - Improve text to speech order while using some screen readers.
 - **No Face Timeouts** - Only start detecting faces when ready is clicked.
 - **Error Handling** - Ensure error messages are always present.
