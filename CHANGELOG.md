@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 09.12.2021 3.3.6
+
+## Fixed
+
+- **Client errors** - We've fixed some, if not all, instances of `NotAllowedError` occurring when we get a video stream.
+- **WebGL** - We now gracefully handle `webglcontextlost` events which might happen when devices are under high load.
+- **Iframe Bridge + Native Bridge** - We fixed a regression introduced in 3.3.5. Sorry about that.
+
 ## 26.11.2021 3.3.5
 
 ## Fixed
