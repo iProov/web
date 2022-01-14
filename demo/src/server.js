@@ -24,12 +24,13 @@ async function init() {
   server.route({
     method: "GET",
     path: "/{param*}",
+    options: { cors: { origin: ["*"] } },
     handler: {
       directory: {
         path: resolve(__dirname, "static"),
         index: "index.html",
-      }
-    }
+      },
+    },
   })
 
   server.route({
@@ -55,7 +56,6 @@ async function init() {
 
   console.log("iProov tokens will be created on %s with API_KEY %s", BASE_URL, API_KEY)
   console.log("Web SDK example available at %s", "http://localhost:" + EXAMPLE_SERVER_PORT)
-
 }
 
 process.on("unhandledRejection", (err) => {

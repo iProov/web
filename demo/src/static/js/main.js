@@ -7,6 +7,7 @@ import { createSDK } from "./iproov-integration.js"
  * Initialize a new SDK instance or handle any errors.
  */
 async function submitTokenRequest() {
+  document.querySelector("button[type=submit]").textContent = "Loading..."
   const formData = new FormData(document.querySelector("#token_config"))
   const payload = {}
   for (let [field, value] of formData.entries()) {
@@ -89,7 +90,7 @@ function createSupportChecker() {
  */
 async function initializeSDK(body) {
   const { token, base_url } = body
-  const iProov = createSDK(console, token, base_url)
+  const iProov = createSDK(console, token, base_url, { onResult: renderFrame })
   const container = document.querySelector("#iproovme_container")
   container.innerHTML = ""
   container.appendChild(iProov)
@@ -99,11 +100,41 @@ async function initializeSDK(body) {
   }
   const wrapper = document.querySelector("#iproov_wrapper")
   wrapper.classList.remove("hidden")
+
+  document.querySelector("#token_config").classList.add("collapsed")
+  document.querySelector("button[type=submit]").textContent = "Create token"
+
   iProov.addEventListener("ready", () => {
     iProov.querySelector("[slot=button] button").focus()
     wrapper.scrollIntoView({ behavior: "smooth", block: "end" })
   })
-  document.querySelector("#token_config").classList.add("collapsed")
+
+  async function renderFrame() {
+    const formData = new FormData(document.querySelector("#token_config"))
+    const payload = { token }
+    for (let [field, value] of formData.entries()) {
+      payload[field] = value
+    }
+
+    const res = await fetch(`/api/claim/${payload.mode}/validate`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+
+    const body = await res.json()
+    if (body.error) {
+      return handleError(body)
+    }
+
+    if (body.frame_available) {
+      const img = document.createElement("img")
+      img.id = "frame"
+      img.src = "data:image/png;base64," + body.frame
+      container.appendChild(img)
+      img.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+  }
 }
 
 initializeSDK.imported = false

@@ -8,8 +8,10 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@hapi/hapi": "^20.0.3",
-    "@hapi/inert": "^6.0.3",
+    "@hapi/basic": "^6.0.0",
+    "@hapi/hapi": "^20.2.1",
+    "@hapi/inert": "^6.0.4",
+    "dotenv": "^8.2.0",
     "prettier": "^2.2.1",
     "superagent": "^6.1.0"
   }

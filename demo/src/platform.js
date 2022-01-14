@@ -83,10 +83,10 @@ export class PlatformAPI {
         .set(this.withHeaders())
         .send(
           this.withJsonAuth({
+            user_id: userId,
             token,
             ip: "127.0.0.1", // @todo: change when IPv6 is fully supported
             client: "superagent",
-            user_id: userId,
           })
         )
     )
