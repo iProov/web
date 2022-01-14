@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 14.01.2022 3.3.8
+
+## Fixed
+
+- **Support** - We've improved support logic where our partners embed the Web SDK into webpages which might lack the required feature policies to run properly.
+- **client_error** - We've fixed a large proportion, if not all, of video `NotAllowedError` and fullscreen related `TypeError` in browsers that use different user activation paradigms.
+- **server_error** - Some cases where tokens expired after 10 minutes were being classified as `server_error`. These are now correctly thrown as `error_expired_token`.
+
+## Internal changes
+
+- **Start button** - After the user clicks the start button, we now briefly set the start button innerHTML to the prompt_loading language term while the video starts.
+- **Support checker** - We've made a few changes that help give users a better experience:
+  - Where possible in Liveness, we now check `document.featurePolicy` for `accelerometer`, `gyroscope` and `magnetometer`. If these aren't allowed, instead of starting the SDK and erroring, we now run the unsupported callback.
+  - We no longer use the Permissions API to establish camera support due to its poor support and unreliable behaviour.
+
+## 22.12.2021 3.3.7
+
+## Fixed
+
+- **Native bridge** - fixed an issue with possible interplay with Zone.js
+
 ## 09.12.2021 3.3.6
 
 ## Fixed
