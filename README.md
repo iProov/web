@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.3.8
+# iProov Biometrics Web SDK v3.4.0
 
 ## 📖 Table of contents
 
@@ -180,8 +180,8 @@ You can set a custom close button by setting a valid URI as below:
 
 ```html
 <iproov-me
-        token="***YOUR_TOKEN_HERE***"
-        close_button="https://www.materialui.co/materialIcons/navigation/close_black_72x72.png"
+  token="***YOUR_TOKEN_HERE***"
+  close_button="https://www.materialui.co/materialIcons/navigation/close_black_72x72.png"
 ></iproov-me>
 ```
 
@@ -212,16 +212,16 @@ You can customise the look and feel of the main layout by changing the following
 ```javascript
 {
   header_background_color: "rgba(0, 0, 0, .68)", // Header area - usually grey, encloses title and close button
-          header_text_color: "#fff", // Header text
-          footer_background_color: "rgba(0, 0, 0, .68)", // Footer area
-          footer_text_color: "#fff", // Footer text
-          progress_bar_color: "#000", // GPA progress bar. Positioned above the footer and behind the text.
-          loading_tint_color: "#5c5c5c", // The app is connecting to the server or no face found. Default: grey.
-          not_ready_tint_color: "#f5a623", // Cannot start iProoving until the user takes action (e.g. move closer, etc). Default: orange.
-          ready_tint_color: "#01bf46", // Ready to start iProoving. Default: green.
-          oval_scanning_color: "#fff", // The colour of the oval while scanning in GPA.
-          liveness_tint_color: "#1756e5", // Liveness tint colour. Default: blue.
-          liveness_scanning_tint_color: "#5c5c5c", // Liveness is scanning. Default: lightGrey.
+  header_text_color: "#fff", // Header text
+  footer_background_color: "rgba(0, 0, 0, .68)", // Footer area
+  footer_text_color: "#fff", // Footer text
+  progress_bar_color: "#000", // GPA progress bar. Positioned above the footer and behind the text.
+  loading_tint_color: "#5c5c5c", // The app is connecting to the server or no face found. Default: grey.
+  not_ready_tint_color: "#f5a623", // Cannot start iProoving until the user takes action (e.g. move closer, etc). Default: orange.
+  ready_tint_color: "#01bf46", // Ready to start iProoving. Default: green.
+  oval_scanning_color: "#fff", // The colour of the oval while scanning in GPA.
+  liveness_tint_color: "#1756e5", // Liveness tint colour. Default: blue.
+  liveness_scanning_tint_color: "#5c5c5c", // Liveness is scanning. Default: lightGrey.
 }
 
 ```
@@ -230,10 +230,10 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
 
 ```html
 <iproov-me
-        token="***YOUR_TOKEN_HERE***"
-        loading_tint_color="#4293f5"
-        not_ready_tint_color="rgb(245, 66, 66)"
-        ready_tint_color="purple"
+  token="***YOUR_TOKEN_HERE***"
+  loading_tint_color="#4293f5"
+  not_ready_tint_color="rgb(245, 66, 66)"
+  ready_tint_color="purple"
 ></iproov-me>
 ```
 
@@ -467,7 +467,7 @@ Properties of the event's **detail** payload:
 | **is_native_bridge** | All                                                  | Boolean value if event originates from the native bridge   |
 
 > - - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
-      >     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
+>     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
 
 In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 
@@ -484,7 +484,7 @@ In the case of the **cancelled**, **interrupted**, **failed**, **error** and **u
 | **error_camera_in_use**               | The camera is already in use and cannot be accessed       |                  _error_ |
 | **error_camera_not_supported**        | The camera resolution is too small                        |                  _error_ |
 | **error_device_motion_unsupported**   | Your device does not seem to fully report device motion   |                  _error_ |
-| **error_expired_token**               | The token has already been used or has expired            |                  _error_ |
+| **error_expired_token**               | Token expired because it wasn't claimed in time           |                  _error_ |
 | **error_fullscreen_change**           | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
 | **error_invalid_token**               | The token is invalid                                      |                  _error_ |
 | **error_network**                     | Network error                                             |                  _error_ |
@@ -498,6 +498,7 @@ In the case of the **cancelled**, **interrupted**, **failed**, **error** and **u
 | **motion_too_much_movement**          | Please keep still                                         |                 _failed_ |
 | **network_problem**                   | Sorry, network problem                                    |                  _error_ |
 | **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported |                  _error_ |
+| **user_timeout**                      | The user started the claim but did not stream in time     |                 _failed_ |
 
 ### Listeners
 

@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 01.02.2022 3.4.0
+
+## Fixed
+
+- **UI** - Fixed an issue where the UI scaled incorrectly when shifting between orientations and resizing the window
+- **UI** - We've reduced the "page jank" when resizing the UI, when the window resizes change or the phone rotates
+
+## Changes
+
+- **UI** - We've smoothed out the "move closer" prompt to avoid toggling between two UI states.
+- **Timeouts** - We now handle timeout logic in a much clearer way:
+  - The SDK emits an error event with feedback code `error_token_timeout` if the user starts the iProov session too late.
+  - As before, if the user starts iProoving but doesn't stream imagery in time, the SDK emits a failure event with the
+    feedback code `failure_user_timeout`.
+- **Error messaging** and **language** - We've increased the level of detail, see `iproov-en.json` for the new strings:
+  - When the SDK runs any of the following callbacks: `error`, `cancelled`, `interrupted`, `permission_denied`, `no_camera` or `unsupported`:
+    - The language string mapping to the `feedback` event property is now displayed as the heading.
+    - A new language string has been added for each `feedback` code, suffixed with `_message`.
+    - Example: `error_no_camera` is the heading term, defaulting to "We couldn't find a camera connected to your device"
+    - Example: `error_no_camera_message` is the text term displayed beneath the heading, defaulting to "A camera must be available to use iProov"
+  - If your integration specifies language strings but doesn't implement the new `_message` suffix, then we fall back to the old behaviour:
+    - Heading using the "error" language term, and text using the corresponding feedback code's language term.
+
+## Added
+
+- **Genuine Presence Assurance** - added reflection strength estimation capabilities
+- **Language strings**:
+  - `error_token_timeout` and `error_token_timeout_message` when sessions don't start within 10 minutes of token create
+  - `iproov_ready_title` to allow internationalisation of "Ready to iProov" on the ready callback
+  - `iproov_ready_button` to allow internationalisation of "Scan face" for the ready callback button
+
 ## 14.01.2022 3.3.8
 
 ## Fixed
@@ -19,6 +50,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Support checker** - We've made a few changes that help give users a better experience:
   - Where possible in Liveness, we now check `document.featurePolicy` for `accelerometer`, `gyroscope` and `magnetometer`. If these aren't allowed, instead of starting the SDK and erroring, we now run the unsupported callback.
   - We no longer use the Permissions API to establish camera support due to its poor support and unreliable behaviour.
+
+## 22.12.2021 3.3.7
+
+## Fixed
+
+- **Native bridge** - fixed an issue with possible interplay with Zone.js
 
 ## 22.12.2021 3.3.7
 
