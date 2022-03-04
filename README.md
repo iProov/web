@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.4.0
+# iProov Biometrics Web SDK v3.5.1
 
 ## 📖 Table of contents
 
@@ -140,7 +140,7 @@ The behaviour of the iProov Biometrics Web SDK can be altered by setting the fol
 
 Time in seconds for the backend to ack a message we send. In the event of the timeout being exceeded, the error event will fire with the feedback code [error_network](#Details).
 
-The default value is 10 seconds. To set the timeout to 15 seconds you would pass the following option:
+The minimum, default value is **_10 seconds_**. To set the timeout to 15 seconds you would pass the following option:
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" network_timeout="15"></iproov-me>
@@ -235,6 +235,22 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
   not_ready_tint_color="rgb(245, 66, 66)"
   ready_tint_color="purple"
 ></iproov-me>
+```
+
+#### Filter
+
+This setting controls the filter for camera preview. Can be `classic`, `shaded` (additional detail, the default) or `vibrant` (full color).
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" filter="shaded"></iproov-me>
+```
+
+#### Floating Prompt
+
+Whether the instructions prompt should "float" over the user's face in the centre of the screen (`true`) or be placed in the footer (`false` - default).
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" enable_floating_prompt="true"></iproov-me>
 ```
 
 #### CSP Nonce
@@ -469,7 +485,7 @@ Properties of the event's **detail** payload:
 > - - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
 >     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
 
-In the case of the **cancelled**, **interrupted**, **failed**, **error** and **unsupported** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
+In the case of the **error**, **cancelled**, **failed**, **unsupported** and **permission_denied** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
 
 | Feedback                              | Reason                                                    |                    Event |
 | ------------------------------------- | --------------------------------------------------------- | -----------------------: |
@@ -483,13 +499,19 @@ In the case of the **cancelled**, **interrupted**, **failed**, **error** and **u
 | **error_asset_fetch**                 | Unable to fetch assets                                    |                  _error_ |
 | **error_camera_in_use**               | The camera is already in use and cannot be accessed       |                  _error_ |
 | **error_camera_not_supported**        | The camera resolution is too small                        |                  _error_ |
+| **error_camera_permission_denied**    | The user denied our camera permission request             |                  _permission_denied_ |
+| **error_device_motion_denied**        | The user denied our device motion permission request      |                  _permission_denied_ |
 | **error_device_motion_unsupported**   | Your device does not seem to fully report device motion   |                  _error_ |
 | **error_expired_token**               | Token expired because it wasn't claimed in time           |                  _error_ |
 | **error_fullscreen_change**           | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
 | **error_invalid_token**               | The token is invalid                                      |                  _error_ |
 | **error_network**                     | Network error                                             |                  _error_ |
 | **error_no_face_found**               | No face could be found                                    |                  _error_ |
-| **error_server**                      | Server error                                              |                  _error_ |
+| **error_not_supported**               | The device or integration isn't able to run the Web SDK   |                  _error_ |
+| **error_server**                      | An error occurred when communicating with iProov's servers|                  _error_ |
+| **error_token_timeout**               | The token was claimed too long after being created        |                  _error_ |
+| **error_too_many_requests**           | The service is under high load and the user must try again|                  _error_ |
+| **failure_user_timeout**              | The user started the claim but did not stream in time     |                 _failed_ |
 | **lighting_backlit**                  | Strong light source detected behind you                   |                 _failed_ |
 | **lighting_face_too_bright**          | Too much light detected on your face                      |                 _failed_ |
 | **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low     |                 _failed_ |
@@ -498,7 +520,7 @@ In the case of the **cancelled**, **interrupted**, **failed**, **error** and **u
 | **motion_too_much_movement**          | Please keep still                                         |                 _failed_ |
 | **network_problem**                   | Sorry, network problem                                    |                  _error_ |
 | **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported |                  _error_ |
-| **user_timeout**                      | The user started the claim but did not stream in time     |                 _failed_ |
+| **integration_unloaded**              | The SDK was unmounted from the DOM before it finished     |                 _error_ |
 
 ### Listeners
 
@@ -641,19 +663,24 @@ For known issues, [see here](#known-issues).
 
 ### Support checker
 
-Developers can use the `iProovSupport` check component to ensure their users have the correct hardware and software to use the Web SDK before embedding the web component. If the user device is unsupported, the integrator can send the user down an alternative journey.
+For complex use cases, we recommend separately deploying the lightweight `iProovSupport` support checker component ahead
+of the iProov user journey to ensure that users have the correct hardware and software to use the Web SDK successfully.
 
-`iProovSupport` is a lightweight, separate component from the main `IProovMe` web component.
-Using `iProovSupport` on a standalone basis means that consumers can code split their bundle so that users don't need to download an entrypoint that contains the full component until device support has been established.
+Key points:
 
-We recommend using this pattern and splitting entrypoints on your app so that iProov is downloaded only when necessary to ensure a quick UX.
+- You don't need to create a token to use the support checker, you just need to choose the assurance type.
+- The checker tests the user's device software, hardware and optionally permissions, but also the feature policy of the webpage containing the Web SDK.
+- If the user device is unsupported, the integrator can send the user down an alternative journey.
+
+Integrators can and should code split their bundle so that users don't need to download an entrypoint that contains the
+full component until device support has been established, so that the Web SDK only is downloaded when necessary.
 
 **Example usage when using a bundler that treats UMD like ESM:**
 
 ```javascript
 import { iProovSupport } from "@iproov/web/iProovSupport.js"
 const optionalLogger = console
-const supportChecker = new iProovSupport(optionalLogger)
+const supportChecker = new iProovSupport({ logger: optionalLogger })
 ```
 
 **Example usage without a bundler, inside a vanilla ES6 / ESM environment:**
@@ -677,7 +704,10 @@ const supportChecker = new window.IProov.IProovSupport()
 #### How to use iProovSupport:
 
 ```javascript
-const supportChecker = new iProovSupport()
+const supportChecker = new iProovSupport({
+  assuranceType: "genuine_presence", // optionally pass an assurance type if using liveness; defaults to genuine_presence
+  logger: console, // optionally pass in a logger conforming to JS console API
+})
 // Event based:
 supportChecker.addEventListener("check", (event) => {
   const { supported, granted, is_native_bridge } = event.detail
@@ -814,9 +844,14 @@ iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ ui: { scanLine
 ```
 
 ### Iframe integrations
+
 Integrations via iframes are supported by the Web SDK but please note that you must declare that camera and fullscreen permissions are allowed. Any additional permissions you may require must be separated by a semi-colon `;`. Please note: `accelerometer;gyroscope;magnetometer;` are only required if you are intending to complete LA claims.
+
 ```html
-<iframe src="https://your-iframe-target.example" allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"></iframe>
+<iframe
+  src="https://your-iframe-target.example"
+  allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"
+></iframe>
 ```
 
 ### Iframe bridge for mobile Safari
