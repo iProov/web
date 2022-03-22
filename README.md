@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.5.1
+# iProov Biometrics Web SDK v3.5.2
 
 ## 📖 Table of contents
 
@@ -680,7 +680,7 @@ full component until device support has been established, so that the Web SDK on
 ```javascript
 import { iProovSupport } from "@iproov/web/iProovSupport.js"
 const optionalLogger = console
-const supportChecker = new iProovSupport({ logger: optionalLogger })
+const supportChecker = new iProovSupport(optionalLogger, { assuranceType: "genuine_presence" })
 ```
 
 **Example usage without a bundler, inside a vanilla ES6 / ESM environment:**
@@ -704,9 +704,9 @@ const supportChecker = new window.IProov.IProovSupport()
 #### How to use iProovSupport:
 
 ```javascript
-const supportChecker = new iProovSupport({
+const loggger = console  // optionally pass in a logger conforming to JS console API
+const supportChecker = new iProovSupport(loggger, {
   assuranceType: "genuine_presence", // optionally pass an assurance type if using liveness; defaults to genuine_presence
-  logger: console, // optionally pass in a logger conforming to JS console API
 })
 // Event based:
 supportChecker.addEventListener("check", (event) => {

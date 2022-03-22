@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 22.03.2022 3.5.2
+
+## Fixes
+
+- **UI**: We've fixed regressions introduced in 3.5.1 relating to `logo` and `close_button`. Sorry.
+- **Native Bridge**: We've fixed cases where `native_bridge_options` were not being passed to the native SDKs.
+
 ## 04.03.2022 3.5.1
 
 ## Additions
@@ -31,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This replaces our old SVG based UI and uses the latest cutting edge technologies, HTML and CSS.
 - **Internal**: Our team has started migration to TypeScript in order to reduce integration issues for our customers.
 
-## Fixes:
+## Fixes
 
 - **UI**: We've found and replaced the missing scan line in iOS 15.
 - **Cameras**: We've fixed an issue where cameras not providing a feed crashed the Web SDK.
