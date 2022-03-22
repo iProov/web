@@ -20,7 +20,7 @@ export function createSDK(logger, token, base_url, { onResult }) {
   const iProov = document.createElement("iproov-me")
   iProov.setAttribute("token", token)
   iProov.setAttribute("base_url", base_url)
-  iProov.setAttribute("assets_url", "/node_modules/@iproov/web/")
+  iProov.setAttribute("assets_url", location.origin + "/node_modules/@iproov/web/")
   iProov.setAttribute("debug", "true")
   iProov.addEventListener("progress", (event) => {
     const { progress, message } = event.detail
