@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 01.04.2022 3.5.3
+
+## Fixed
+
+- **UI**: We've fixed an issue where the reflection strength estimator hung indefinitely when end users moved out of frame.
+- **UI**: In kiosk mode, we've fixed an issue where instructions don't appear when `enable_floating_prompt` isn't enabled.
+
 ## 22.03.2022 3.5.2
 
 ## Fixes

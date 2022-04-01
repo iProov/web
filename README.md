@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.5.2
+# iProov Biometrics Web SDK v3.5.3
 
 ## 📖 Table of contents
 
@@ -9,6 +9,7 @@
 - [Options](#-options)
 - [Slots](#-slots)
 - [Events](#-events)
+  - [Feedback Codes](#feedback-codes)
 - [Localization](#-localization)
 - [Browser support](#-browser-support)
 - [WebViews](#-webviews)
@@ -485,7 +486,15 @@ Properties of the event's **detail** payload:
 > - - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
 >     † - The **type** and **frame** properties are not available when running in Native Bridge mode.
 
-In the case of the **error**, **cancelled**, **failed**, **unsupported** and **permission_denied** events, the _feedback_ code can be used for dealing with special cases, and the _reason_ can be displayed to the user. The following are possible responses:
+### Feedback Codes
+
+When the SDK exits, we use a set of feedback codes to expose more information about the exit reason for internal tracking.
+
+These codes can be used to tailor guidance for the user to try again in the case of `permission_denied`, `cancelled` and `failure` events.
+
+We always store the SDK exit feedback code against the transaction for reporting and quality improvement purposes.
+
+In all events, corresponding _reason_ field can be displayed to the user. Below is a table of possible responses and explanations:
 
 | Feedback                              | Reason                                                    |                    Event |
 | ------------------------------------- | --------------------------------------------------------- | -----------------------: |
