@@ -1,4 +1,4 @@
-# iProov Biometrics Web SDK v3.5.3
+# iProov Biometrics Web SDK v3.6.0
 
 ## 📖 Table of contents
 
@@ -14,7 +14,9 @@
 - [Browser support](#-browser-support)
 - [WebViews](#-webviews)
 - [Native bridge](#-native-bridge)
-- [Mobile Safari Iframe bridge](#iframe-bridge-for-mobile-safari)
+- [Iframe Bridge](#iframe-bridge)
+  - [Mobile Safari](#iframe-bridge-for-mobile-safari)
+- [Accessibility](#-accessibility)
 - [Help & support](#-help--support)
 
 ## 🤳 Introduction
@@ -190,7 +192,7 @@ SVG is recommended.
 
 #### Custom Title
 
-Specify a custom title to be shown. Defaults to show an iProov-generated message. Set to empty string "" to hide the message entirely. You can also pass in `%@` characters which will be mapped in this order to `type` (Enrol or Verify), `user_name` (the user_name you passed when generating the token), `sp_name` (the service provider you used to generate the token).
+Specify a custom title to be shown. Defaults to empty string "" - hide the message entirely. You can also pass in `%@` characters which will be mapped in this order to `type` (Enrol or Verify), `user_name` (the user_name you passed when generating the token), `sp_name` (the service provider you used to generate the token).
 
 > ⚠️ iProov-generated messages are passed through our translators. If you pass a custom title, you must provide the translated version.
 
@@ -220,9 +222,15 @@ You can customise the look and feel of the main layout by changing the following
   loading_tint_color: "#5c5c5c", // The app is connecting to the server or no face found. Default: grey.
   not_ready_tint_color: "#f5a623", // Cannot start iProoving until the user takes action (e.g. move closer, etc). Default: orange.
   ready_tint_color: "#01bf46", // Ready to start iProoving. Default: green.
-  oval_scanning_color: "#fff", // The colour of the oval while scanning in GPA.
-  liveness_tint_color: "#1756e5", // Liveness tint colour. Default: blue.
+  oval_scanning_color: "#fff", // The color of the oval while scanning in GPA.
+  liveness_tint_color: "#1756e5", // Liveness tint color. Default: blue.
   liveness_scanning_tint_color: "#5c5c5c", // Liveness is scanning. Default: lightGrey.
+  liveness_overlay_stroke_color: null, // Overlay color in Liveness. Default: null.
+  liveness_floating_prompt_background_color: null, // Floating prompt background color in Liveness. Default: null.
+  gpa_not_ready_overlay_stroke_color: null, // Overlay color in GPA in not ready state. Default: null.
+  gpa_ready_overlay_stroke_color: null, // Overlay color in GPA in ready state. Default: null.
+  gpa_not_ready_floating_prompt_background_color: null, // Floating prompt background in GPA in not ready state. Default: null.
+  gpa_ready_floating_prompt_background_color: null, // Floating prompt background in GPA in ready state. Default: null.
 }
 
 ```
@@ -236,6 +244,13 @@ The example below changes the default grey no face to `#4293f5` (blue), giving f
   not_ready_tint_color="rgb(245, 66, 66)"
   ready_tint_color="purple"
 ></iproov-me>
+```
+
+#### Aria Live
+Control screen reader priority of messages being read out. By default, this is set to `assertive`, this can be disabled by passing `off` or you can set this to `polite` to not override anything that's currently being read out. [See official documentation here.](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions)
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" aria_live="assertive"></iproov-me>
 ```
 
 #### Filter
@@ -253,6 +268,8 @@ Whether the instructions prompt should "float" over the user's face in the centr
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" enable_floating_prompt="true"></iproov-me>
 ```
+
+The floating prompt also has an option to control rounded corners. Rounded corners are enabled by default (set to `true`); to disable rounded corners set `floating_prompt_rounded_corners` to `false`.
 
 #### CSP Nonce
 
@@ -272,7 +289,7 @@ Here is the behaviour:
 
 - For GPA and Liveness, landscape orientation is blocked in most handheld devices.
 - For Liveness, no handheld device will be able to start in landscape mode, regardless of this setting.
-- This blocking behaviour is not enforced Android tablets due to the varying position of their camera.
+- This blocking behaviour is not enforced on Android tablets due to the varying position of their camera.
 - When in landscape mode in an affected UX, the iProov component will display the `rotate_portrait` slot.
 - Desktop devices are unaffected by `allow_landscape`.
 
@@ -294,7 +311,9 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 
 Support multiple camera selection on desktop devices by setting `enable_camera_selector` to `true`.
 
-When enabled, the `camera_selector` slot and `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customisation options. This feature is only available on desktop devices (laptops, PCs etc).
+When enabled, the `camera_selector` slot, `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customisation options. This feature is only available on desktop devices (laptops, PCs etc).
+
+Regardless of `enable_camera_selector` value, if more than one camera is available and if the browser is not Firefox, a button to switch camera will be available in the application.
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" enable_camera_selector="true"></iproov-me>
@@ -427,7 +446,7 @@ The following is the complete list of slots can be used with the `<iproov-me>` w
 
 > \* Visible and managed when [camera selection](#enable-camera-selector) is enabled. A select menu with the class `iproov-camera-selector` must be present within your slots markup. An error will be thrown if this cannot be found.
 
-> \*\* See [allow landscape](#-allow-landscape) option which controls the behaviour of the `rotate_portrait` slot and details on how to override.
+> \*\* See [allow landscape](#allow-landscape) option which controls the behaviour of the `rotate_portrait` slot and details on how to override.
 
 ## 📆 Events
 
@@ -496,40 +515,35 @@ We always store the SDK exit feedback code against the transaction for reporting
 
 In all events, corresponding _reason_ field can be displayed to the user. Below is a table of possible responses and explanations:
 
-| Feedback                              | Reason                                                    |                    Event |
-| ------------------------------------- | --------------------------------------------------------- | -----------------------: |
-| **ambiguous_outcome**                 | Sorry, ambiguous outcome                                  |                 _failed_ |
-| **client_api**                        | There was an error calling the API                        |                  _error_ |
-| **client_browser**                    | The browser is not supported                              |            _unsupported_ |
-| **client_camera**                     | There was an error getting video from the camera          |                  _error_ |
-| **client_config**                     | There was an error with the client configuration          |                  _error_ |
-| **client_error**                      | An unknown error occurred                                 |                  _error_ |
-| **client_stream**                     | There was an error streaming the video                    |                  _error_ |
-| **error_asset_fetch**                 | Unable to fetch assets                                    |                  _error_ |
-| **error_camera_in_use**               | The camera is already in use and cannot be accessed       |                  _error_ |
-| **error_camera_not_supported**        | The camera resolution is too small                        |                  _error_ |
-| **error_camera_permission_denied**    | The user denied our camera permission request             |                  _permission_denied_ |
-| **error_device_motion_denied**        | The user denied our device motion permission request      |                  _permission_denied_ |
-| **error_device_motion_unsupported**   | Your device does not seem to fully report device motion   |                  _error_ |
-| **error_expired_token**               | Token expired because it wasn't claimed in time           |                  _error_ |
-| **error_fullscreen_change**           | Exited fullscreen without completing iProov               | _cancelled, interrupted_ |
-| **error_invalid_token**               | The token is invalid                                      |                  _error_ |
-| **error_network**                     | Network error                                             |                  _error_ |
-| **error_no_face_found**               | No face could be found                                    |                  _error_ |
-| **error_not_supported**               | The device or integration isn't able to run the Web SDK   |                  _error_ |
-| **error_server**                      | An error occurred when communicating with iProov's servers|                  _error_ |
-| **error_token_timeout**               | The token was claimed too long after being created        |                  _error_ |
-| **error_too_many_requests**           | The service is under high load and the user must try again|                  _error_ |
-| **failure_user_timeout**              | The user started the claim but did not stream in time     |                 _failed_ |
-| **lighting_backlit**                  | Strong light source detected behind you                   |                 _failed_ |
-| **lighting_face_too_bright**          | Too much light detected on your face                      |                 _failed_ |
-| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low     |                 _failed_ |
-| **lighting_too_dark**                 | Your environment appears too dark                         |                 _failed_ |
-| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                        |                 _failed_ |
-| **motion_too_much_movement**          | Please keep still                                         |                 _failed_ |
-| **network_problem**                   | Sorry, network problem                                    |                  _error_ |
-| **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported |                  _error_ |
-| **integration_unloaded**              | The SDK was unmounted from the DOM before it finished     |                 _error_ |
+| Feedback                              | Reason                                                     |                    Event |
+| ------------------------------------- | ---------------------------------------------------------- | -----------------------: |
+| **ambiguous_outcome**                 | Sorry, ambiguous outcome                                   |                 _failed_ |
+| **client_camera**                     | There was an error getting video from the camera           |                  _error_ |
+| **client_error**                      | An unknown error occurred                                  |                  _error_ |
+| **error_asset_fetch**                 | Unable to fetch assets                                     |                  _error_ |
+| **error_camera**                      | The camera cannot be started for unknown reasons           |                  _error_ |
+| **error_camera_in_use**               | The camera is already in use and cannot be accessed        |                  _error_ |
+| **error_camera_not_supported**        | The camera resolution is too small                         |                  _error_ |
+| **error_camera_permission_denied**    | The user denied our camera permission request              |      _permission_denied_ |
+| **error_device_motion_denied**        | The user denied our device motion permission request       |      _permission_denied_ |
+| **error_device_motion_unsupported**   | Your device does not seem to fully report device motion    |                  _error_ |
+| **error_fullscreen_change**           | Exited fullscreen without completing iProov                | _cancelled, interrupted_ |
+| **error_invalid_token**               | The token is invalid                                       |                  _error_ |
+| **error_network**                     | Network error                                              |                  _error_ |
+| **error_no_face_found**               | No face could be found                                     |                  _error_ |
+| **error_not_supported**               | The device or integration isn't able to run the Web SDK    |                  _error_ |
+| **error_server**                      | An error occurred when communicating with iProov's servers |                  _error_ |
+| **error_token_timeout**               | The token was claimed too long after being created         |                  _error_ |
+| **error_too_many_requests**           | The service is under high load and the user must try again |                  _error_ |
+| **failure_user_timeout**              | The user started the claim but did not stream in time      |                 _failed_ |
+| **lighting_backlit**                  | Strong light source detected behind you                    |                 _failed_ |
+| **lighting_face_too_bright**          | Too much light detected on your face                       |                 _failed_ |
+| **lighting_flash_reflection_too_low** | Ambient light too strong or screen brightness too low      |                 _failed_ |
+| **lighting_too_dark**                 | Your environment appears too dark                          |                 _failed_ |
+| **motion_too_much_mouth_movement**    | Please do not talk while iProoving                         |                 _failed_ |
+| **motion_too_much_movement**          | Please keep still                                          |                 _failed_ |
+| **sdk_unsupported**                   | The SDK has passed end of life and is no longer supported  |                  _error_ |
+| **integration_unloaded**              | The SDK was unmounted from the DOM before it finished      |                  _error_ |
 
 ### Listeners
 
@@ -644,6 +658,27 @@ window.addEventListener("WebComponentsReady", async (event) => {
 
 There are also some framework specific examples on the [Angular](https://github.com/iProov/web/wiki/Angular-v10#local-language-file) and [React](https://github.com/iProov/web/wiki/React-v16#include-language-file) wiki pages.
 
+### Right-to-left direction
+
+A language ISO code is read from the value of the key `language_file` in the language file (e.g. ISO code `en` for `language_file` value `en-GB`).
+
+If the ISO code corresponds to one of the following languages, the right-to-left direction will be automatically applied.
+
+| ISO Language Code | Language Name |
+| ----------------- | ------------- |
+| ar                | Arabic        |
+| arc               | Aramaic       |
+| dv                | Divehi        |
+| fa                | Persian       |
+| ha                | Hausa         |
+| he                | Hebrew        |
+| khw               | Khowar        |
+| ks                | Kashmiri      |
+| ku                | Kurdish       |
+| ps                | Pashto        |
+| ur                | Urdu          |
+| yi                | Yiddish       |
+
 ## 🌐 Browser support
 
 iProov's Web SDK makes use of the following technologies:
@@ -713,7 +748,7 @@ const supportChecker = new window.IProov.IProovSupport()
 #### How to use iProovSupport:
 
 ```javascript
-const loggger = console  // optionally pass in a logger conforming to JS console API
+const loggger = console // optionally pass in a logger conforming to JS console API
 const supportChecker = new iProovSupport(loggger, {
   assuranceType: "genuine_presence", // optionally pass an assurance type if using liveness; defaults to genuine_presence
 })
@@ -852,7 +887,7 @@ The `native_sdk_options` setting accepts a base64 encoded JSON object of iProov 
 iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ ui: { scanLineDisabled: true, filter: "classic" } })))
 ```
 
-### Iframe integrations
+## 🔳 Iframe integrations
 
 Integrations via iframes are supported by the Web SDK but please note that you must declare that camera and fullscreen permissions are allowed. Any additional permissions you may require must be separated by a semi-colon `;`. Please note: `accelerometer;gyroscope;magnetometer;` are only required if you are intending to complete LA claims.
 
@@ -871,6 +906,45 @@ If integrating iProov Liveness into an iframed document, you must use Iframe Bri
 
 `IProovSupport.check` returns a `flags` object. The presence of `requires_iframe_bridge` in `flags` will indicate that
 Iframe Bridge will be used if a user proceeds. No further tests are made on the host window if this is detected.
+
+## ❌ Manually cancelling a transaction
+
+Transactions can be manually cancelled by calling the `cancelTransaction` function on the `iproov-me` component. This feature is useful when integrators want to abort the user journey without waiting for the transaction to timeout. This must be called before removing the `iproov-me` element from the page.
+
+```javascript
+// an example showing how to cancel a transaction 20 seconds after the connected event is fired
+const iProovMe = document.createElement("iproov-me")
+// add token and other options...
+const cancelAfterTimeoutFromConnected = (event) => {
+  setTimeout(function () {
+    iProovMe.cancelTransaction() // error_transaction_cancelled will be triggered
+  }, 20 * 1000)
+}
+iProovMe.addEventListener("connected", cancelAfterTimeoutFromConnected)
+// inject element into page...
+```
+
+## 🚹 Accessibility
+
+### Screen reader
+
+For a better experience with screen readers, all elements in the integration page other than iProov should be temporarily hidden from accessibility tools during the scan.
+
+The following code is an example to manage the visibility of HTML elements outside iProov.
+In this example, elements to hide during iProov scan are identified with the CSS class `.hide-in-fs`:
+
+```javascript
+const ELEMENTS_TO_HIDE_IN_FS = document.querySelectorAll(".hide-in-fs")
+iProov.addEventListener("started", () => {
+  ELEMENTS_TO_HIDE_IN_FS.forEach((el) => el.setAttribute("aria-hidden", "true"))
+})
+const EXIT_EVENTS = ["cancelled", "error", "failed", "passed"]
+EXIT_EVENTS.forEach((eventName) => {
+  iProov.addEventListener(eventName, () => {
+    ELEMENTS_TO_HIDE_IN_FS.forEach((el) => el.removeAttribute("aria-hidden"))
+  })
+})
+```
 
 ## ❓ Help & support
 

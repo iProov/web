@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 30.06.2022 3.6.0
+
+## Added
+
+- **Accessibility**:
+  - Achieves WCAG 2.1 AA certification.
+  - [New option](https://github.com/iProov/web#aria-live) `aria_live` to control the priority of screen reader messages. [See official documentation here](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions).
+- **Claim Management**: Ability to cancel a claim manually with `iProovMe.cancelTransaction()` which will emit the `integration_cancelled` error.
+- **UI**: Added support for right-to-left languages.
+- **UI**: Users can now choose their webcam in full screen with a new camera selection button.
+- **UI**: We've added a set of options for controlling overlay colours, styles, and the floating prompt:
+  - `floating_prompt_rounded_corners` controls corners of floating prompt. Use `false` to remove border radius (default: true).
+  - `liveness_overlay_stroke_color` controls color of the overlay in Liveness (default: null).
+  - `liveness_floating_prompt_background_color` controls color of floating prompt background in Liveness (default: null).
+  - `gpa_not_ready_overlay_stroke_color` controls color of overlay in GPA in not ready state (default: null).
+  - `gpa_ready_overlay_stroke_color` controls color of overlay in GPA in ready state (default: null).
+  - `gpa_not_ready_floating_prompt_background_color` controls color of floating prompt background in GPA in not ready state (default: null).
+  - `gpa_ready_floating_prompt_background_color` controls color of floating prompt background in GPA in ready state (default: null).
+
+## Changed
+
+- **UI - accessibility**: We've changed the default values for `not_ready_tint_color` and `ready_tint_color` to ensure a minimum contrast satisfying WCAG 2.1.
+- **Title**: We've removed the default title - by default no content will be shown. A `custom_title` can still be set in SDK options.
+
+## Removed
+
+- Removed `failure_network_problem` from [iproov-en.json](https://github.com/iProov/web/blob/master/iproov-en.json) as its never used.
+
+## Fixed
+
+- In version `3.3.2` we added a `user_cancelled` feedback code for when the user cancels their transaction on their own while pressing the 'Esc' key. That was missed in the Changelog at the time so we're surfacing that now.
+- Fetch-retry was no longer retrying when failing, this has been fixed.
+- Fixed countdown timer display in Kiosk Mode.
+- Fixed the `close_button` not being sized correctly in Safari.
+
+## Enhancements
+
+- Disabled RSE while in Kiosk Mode.
+- Allow LA to function while in Kiosk Mode.
+
 ## 01.04.2022 3.5.3
 
 ## Fixed
