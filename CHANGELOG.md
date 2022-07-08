@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 08.07.2022 3.6.1
+
+## Changed
+- **UI**: The new color options are now WCAG 2.1 AA compliant by default:
+  - `gpa_not_ready_overlay_stroke_color`: `#904300`
+  - `gpa_ready_overlay_stroke_color`: `#006625`
+  - `gpa_not_ready_floating_prompt_background_color`: `#F06F00`
+  - `gpa_ready_floating_prompt_background_color`: `#01AC41`
+    `liveness_overlay_stroke_color`: `#1756e5`,
+    `liveness_floating_prompt_background_color`: `#1756e5`,
+
+## Fixed
+- **UI**: We fixed an issue where the new Liveness Assurance colors were being applied during loading.
+
 ## 30.06.2022 3.6.0
 
 ## Added
