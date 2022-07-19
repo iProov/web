@@ -27,6 +27,11 @@ You will need to generate a token from your back-end to use with the iProov Biom
 
 Check out our [example](./demo), which can be spun up with a single command, which demonstrates an example backend/frontend integration.
 
+iProov offers Genuine Presence Assurance&trade; technology and Liveness Assurance&trade; technology:
+
+- [Genuine Presence Assurance](https://www.iproov.com/iproov-system/technology/genuine-presence-assurance) verifies that an online remote user is the right person, a real person and that they are authenticating right now, for purposes of access control and security.
+- [Liveness Assurance](https://www.iproov.com/iproov-system/technology/liveness-assurance) verifies a remote online user is the right person and a real person for access control and security.
+
 ## ✍ Registration
 
 You can obtain API credentials by registering on the [iProov Portal](https://portal.iproov.com/).
