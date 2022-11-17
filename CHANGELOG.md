@@ -5,9 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 17.11.2022 4.0.0
+
+## Added
+
+- **User Feedback Codes**: Several User Feedback codes added to provide more granular instructions to users:
+  - **misaligned_face**
+  - **eyes_closed**
+  - **face_too_far**
+  - **face_too_close**
+  - **sunglasses**
+  - **obscured_face**
+- **UI** We've added two new filters: `clear` and `blur`
+- **Languages** Support for additional languages\*\* - The SDK now ships with support for 9 additional languages alongside English.
+
+## Changed
+- **Native SDK**: The schema for Native SDK integrations has been updated. Please refer to the following documentation for [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options)
+- **Networking**: SocketIO has been replaced with a more secure in-house solution directly based on WebSockets
+- **Networking**: Default network timeout has been increased to 20 seconds
+- **Events**: Removed `Interrupted` Event
+- **UI**: Introduced the new NUX UI for WebSDK (Kiosk Mode is unaffected from all the following UI related changes)
+- **UI**: The centre prompt can now take a string of any length
+- **UI**: Introduced the following options for new features brought by NUX:
+  - `csp_nonce`: This can be set to a random string to avoid requiring `unsafe-inline` in your style-src CSP.
+  - `floating_prompt_rounded_corners` has been renamed to `prompt_rounded_corners`
+  - Removed `enable_floating_prompt`
+- **UI**: When not using Kiosk mode the following changes to SDK options are in effect:
+  - `title_text_color`: Controls the colour of the text that can be added to the top of the UI with `custom_title`
+  - `surround_color`: Controls the colour of the UI around the centre oval
+  - `prompt_background_color`: Controls the background colour of the centre prompt for both GPA and Liveness
+  - `prompt_text_color`: Controls the background colour of the centre prompt for both GPA and Liveness
+  - `gpa_not_ready_oval_stroke_color`: Colour for oval stroke when in the GPA "not ready" state
+  - `gpa_ready_oval_stroke_color`: Colour for oval stroke when in the GPA "ready" state
+  - `liveness_oval_stroke_color`: Colour for the oval stroke during Liveness
+  - `liveness_completed_oval_stroke_color`: Colour for the oval stroke after the user has finished iProov-ing using Liveness
+  - Removed `background_color`
+  - Removed `header_background_color`
+  - Removed `header_text_color`
+  - Removed `line_color`
+  - Removed `loading_tint_color`
+  - Removed `no_face_found_color`
+  - Removed `not_ready_tint_color`
+  - Removed `oval_scanning_color`
+  - Removed `ready_tint_color`
+  - Removed `gpa_not_ready_overlay_stroke_color`
+  - Removed `gpa_ready_overlay_stroke_color`
+  - Removed `gpa_not_ready_floating_prompt_background_color`
+  - Removed `gpa_ready_floating_prompt_background_color`
+  - Removed `liveness_scanning_tint_color`
+  - Removed `liveness_tint_color`
+  - Removed `liveness_floating_prompt_background_color`
+- **RSE**: Reflection Strength Estimator has been removed
+- **Errors** `not_supported` is not treated as a failure rather than an error
+
+## Fixed
+
+- **Stability**: Fixed an issue where source maps generation from our obfuscator could cause crashes
+- **Device detection**: Fixed an issue where mobile devices where sometimes reported as desktop devices
+- **Landscape** Fixed an issue where the pipeline isn't paused when in landscape orientation whilst landscape is not permitted
+
 ## 08.07.2022 3.6.1
 
 ## Changed
+
 - **UI**: The new color options are now WCAG 2.1 AA compliant by default:
   - `gpa_not_ready_overlay_stroke_color`: `#904300`
   - `gpa_ready_overlay_stroke_color`: `#006625`
@@ -17,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     `liveness_floating_prompt_background_color`: `#1756e5`,
 
 ## Fixed
+
 - **UI**: We fixed an issue where the new Liveness Assurance colors were being applied during loading.
 
 ## 30.06.2022 3.6.0
