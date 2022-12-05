@@ -1,6 +1,8 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v4.0.0
+# iProov Biometrics Web SDK v{{VERSION}}
+
+This is a beta version of the SDK, which means that there may be missing or broken functionality, or features which may vary between this beta and the production release. This version of the SDK is for testing, feedback and evaluation purposes only and should not be deployed to production without prior express approval from iProov.
 
 ## 📖 Table of contents
 
@@ -40,48 +42,33 @@ You can obtain API credentials by registering on the [iProov Portal](https://por
 
 ## 📲 Installation
 
-The npm package `@iproov/web` allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
-
-### Script Tag
-
-For a fast proof of concept, the simplest way to integrate iProov Web to include with a script tag using our [NPM package](https://www.npmjs.com/package/@iproov/web) hosted on a CDN such as [jsDelivr](https://www.jsdelivr.com/package/npm/@iproov/web) or [UNPKG](https://unpkg.com/browse/@iproov/web/).
-
-**jsDelivr**:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/@iproov/web"></script>
-```
-
-**UNPKG**:
-
-```html
-<script src="https://unpkg.com/@iproov/web"></script>
-```
+The npm package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk
+) allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
 
 ### NPM Package
 
-Installing locally with npm is recommended for production installations, and works best with a bundler like Webpack, Parcel or Rollup.
+Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will given instructions on using the private NPM registry.
 
 #### Setup
 
 Install the package as a dependency. You can use [Yarn](https://yarnpkg.com/lang/en/) or [NPM](https://www.npmjs.com/get-npm) to do this.
 
 ```sh
-yarn add @iproov/web
+yarn add @iproov/web-sdk
 ```
 
 ```sh
-npm i @iproov/web --save
+npm i @iproov/web-sdk --save
 ```
 
-After you have installed the `@iproov/web` package, you can require or import it into your codebase:
+After you have installed the `@iproov/web-sdk` package, you can require or import it into your codebase:
 
 ```javascript
 // ESM or Module Bundler:
-import "@iproov/web"
+import "@iproov/web-sdk"
 
 // CJS style:
-require("@iproov/web")
+require("@iproov/web-sdk")
 ```
 
 It's as simple as that to include the iProov Biometrics Web SDK with your project.
@@ -745,7 +732,7 @@ full component until device support has been established, so that the Web SDK on
 **Example usage when using a bundler that treats UMD like ESM:**
 
 ```javascript
-import { iProovSupport } from "@iproov/web/iProovSupport.js"
+import { iProovSupport } from "@iproov/web-sdk/iProovSupport.js"
 const optionalLogger = console
 const supportChecker = new iProovSupport(optionalLogger, { assuranceType: "genuine_presence" })
 ```
@@ -754,7 +741,7 @@ const supportChecker = new iProovSupport(optionalLogger, { assuranceType: "genui
 
 ```javascript
 // ESM without a bundler:
-import "@iproov/web/iProovSupport.js
+import "@iproov/web-sdk/iProovSupport.js
 const supportChecker = new window.iProovSupport.default()
 ```
 
