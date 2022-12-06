@@ -47,7 +47,7 @@ The npm package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk
 
 ### NPM Package
 
-Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will given instructions on using the private NPM registry.
+Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on using the private NPM registry.
 
 #### Setup
 
