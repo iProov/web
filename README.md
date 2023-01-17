@@ -2,8 +2,6 @@
 
 # iProov Biometrics Web SDK v4.0.0
 
-This is a beta version of the SDK, which means that there may be missing or broken functionality, or features which may vary between this beta and the production release. This version of the SDK is for testing, feedback and evaluation purposes only and should not be deployed to production without prior express approval from iProov.
-
 ## 📖 Table of contents
 
 - [Introduction](#-introduction)
