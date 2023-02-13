@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 13.02.2023 4.1.0
+
+## Added
+- **Support Checker**: New `localStorage` test to handle when `localStorage` is not supported and edge cases such as iframed integrations while using Chrome's incognito mode.
+
+## Changed
+- **UI**
+  - **Optimisation**: We replaced ThreeJS with a custom WebGL implementation.
+    - **Android**: Upto `20%` performance improvement with low-end Android devices.
+    - **Bundle Size**: `200kb` removed from the overall bundle size!
+
+## Fixed
+- **SDK Options**: Fixed `base_url` option not accepting URLs which include a path name.
+- **Failed Event**: `ambiguous_outcome` not being replaced with `unknown` in the failed event data.
+- **Video Feed**: The camera feed not being visible after cancelling a claim and then when a new `iproov-me` element is loaded into the page the camera feed wouldn't be visible.
+- **Frozen Video Feed on macOS/Safari**: The camera feed froze shortly after starting a claim on the first attempt.
+- **Token Timeout**: When the server applies a `10` minute timeout to the token being claimed, this is now handled with the appropriate error `error_token_timeout`.
+- **Iframe Bridge Safari prior to iOS 15**: Broken in `v4.0.0` due to being unable to fetch an asset.
+
 ## 17.11.2022 4.0.0
 
 ## Added
@@ -20,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Languages** Support for additional languages\*\* - The SDK now ships with support for 9 additional languages alongside English.
 
 ## Changed
+
 - **Native SDK**: The schema for Native SDK integrations has been updated. Please refer to the following documentation for [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options)
 - **Networking**: SocketIO has been replaced with a more secure in-house solution directly based on WebSockets
 - **Networking**: Default network timeout has been increased to 20 seconds
@@ -214,12 +234,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Support checker** - We've made a few changes that help give users a better experience:
   - Where possible in Liveness, we now check `document.featurePolicy` for `accelerometer`, `gyroscope` and `magnetometer`. If these aren't allowed, instead of starting the SDK and erroring, we now run the unsupported callback.
   - We no longer use the Permissions API to establish camera support due to its poor support and unreliable behaviour.
-
-## 22.12.2021 3.3.7
-
-## Fixed
-
-- **Native bridge** - fixed an issue with possible interplay with Zone.js
 
 ## 22.12.2021 3.3.7
 

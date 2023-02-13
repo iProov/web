@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v4.0.0
+# iProov Biometrics Web SDK v4.1.0
 
 ## 📖 Table of contents
 
@@ -40,12 +40,13 @@ You can obtain API credentials by registering on the [iProov Portal](https://por
 
 ## 📲 Installation
 
-The npm package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk
-) allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
+The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk) allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
 
 ### NPM Package
 
-Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on using the private NPM registry.
+Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on using the private NPM reg
+
+>⚠️When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login).
 
 #### Setup
 
@@ -851,6 +852,7 @@ const possibleTests = {
   frontCamera: null,
   fullScreen: null,
   webgl: null,
+  localStorage: null,
 }
 ```
 
