@@ -618,7 +618,7 @@ $("iproov-me").on("ready started cancelled streamed progress passed failed error
 
 The Web SDK ships with English strings by default. To provide strings in another language, you can supply `language` overrides as JSON. Language files use the same structure.
 
-- [View the default language file with all keys and language strings](https://github.com/iProov/web/blob/master/iproov-en.json)
+- [View the default language file with all keys and language strings](https://github.com/iProov/web/blob/master/languages/iproov-en.json)
 
 You can customise the language by supplying the `language` attribute to your iProov component. The `language` value must be valid JSON and passed as a string.
 
