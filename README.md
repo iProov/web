@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v4.1.0
+# iProov Biometrics Web SDK v4.1.1
 
 ## 📖 Table of contents
 
@@ -46,7 +46,7 @@ The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk)
 
 Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on using the private NPM reg
 
->⚠️When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login).
+>⚠️When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login) or [YARN login](https://classic.yarnpkg.com/lang/en/docs/cli/login/).
 
 #### Setup
 
@@ -618,7 +618,7 @@ $("iproov-me").on("ready started cancelled streamed progress passed failed error
 
 The Web SDK ships with English strings by default. To provide strings in another language, you can supply `language` overrides as JSON. Language files use the same structure.
 
-- [View the default language file with all keys and language strings](https://github.com/iProov/web/blob/master/languages/iproov-en.json)
+- [View the default language file with all keys and language strings](https://github.com/iProov/web/blob/master/iproov-en.json)
 
 You can customise the language by supplying the `language` attribute to your iProov component. The `language` value must be valid JSON and passed as a string.
 
