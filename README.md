@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v4.1.1
+# iProov Biometrics Web SDK v4.2.0
 
 ## 📖 Table of contents
 
@@ -46,7 +46,7 @@ The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk)
 
 Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on using the private NPM reg
 
->⚠️When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login) or [YARN login](https://classic.yarnpkg.com/lang/en/docs/cli/login/).
+> ⚠️When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login) or [YARN login](https://classic.yarnpkg.com/lang/en/docs/cli/login/).
 
 #### Setup
 
@@ -130,7 +130,7 @@ There are also the following framework specific example integrations available o
 
 ## ⚙ Options
 
-The behaviour of the iProov Biometrics Web SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
+The behavior of the iProov Biometrics Web SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
 
 #### Network Timeout
 
@@ -201,9 +201,9 @@ Specify a custom title to be shown. Defaults to empty string "" - hide the messa
 <iproov-me token="***YOUR_TOKEN_HERE***" custom_title="%@ AS %@ TO %@" />
 ```
 
-#### Colours
+#### Colors
 
-You can customise the look and feel of the main layout by changing the following options. You can pass a literal value `red`, RGB `rgb(230, 245, 66)`, a hex value `#e6f542` or an RGBA value `rgba(230, 245, 66, 0.8)`.
+You can customize the look and feel of the main layout by changing the following options. You can pass a literal value `red`, RGB `rgb(230, 245, 66)`, a hex value `#e6f542` or an RGBA value `rgba(230, 245, 66, 0.8)`.
 
 ```javascript
 {
@@ -211,6 +211,7 @@ You can customise the look and feel of the main layout by changing the following
   surround_color: "rgba(0, 0, 0, 0.4)",
   prompt_background_color: "rgba(0, 0, 0, 0.8)",
   prompt_text_color: "#ffffff",
+  header_background_color: "rgba(255, 0, 0, 0.8)",
   gpa_not_ready_oval_stroke_color: "#ffffff",
   gpa_ready_oval_stroke_color: "#01ac41",
   liveness_oval_stroke_color: "#ffffff",
@@ -218,20 +219,21 @@ You can customise the look and feel of the main layout by changing the following
 }
 ```
 
-With the introduction of NUX the following colour options are possible:
+Color option changes introduced in [v4.0.0](https://github.com/iProov/web/releases/tag/v4.0.0):
 
-| Colour Option                            | Description                                                                                                                                           |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **title_text_color**                     | Adjusts the colour of the text that can be added above the oval (by default there is no text here - see the custom_title option for more information) |
-| **surround_color**                       | Adjusts the colour of the surroundings to the centre oval in NUX.                                                                                     |
-| **prompt_text_color**                    | Adjusts the colour of the text visible in the centre prompt of the screen                                                                             |
-| **prompt_background_color**              | Adjusts the colour of the background visible in the centre prompt of the screen                                                                       |
-| **gpa_not_ready_oval_stroke_color**      | Stroke colour for the centre oval whilst the SDK is in a "Not Ready" state in GPA                                                                     |
-| **gpa_ready_oval_stroke_color**          | Stroke colour for the centre oval whilst the SDK is in a "Ready" state in GPA                                                                         |
-| **liveness_oval_stroke_color**           | Stroke colour for the centre oval whilst the SDK before iProov-ing in Liveness                                                                        |
-| **liveness_completed_oval_stroke_color** | Stroke colour for the centre oval whilst the SDK after iProov-ing in Liveness                                                                         |
+| Color Option                             | Description                                                                                                                                          |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **title_text_color**                     | Adjusts the color of the text that can be added above the oval (by default there is no text here - see the custom_title option for more information) |
+| **surround_color**                       | Adjusts the color of the surroundings to the centre oval.                                                                                            |
+| **prompt_text_color**                    | Adjusts the color of the text visible in the centre prompt of the screen                                                                             |
+| **prompt_background_color**              | Adjusts the color of the background visible in the centre prompt of the screen                                                                       |
+| **header_background_color**              | Adjusts the color of the background visible in the top bar of the application (transparent by default)                                               |
+| **gpa_not_ready_oval_stroke_color**      | Stroke color for the centre oval whilst the SDK is in a "Not Ready" state in GPA                                                                     |
+| **gpa_ready_oval_stroke_color**          | Stroke color for the centre oval whilst the SDK is in a "Ready" state in GPA                                                                         |
+| **liveness_oval_stroke_color**           | Stroke color for the centre oval whilst the SDK before iProov-ing in Liveness                                                                        |
+| **liveness_completed_oval_stroke_color** | Stroke color for the centre oval whilst the SDK after iProov-ing in Liveness                                                                         |
 
-Kiosk mode is unaffected from these changes to colour options. The same colour options passed through from 3.6.1 and prior should be utilised instead.
+Kiosk mode is unaffected from these changes to color options. The same color options passed through from 3.6.1 and prior should be utilized instead.
 
 #### Aria Live
 
@@ -273,11 +275,11 @@ Note that inline CSS _is_ needed to provide critical styles for `<iproov-me>` fo
 
 When `allow_landscape` is set to `true`, handheld devices will be able to start in landscape orientation.
 
-Here is the behaviour:
+Here is the behavior:
 
 - For GPA and Liveness, landscape orientation is blocked in most handheld devices.
 - For Liveness, no handheld device will be able to start in landscape mode, regardless of this setting.
-- This blocking behaviour is not enforced on Android tablets due to the varying position of their camera.
+- This blocking behavior is not enforced on Android tablets due to the varying position of their camera.
 - When in landscape mode in an affected UX, the iProov component will display the `rotate_portrait` slot.
 - Desktop devices are unaffected by `allow_landscape`.
 
@@ -299,12 +301,22 @@ By setting `show_countdown` to `true`, a countdown will be shown to the user bef
 
 Support multiple camera selection on desktop devices by setting `enable_camera_selector` to `true`.
 
-When enabled, the `camera_selector` slot, `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customisation options. This feature is only available on desktop devices (laptops, PCs etc).
+When enabled, the `camera_selector` slot, `multiple_cameras` event will be exposed. See [Camera Selector](#-slots) slot for customization options. This feature is only available on desktop devices (laptops, PCs etc).
 
 Regardless of `enable_camera_selector` value, if more than one camera is available and if the browser is not Firefox, a button to switch camera will be available in the application.
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" enable_camera_selector="true"></iproov-me>
+```
+
+#### Disable Exterior Blur
+
+Disables the blur and vignette around the centre oval available by default. This option is disabled by default.
+
+This option is not compatible with the `blur` filter.
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" disable_exterior_blur="true"></iproov-me>
 ```
 
 #### Debug Logs
@@ -316,13 +328,13 @@ Warnings and errors will always be emitted to the console.
 <iproov-me token="***YOUR_TOKEN_HERE***" debug="true"></iproov-me>
 ```
 
-This setting has no effect on any `iProovSupport` instance that's been initialised separately to the main component.
+This setting has no effect on any `iProovSupport` instance that's been initialized separately to the main component.
 
 The checker itself accepts a logger argument which could be `console`, or any common logging library which you are free to configure to your own requirements.
 
 #### Kiosk Mode
 
-Kiosk mode still utilises the same UX as prior SDK versions - this also applies to SDK and colour options.
+Kiosk mode still utilizes the same UX as prior SDK versions - this also applies to SDK and color options.
 
 When deploying iProov on physically secured hardware such as laptops and desktop devices, you can enable the kiosk mode UI.
 
@@ -335,9 +347,9 @@ When deploying iProov on physically secured hardware such as laptops and desktop
 ## 📥 Slots
 
 Customise the markup, styling and automatically inherit your app's styles by [using slots](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots).
-You can customise the preparation and result stages of iProov to seamlessly integrate it into your application.
+You can customize the preparation and result stages of iProov to seamlessly integrate it into your application.
 
-The following examples show different ways to customise some commonly used slots.
+The following examples show different ways to customize some commonly used slots.
 
 ### HTML
 
@@ -412,19 +424,19 @@ To integrate with our localization feature, use special class names in your slot
 </div>
 ```
 
-> ⚠️ When customising any the `button` and `grant_button` slots, the slot must contain a `<button>` element to ensure interactivity. These buttons may be disabled by the SDK on component load while we configure according to the passed in token.
+> ⚠️ When customizing any the `button` and `grant_button` slots, the slot must contain a `<button>` element to ensure interactivity. These buttons may be disabled by the SDK on component load while we configure according to the passed in token.
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 
 | Slot                     | Description                                                                                                |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| ------------------------ |------------------------------------------------------------------------------------------------------------|
 | **button**               | Element that a user taps or clicks on to launch into fullscreen and start iProov                           |
 | **camera_selector** \*   | Label and dropdown populated with available cameras, if multiple cameras are detected.                     |
 | **cancelled**            | State displayed to the user when they exit fullscreen before iProoving                                     |
 | **error**                | State displayed to the user in the event of an error                                                       |
 | **failed**               | State displayed to the user when the user failed iProov                                                    |
 | **grant_button**         | Element that user taps or clicks to grant camera permission                                                |
-| **grant_permission**     | State displayed to the user when camera permission is unknown and not blocked                              |
+| **grant_permission**     | State displayed to the user when camera or motion permission is unknown and not blocked                    |
 | **iframe_bridge_title**  | State displayed to the user if [iframe bridge](#-iframe-integrations) is enabled                           |
 | **iframe_bridge_button** | Element that user taps or clicks to open a new window if [iframe bridge](#-iframe-integrations) is enabled |
 | **no_camera**            | State displayed to the user when there is no camera                                                        |
@@ -449,7 +461,8 @@ Every event has a [detail](https://developer.mozilla.org/en-US/docs/Web/API/Cust
 
 ```json
 {
-  "token": "Your Generated Token"
+  "token": "Your Generated Token",
+  "is_native_bridge": boolean
 }
 ```
 
@@ -462,12 +475,12 @@ The available events are detailed below with any extra properties that are suppl
 | **connected**           | None                             | The SDK has connected. You should hide any progress indication at this point.                                                                                                                                                   |
 | **error**               | _feedback, reason_               | iProov encountered an error while processing the authentication                                                                                                                                                                 |
 | **failed**              | _type, passed, feedback, reason_ | Authentication was unsuccessful, the user needs to try again                                                                                                                                                                    |
-| **multiple_cameras** \* | _devices, device_selector, slot_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected                                                                                                                       |
-| **passed**              | _type, passed_                   | Authentication was successful, the result can now be validated                                                                                                                                                                  |
-| **permission**          | None                             | Camera permission is unknown & not blocked, show permission                                                                                                                                                                     |
-| **permission_denied**   | None                             | User has blocked access to the camera                                                                                                                                                                                           |
+| **multiple_cameras** \* | _devices, device\_selector, slot, label_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected                                                                                                                       |
+| **passed**              | _type, feedback, reason, passed_                   | Authentication was successful, the result can now be validated                                                                                                                                                                  |
+| **permission**          | _reason_                             | Camera permission is unknown & not blocked, show permission                                                                                                                                                                     |
+| **permission_denied**   | _feedback, reason_                             | User has blocked access to the camera                                                                                                                                                                                           |
 | **progress**            | _progress, message_              | iProov has published a progress update for the authentication                                                                                                                                                                   |
-| **ready**               | None                             | iProov has initialised successfully and has camera permission                                                                                                                                                                   |
+| **ready**               | None                             | iProov has initialized successfully and has camera permission                                                                                                                                                                   |
 | **started**             | None                             | User has started iProov by launching into fullscreen                                                                                                                                                                            |
 | **streaming**           | None                             | User has started streaming. The client remains in fullscreen.                                                                                                                                                                   |
 | **streamed**            | None                             | User has finished streaming and the client has exited fullscreen _(Not guaranteed to fire every time due to a possible fast failure or any errors that can occur and should be handled within your event handlers accordingly)_ |
@@ -480,7 +493,7 @@ Properties of the event's **detail** payload:
 | Property             | Events                                  | Description                                                |
 | -------------------- | --------------------------------------- | ---------------------------------------------------------- |
 | **token**            | All                                     | The token associated with the authentication attempt       |
-| **type** (†)         | _passed, failed_                        | The type of authentication (enrol, verify or id_match)     |
+| **type** (†)         | _passed, failed_                        | The type of authentication (`enrol` or `verify`)           |
 | **passed**           | _passed, failed_                        | Boolean value whether the result passed or failed          |
 | **frame** (†) (\*)   | _passed, failed_                        | An `ImageData` from the scanning process                   |
 | **progress**         | _progress_                              | A percentage (between 0 and 100) representing the progress |
@@ -505,7 +518,7 @@ We always store the SDK exit feedback code against the transaction for reporting
 
 In all events, corresponding _reason_ field can be displayed to the user.
 
-### Failure Feedback Codes for Genuine Presense Assurance
+### Failure Feedback Codes for Genuine Presence Assurance
 
 | Feedback              | Reason                                                |
 | --------------------- | ----------------------------------------------------- |
@@ -616,11 +629,9 @@ $("iproov-me").on("ready started cancelled streamed progress passed failed error
 
 ## 🌎 Localization
 
-The Web SDK ships with English strings by default. To provide strings in another language, you can supply `language` overrides as JSON. Language files use the same structure.
+The Web SDK supports a [multitude of languages](https://github.com/iProov/web/blob/master/languages/) with [English](https://github.com/iProov/web/blob/master/languages/iproov-en.json) being the default. To provide strings in another language, you can supply `language` overrides as JSON. Language files use the same structure.
 
-- [View the default language file with all keys and language strings](https://github.com/iProov/web/blob/master/iproov-en.json)
-
-You can customise the language by supplying the `language` attribute to your iProov component. The `language` value must be valid JSON and passed as a string.
+You can customize the language by supplying the `language` attribute to your iProov component. The `language` value must be valid JSON and passed as a string.
 
 Any value not supplied will fall back to the English default.
 
@@ -889,7 +900,7 @@ For more information on using iProov Web within a native WebView based app, see 
 - [Android Native Bridge Integration Guide](https://github.com/iProov/android/wiki/Web-Native-Bridge)
 - [iOS Native Bridge Integration Guide](https://github.com/iProov/ios/wiki/Native-Bridge)
 
-### Customisation
+### Customization
 
 The `native_sdk_options` setting accepts a base64 encoded JSON object of iProov Native SDK options as defined in the [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options) documentation:
 

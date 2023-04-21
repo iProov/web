@@ -5,25 +5,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 21.04.2023 4.2.0
+
+## Added
+
+- **UI**
+  - **Color Customization**: New `header_background_color` option, transparent by default. [See color documentation](https://github.com/iProov/web#colors).
+  - **Exterior Blur Customization**: New `disable_exterior_blur` option, disabled by default. [See disable exterior blur documentation](https://github.com/iProov/web#disable-exterior-blur).
+- **Errors**
+  - **Logging & Telemetry**: Improved logging and telemetry to better understand errors we previously didn't have visibility of.
+
+## Changed
+
+- **Motion Permission**: Permission for motion collection is now requested for iOS or iPadOS after the `grant_permission` slot. [See upgrade guide for more details](https://github.com/iProov/web/wiki/Upgrade-Guide#upgrading-from-v4xx-to-v420)
+
+## Fixed
+
+- **UI**
+  - **Feedback Prompt**: Fixed prompt not expanding and forcing feedback messages onto 2 lines.
+  - **Progress Bar**: Fixed GPA progress bar not reaching 100%.
+  - **Landscape Orientation**: Fixed an issue where `allow_landscape` option was allowing LA claims to start in landscape on mobiles. [See behavior documentation](https://github.com/iProov/web#allow-landscape).
+  - **Android Tablet**: Fixed an issue to allow LA claims in landscape orientation on Android tablets (although this orientation is not recommended).
+  - **iPad's Version Reporting**: Fixed an issue where iPad's were reporting the wrong iOS version which triggered iframe bridge unnecessarily.
+  - **Event Details**: Fixed missing `type` in details + updated docs to correctly reflect expected data.
+
 ## 27.02.2023 4.1.1
 
 ## Fixed
 
 - **Supplementary Imagery**: Fixed issue with imagery not being returned.
 
-
 ## 13.02.2023 4.1.0
 
 ## Added
+
 - **Support Checker**: New `localStorage` test to handle when `localStorage` is not supported and edge cases such as iframed integrations while using Chrome's incognito mode.
 
 ## Changed
+
 - **UI**
   - **Optimisation**: We replaced ThreeJS with a custom WebGL implementation.
     - **Android**: Upto `20%` performance improvement with low-end Android devices.
     - **Bundle Size**: `200kb` removed from the overall bundle size!
 
 ## Fixed
+
 - **SDK Options**: Fixed `base_url` option not accepting URLs which include a path name.
 - **Failed Event**: `ambiguous_outcome` not being replaced with `unknown` in the failed event data.
 - **Video Feed**: The camera feed not being visible after cancelling a claim and then when a new `iproov-me` element is loaded into the page the camera feed wouldn't be visible.
@@ -51,9 +77,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Networking**: SocketIO has been replaced with a more secure in-house solution directly based on WebSockets
 - **Networking**: Default network timeout has been increased to 20 seconds
 - **Events**: Removed `Interrupted` Event
-- **UI**: Introduced the new NUX UI for WebSDK (Kiosk Mode is unaffected from all the following UI related changes)
+- **UI**: Introduced a new UI for the Web SDK (Kiosk Mode is unaffected from all the following UI related changes)
 - **UI**: The centre prompt can now take a string of any length
-- **UI**: Introduced the following options for new features brought by NUX:
+- **UI**: Introduced the following options for new UI features:
   - `csp_nonce`: This can be set to a random string to avoid requiring `unsafe-inline` in your style-src CSP.
   - `floating_prompt_rounded_corners` has been renamed to `prompt_rounded_corners`
   - Removed `enable_floating_prompt`
