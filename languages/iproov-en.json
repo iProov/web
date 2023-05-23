@@ -42,6 +42,7 @@
     "failure_face_too_close": "Move your face farther from the screen",
     "failure_face_too_far": "Move your face closer to the screen",
     "failure_misaligned_face": "Keep your face in the oval",
+    "failure_multiple_faces": "Ensure only one person is visible",
     "failure_network_problem": "Sorry, network problem",
     "failure_not_supported": "Device is not supported",
     "failure_obscured_face": "Remove any face coverings",
