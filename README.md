@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v4.2.0
+# iProov Biometrics Web SDK v4.2.1
 
 ## 📖 Table of contents
 
@@ -44,7 +44,7 @@ The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk)
 
 ### NPM Package
 
-Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on using the private NPM reg
+Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on usage.
 
 > ⚠️When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login) or [YARN login](https://classic.yarnpkg.com/lang/en/docs/cli/login/).
 
@@ -72,6 +72,8 @@ require("@iproov/web-sdk")
 
 It's as simple as that to include the iProov Biometrics Web SDK with your project.
 Now you can inject the web component where you need it using one of the [integration methods](#frontend) shown below.
+
+> 🔒 A secure context is required when using the iProov Web SDK. This means that the page must be served over https including when using localhost. If you are using localhost, you can use a self-signed certificate.
 
 ## 🚀 Get started
 
