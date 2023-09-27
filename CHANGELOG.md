@@ -5,7 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 23.05.2023 4.2.1
+## 27.09.2023 5.0.0
+
+## Added
+
+- **User Feedback Codes**: New User Feedback codes for Liveness Assurance, see upgrade guide for details.
+- **UI**
+  - **LA Background Cropping** LA with the clear or blur filter has a new cropping animation applied, in order to provide a more pleasing UX. Note the size/extent of this effect varies based on the claim.
+  - **GPA animation** New get ready and progress animation for GPA.
+  - **Alternate Camera Button** Now customizable. See readme for details.
+- **Imagery Quality** In LA, higher quality imagery can be collected and returned via the validate frame. This feature can be toggled on - please reach out to Customer Success to enable this.
+
+## Fixed
+
+- **UI**
+  - **Full screen failure** Layout issue when full screen fails has been fixed.
+  - **Viewport resize** Video display issue when viewport is resized has been fixed.
+  - **Liveness animation** Liveness Assurance complete animation on iOS/iPadOS has been fixed to align with other platforms.
+- **Imagery**
+  - **Imagery on rotation** Fix frames overlaying each other when device is rotated while scanning.
+- **Error**
+  - **Error code** Error codes are now correctly reported to the backend.
+
+## Changed
+
+- **Motion permission on GPA** Motion will be required on GPA.
+- **Feedback codes** `user_timeout` and `not_supported` are now reported as errors (they were reported as failures before).
+- **Security** The security of the SDK has been enhanced.
+- **US Spelling** Changed API to U.S. English spelling of "Canceled".
+
+## Removed
+
+- **Iframe Bridge**: iOS/iPadOS 14 and lower are no longer supported within iframe integrations. The minimum supported version is now iOS 15.1. As a consequence Iframe Bridge has been removed from the SDK.
+
+## 22.05.2023 4.2.1
 
 ## Fixed
 
