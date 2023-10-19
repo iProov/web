@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v5.0.0
+# iProov Biometrics Web SDK v5.0.1
 
 ## 📖 Table of contents
 
@@ -1014,3 +1014,5 @@ For further help with integrating the SDK, please contact [support@iproov.com](m
   - [Safari 15.0 tab crashes when requesting WebGL context](https://bugs.webkit.org/show_bug.cgi?id=231423)
   - [Safari 15.0 unable to render webcam to canvas context](https://github.com/mrdoob/three.js/issues/22582#issuecomment-938710902)
 - Flickering can occur while cropping with `clear` and `blur` SDK filters (only observed on MacBook Pro M2 with an external monitor)
+
+
