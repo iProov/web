@@ -7,6 +7,6 @@
   "author": "",
   "devDependencies": {},
   "dependencies": {
-    "@iproov/web": "latest"
+    "@iproov/web-sdk": "latest"
   }
 }

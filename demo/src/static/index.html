@@ -52,8 +52,8 @@
         <pre class="detail iproov-lang-term"></pre>
         <button class="ipbutton--lozenge action-restart">Try again</button>
       </div>
-      <div slot="cancelled" class="state state--cancelled">
-        <h3>Cancelled</h3>
+      <div slot="canceled" class="state state--canceled">
+        <h3>Canceled</h3>
         <p>User exited out of iProov</p>
         <button class="ipbutton--lozenge action-restart">Restart iProov</button>
       </div>
@@ -68,18 +68,25 @@
       </div>
     </template>
     <div class="wrapper">
-      <header>
+      <header class="hide-in-fs">
         <h1>
           <img class="logo" src="img/iproov_logo.svg" width="100" alt="iProov" />
-          <span>Web SDK Demo</span>
+          <a href="/" title="Web SDK Demo" aria-label="Web SDK Demo">
+            <span>Web SDK Demo</span>
+          </a>
         </h1>
       </header>
-      <p>Demo page for iProov Web integrators. Enter your email address, select claim mode, and iProov!</p>
-      <form id="token_config" class="card">
-        <h4>Create Token</h4>
+      <p class="hide-in-fs">
+        Demo page for iProov Web integrators. Enter your email address, select claim mode, and iProov!
+      </p>
+      <form id="token_config" class="card hide-in-fs">
+        <h2>Create Token</h2>
         <div class="form__field">
           <label for="user_id">Enter your email address</label>
-          <input type="email" name="user_id" id="user_id" placeholder="Email address (user_id)" />
+          <input type="email" name="user_id" id="user_id" placeholder="Email address (user_id)" autocomplete="email" />
+          <p class="error-message">
+            Please enter a valid email address which includes the @ character i.e. <strong>name@domain.com</strong>
+          </p>
         </div>
         <div class="form__field">
           <fieldset>
@@ -115,7 +122,7 @@
       <div id="iproov_wrapper" class="card hidden">
         <div id="iproovme_container"></div>
       </div>
-      <footer>
+      <footer class="hide-in-fs">
         <p>
           By using iProov, you agree to the <a href="https://www.iproov.com/terms-and-conditions">Terms of Use</a> &amp;
           <a href="https://www.iproov.com/privacy-policy">Privacy Policy</a>

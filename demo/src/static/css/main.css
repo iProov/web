@@ -24,6 +24,7 @@
   --c-black: #000;
   --c-black-o2: rgba(0, 0, 0, 0.2);
   --c-black-o4: rgba(0, 0, 0, 0.4);
+  --c-black-o6: rgba(0, 0, 0, 0.6);
   --c-black-o8: rgba(0, 0, 0, 0.8);
   --c-deep-cove: #061a40;
   --c-deep-cove-o2: rgba(6, 26, 64, 0.2);
@@ -40,6 +41,7 @@
   --c-matisse-o2: rgba(28, 82, 152, 0.2);
   --c-mercury: #e9e9e9;
   --c-mine-shaft: #272727;
+  --c-dark-green: #2e855e;
   --c-ocean-green: #46bc86;
   --c-picton-blue: #1fc8e7;
   --c-seashell: #f1f1f1;
@@ -47,9 +49,11 @@
   --c-silver-chalice: #a5a5a5;
   --c-slate-gray: #6b788e;
   --c-stratos: #00133e;
-  --c-texas-rose: #fdbd50;
-  --c-texas-rose-darker: #e4a437;
+  --c-texas-rose: #fdbc51;
+  --c-texas-rose-darker: #986c1f;
   --c-torch-red: #ff0033;
+  --c-dark-red: #c70028;
+  --c-l-pink: #fdd;
   --c-white: #fff;
   --c-white-darker: #e6e6e6;
   --c-white-o3: rgba(255, 255, 255, 0.3);
@@ -146,13 +150,16 @@ textarea {
   border: 1px solid var(--c-mercury);
   padding: 1rem;
   margin-bottom: 1rem;
-  transition: filter, opacity linear .5s;
+  overflow: hidden;
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 
 .card.collapsed {
-  opacity: .25;
-  filter: grayscale(50%);
-  pointer-events: none;
+  max-height: 0;
+  padding: 0;
+  border: hidden;
 }
 
 .card :first-of-type {
@@ -185,24 +192,46 @@ header h1 {
 }
 
 header span {
-  font-size: 1.95rem;
+  font-size: 1.35rem;
   line-height: 1;
 }
 
-@media screen and (min-width: 1024px) {
+header a {
+  text-align: right;
+  flex: 5;
+}
+
+header a:hover,
+header a:active {
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 400px) {
+  header span {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
   header span {
     font-size: 2.6rem;
   }
 }
 
-
-
 header .logo {
   margin-right: 1rem;
+  flex: 1;
+}
+
+h2 {
+  color: var(--c-matisse);
+  font-size: 1.2em;
+  letter-spacing: -0.04em;
+  margin-bottom: 0;
 }
 
 h3 {
-  color: var(--c-deep-cove);
+  color: var(--c-matisse);
   letter-spacing: -0.02em;
   font-family: var(--f-regular);
   margin-bottom: 0;
@@ -211,15 +240,13 @@ h3 {
   line-height: 1.3em;
 }
 
-h4 {
-  color: var(--c-deep-cove);
+h3.error {
+  color: var(--c-torch-red);
   font-size: 1.2em;
-  letter-spacing: -0.04em;
-  margin-bottom: 0;
 }
 
 header + p {
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 a {
@@ -228,7 +255,8 @@ a {
   transition: color 0.3s ease-in-out;
 }
 
-a:focus, a:hover {
+a:focus,
+a:hover {
   color: var(--c-deep-cove);
 }
 
@@ -263,7 +291,7 @@ fieldset label {
 
 input[type="text"],
 input[type="email"] {
-  border-color: var(--c-black-o4);
+  border-color: var(--c-black-o6);
   border-style: solid;
   border-width: 0 0 1px;
   padding-left: 0;
@@ -280,6 +308,15 @@ input[type="email"] {
   display: block;
   max-width: 100%;
   width: 100%;
+}
+
+/*
+ * Form Validation
+ */
+.error-message {
+  color: var(--c-torch-red);
+  font-size: 0.8rem;
+  display: none;
 }
 
 .assurance,
@@ -382,6 +419,7 @@ pre {
   font-size: 0.8em;
   padding: 1rem;
   border-radius: 4px;
+  white-space: pre-wrap;
 }
 
 footer {
@@ -392,7 +430,7 @@ footer {
 footer a {
   color: var(--c-dove-gray);
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 /* iProov Web SDK overrides */
@@ -435,39 +473,39 @@ footer a {
   padding-right: calc(80px + 1rem);
 }
 
-
 .state--passed {
   background-image: url(../img/gpa-tick.png);
 }
 
-.state--cancelled,
+.state--canceled,
 .state--error,
 .state--failed {
-  background-image: url('../img/No-not-worked-woman-yellow.png');
+  background-image: url("../img/No-not-worked-woman-yellow.png");
   padding-right: calc(1rem + 80px);
 }
 
-[slot=ready] h3 {
+[slot="ready"] h3 {
   font-size: 1.5rem;
 }
 
 .error-container {
-  background-color: var(--c-egg-sour);
-  color: var(--c-torch-red);
+  background-color: var(--c-l-pink);
+  color: var(--c-dark-red);
   border-radius: 4px;
-  border: 1px solid var(--c-torch-red);
+  border: 1px solid var(--c-dark-red);
   padding: 1rem;
   margin-top: 1rem;
 }
 
-.error-container h4, .error-container p {
+.error-container h3,
+.error-container p {
   color: inherit;
   margin-bottom: 0;
 }
 
 .support-container {
   margin: 1rem 0 0;
-  font-size: .8rem;
+  font-size: 0.8rem;
   background-repeat: no-repeat;
   padding-left: 2rem;
   background-size: 1.5rem;
@@ -476,7 +514,8 @@ footer a {
 
 .support-container--ok {
   background-image: url(../img/thumbs-up.png);
-  color: var(--c-ocean-green);
+  color: var(--c-dark-green);
+  font-weight: 700;
 }
 
 .support-container--error {

@@ -2,7 +2,7 @@
 
 This demo is a self-contained NodeJS server and minimal frontend which covers:
 
-* Running a server with a `BASE_URL`, `API_KEY` and `API_SECRET` that you can obtain from https://portal.iproov.com;
+* Running a server with a `BASE_URL`, `API_KEY`, `API_SECRET` that you can obtain from https://portal.iproov.com and `NPM_ACCESS_TOKEN` that you can create once your get access to our private NPM registry (please contact support@iproov.com).
 * Creating tokens for Genuine Presence and Liveness transactions;
 * Enrolling and verifying;
 * Customising iProov Web with web component slots and CustomEvents.
