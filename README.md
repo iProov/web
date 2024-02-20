@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v5.0.1
+# iProov Biometrics Web SDK v5.1.0
 
 ## 📖 Table of contents
 
@@ -45,6 +45,8 @@ The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk)
 ### NPM Package
 
 Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on usage.
+
+> ⚠️ The iProov Web SDK shouldn't be included in any bundling, obfuscation, or minification processes. We have taken all necessary steps to ensure the SDK is as small as possible. Including the SDK in any of these processes may cause unexpected errors or performance degradation.
 
 > ⚠️ When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login) or [YARN login](https://classic.yarnpkg.com/lang/en/docs/cli/login/).
 
@@ -490,12 +492,13 @@ The available events are detailed below with any extra properties that are suppl
 
 | Event                   | Extra Properties                        | Description                                                                                                                                                                                                                     |
 | ----------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **canceled**            | _feedback, reason_                      | User has canceled iProov by exiting fullscreen                                                                                                                                                                                 |
+| **canceled**            | _feedback, reason_                      | User has canceled iProov by exiting fullscreen |
 | **connecting**          | None                                    | The SDK is connecting to the server. You should provide an indeterminate progress indicator to let the user know that the connection is taking place.                                                                           |
 | **connected**           | None                                    | The SDK has connected. You should hide any progress indication at this point.                                                                                                                                                   |
 | **error**               | _feedback, reason_                      | iProov encountered an error while processing the authentication                                                                                                                                                                 |
 | **failed**              | _type, passed, feedback, reason_        | Authentication was unsuccessful, the user needs to try again                                                                                                                                                                    |
 | **multiple_cameras** \* | _devices, device_selector, slot, label_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected                                                                                                                       |
+| **no_camera**            | _feedback, reason_                      | No video input was detected on the user's device |
 | **passed**              | _type, feedback, reason, passed_        | Authentication was successful, the result can now be validated                                                                                                                                                                  |
 | **permission**          | _reason_                                | Camera permission is unknown & not blocked, show permission                                                                                                                                                                     |
 | **permission_denied**   | _feedback, reason_                      | User has blocked access to the camera                                                                                                                                                                                           |
@@ -743,6 +746,8 @@ Of the mainstream browsers that support the above technologies, we support the *
 
 For known issues, [see here](#known-issues).
 
+We officially support only the following browsers. Please note that browsers not included in the list may not guarantee an optimal experience when utilizing the iProov Biometrics Web SDK.
+
 | <img src="https://avatars1.githubusercontent.com/u/4119093?s=200&v=4" alt="Safari" width="24px" height="24px" /><br/>Platform | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /><br/>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /><br/>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" /><br/>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /><br/>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /><br/>Opera | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /><br/>Samsung |
 | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Windows**                                                                                                                   | N/A                                                                                                                                                       | :heavy_check_mark:                                                                                                                                        | :heavy_check_mark:                                                                                                                                     | :heavy_check_mark:                                                                                                                                            | :heavy_check_mark:                                                                                                                                    | N/A                                                                                                                                                                             |
@@ -773,7 +778,7 @@ full component until device support has been established, so that the Web SDK on
 ```javascript
 import { iProovSupport } from "@iproov/web-sdk/iProovSupport.js"
 const optionalLogger = console
-const supportChecker = new iProovSupport(optionalLogger, { assuranceType: "genuine_presence" })
+const supportChecker = new iProovSupport(optionalLogger)
 ```
 
 **Example usage without a bundler, inside a vanilla ES6 / ESM environment:**
@@ -796,11 +801,11 @@ const supportChecker = new window.IProov.IProovSupport()
 
 #### How to use iProovSupport:
 
+> ⚠️ The `assurance_type` config option was removed from the Support Checker in v5 as motion permissions are now required for all assurance types.
+
 ```javascript
 const loggger = console // optionally pass in a logger conforming to JS console API
-const supportChecker = new iProovSupport(loggger, {
-  assuranceType: "genuine_presence", // optionally pass an assurance type if using liveness; defaults to genuine_presence
-})
+const supportChecker = new iProovSupport(loggger)
 // Event based:
 supportChecker.addEventListener("check", (event) => {
   const { supported, granted, is_native_bridge } = event.detail
@@ -902,19 +907,46 @@ Using the support checker is the best and canonical way to detect whether the us
 
 ## 🕸 WebViews
 
-The iProov Web and Native SDKs can work with WebView based apps using the [Native Bridge](#native-bridge) feature. This allows the Web SDK to seamlessly launch the native SDKs embedded within the app.
+Web Views are compatible with the iProov Web SDK. However, there are some considerations to take into account when integrating iProov into a WebView based app.
 
-You can enable this with one line of code in your mobile app; from that point, the Web/Native SDKs take care of the rest.
-
-Note that:
-
-- Native Bridge mode is _mandatory_ for iOS `WKWebView` based apps until iOS 14.3, when Apple enabled support for `getUserMedia`. In all other cases, the `unsupported` event fires.
+- [Native Bridge](#native-bridge) mode is _mandatory_ for iOS `WKWebView` based apps until iOS `14.3`, when Apple enabled support for `getUserMedia`. In all other cases, the `unsupported` event fires. All iOS versions after this are supported.
 - In Android WebView apps, it _is_ possible to use the Web SDK directly provided that your app correctly allows fullscreen mode. This ensures the user interface is correctly rendered.
+
+### Android WebView
 
 These WebView examples demonstrate how to ensure fullscreen is allowed and configured correctly inside your Android app:
 
 - [Java Fullscreen WebView Example](https://github.com/iProov/android/wiki/Java-WebView)
 - [Kotlin Fullscreen WebView Example](https://github.com/iProov/android/wiki/Kotlin-WebView)
+
+### iOS WebView
+
+For iOS, the `WKWebView` is the recommended Web View to use. Below is an example but please be aware the code is a simple example and has not been tested thoroughly.
+
+```swift
+import UIKit
+import WebKit
+
+final class WKWebViewViewController: UIViewController, WKUIDelegate {
+    var webView: WKWebView!
+
+    override func loadView() {
+        let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.allowsInlineMediaPlayback = true
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        view = webView
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let myURL = URL(string: "ENTER_YOUR_URL_HERE")
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
+    }
+}
+```
 
 ## 🌉 Native bridge
 
@@ -936,7 +968,15 @@ For more information on using iProov Web within a native WebView based app, see 
 The `native_sdk_options` setting accepts a base64 encoded JSON object of iProov Native SDK options as defined in the [iOS](https://github.com/iProov/ios#-options) and [Android](https://github.com/iProov/android#-options) documentation:
 
 ```js
-iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ filter: { style: "vibrant" }, title: "NB Test" })))
+// Example shows passing title_text_color and a title to the Native SDK
+iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ title_text_color: "#2D2D2D", title: "NB Test" })))
+```
+#### Filters
+When configuring the `filter` options, you will need to pass these in as objects via the `native_sdk_options` option. See the related [Android SDK filter docs]([#-filter-options](https://docs.iproov.com/docs/Content/ImplementationGuide/biometric-sdk/android/sdk-android-customize-ui.htm?Highlight=filter)) or [iOS SDK filter docs](https://docs.iproov.com/docs/Content/ImplementationGuide/biometric-sdk/ios/sdk-ios-customize-ui.htm?Highlight=filter) for more details on configuring filters.
+
+```js
+// Example shows passing a filter to the Native SDK as natural and clear
+iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ filter: { name: "natural", style: "clear" }})))
 ```
 
 ## 🔳 Iframe integrations
