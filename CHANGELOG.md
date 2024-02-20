@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 20.02.2024 5.1.0
+
+## Added
+- **Video**
+  - **Error Handling**: Video errors are now handled more gracefully to prevent users being in a frozen state and unable to progress the claim.
+- **Security**: New security upgrades.
+
+## Fixed
+- **Imagery**: Fixed blue tone issue on some Android devices.
+- **Support Checker**: Fixed an issue where the metadata endpoint wasn't called when a device is unsupported.
+- **Telemetry**: Fixed an issue where some telemetry was passing incorrect values.
+
+## Changed
+- **UI**
+  - **Canny**: New shaders to improve performance and visual consistency with the other iProov SDKs.
+  - **Prompt**: Improved the prompt's initial styling to not appear empty on entering Canny.
+
 ## 19.10.2023 5.0.1
 
 ## Fixed
