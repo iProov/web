@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 
-- **SIM**: Fixed issue with Express claims (previous Liveness) where if no face is detected immediately and SIM is enabled the SDK could crash.
+- **Streaming**: Fixed an issue where streaming could rarely cause the SDK to crash in Express claims (previously Liveness)
 
 ## 20.02.2024 5.1.0
 
