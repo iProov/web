@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 30.05.2024 5.2.0
+
+## Added
+- Enhanced security for Dynamic Liveness (previously GPA).
+
+## Fixed
+- **FireFox Mobile**: Fixed an issue with Firefox Mobile not always accepting given camera video constraints.
+- **Landscape Orientation**: Landscape Orientation: Fixed instances where streaming could start while the device was in landscape mode, even though landscape orientation was blocked.
+- **Assets**: Fixed issue where double `//` was included in some assets fetched by the Web SDK.
+- **Android Chrome Desktop Mode**: Fixed an issue where the SDK would not start in desktop mode with Chrome for Android.
+- **iOS SVG Element** Fixed an issue where an SVG element was appended to the body with non-zero dimensions.
+
 ## 08.04.2024 5.1.1
 
 ## Fixed
