@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v5.2.2
+# iProov Biometrics Web SDK v5.3.0
 
 ## 📖 Table of contents
 
@@ -29,7 +29,7 @@ You will need to generate a token from your back-end to use with the iProov Biom
 
 Check out our [example](./demo), which can be spun up with a single command, which demonstrates an example backend/frontend integration.
 
-iProov offers Genuine Presence Assurance&trade; technology and Liveness Assurance&trade; technology:
+iProov offers Genuine Presence Assurance&trade; technology (also known as "Dynamic Liveness") and Liveness Assurance&trade; technology (also known as "Express Liveness"):
 
 - [Genuine Presence Assurance](https://www.iproov.com/iproov-system/technology/genuine-presence-assurance) verifies that an online remote user is the right person, a real person and that they are authenticating right now, for purposes of access control and security.
 - [Liveness Assurance](https://www.iproov.com/iproov-system/technology/liveness-assurance) verifies a remote online user is the right person and a real person for access control and security.
@@ -150,7 +150,7 @@ Setting this option lower than the defaults may increase error rates, so please 
 
 #### Base URL
 
-You can change the backend server you are attempting to iProov against by passing the `base_url` property. This needs to point to the same platform used for generating tokens (defaults to the EU platform if not defined). Reverse proxies are supported and a custom path to the WebSocket endpoint can be used, for example: `https://custom.domain.com/custom-path/ws/v2/`
+You can change the backend server you are attempting to iProov against by passing the `base_url` property. This needs to point to the same platform used for generating tokens (defaults to the EU platform if not defined). Reverse proxies are supported and a custom path to the WebSocket endpoint can be used, for example: `https://example.com/custom-path/ws/v2/`
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" base_url="https://eu.rp.secure.iproov.me"></iproov-me>
@@ -171,7 +171,7 @@ Critical dependencies are loaded from our CDN at cdn.iproov.app. We recommend in
 You can use a custom logo by simply passing a relative link, absolute path or data URI to your logo. We recommend providing a logo in SVG format, but any web format is supported. If you don't pass a logo, the iProov logo will be shown by default. If you do not want a logo to show pass the `logo` attribute as `null`.
 
 ```html
-<iproov-me token="***YOUR_TOKEN_HERE***" logo="https://www.iproov.com/images/iproov_logo.svg"></iproov-me>
+<iproov-me token="***YOUR_TOKEN_HERE***" logo="https://example.com/path-to-logo.png"></iproov-me>
 ```
 
 #### Close Button
@@ -181,7 +181,7 @@ You can use a custom button image by simply passing a relative link, an absolute
 ```html
 <iproov-me
   token="***YOUR_TOKEN_HERE***"
-  close_button="https://www.materialui.co/materialIcons/navigation/close_black_72x72.png"
+  close_button="https://example.com/path-to-close-button.png"
 ></iproov-me>
 ```
 
@@ -194,7 +194,7 @@ You can use a custom camera switch button by simply passing a relative link, an 
 ```html
 <iproov-me
   token="***YOUR_TOKEN_HERE***"
-  switch_camera_button="https://your-domain.com/camera-switch-button.svg"
+  switch_camera_button="https://example.com/camera-switch-button.svg"
 ></iproov-me>
 ```
 
