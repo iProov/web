@@ -221,6 +221,13 @@ header a:active {
 header .logo {
   margin-right: 1rem;
   flex: 1;
+  width: 188px;
+}
+
+@media screen and (max-width: 500px) {
+  header h1 {
+    flex-direction: column;
+  }
 }
 
 h2 {
@@ -368,7 +375,10 @@ button {
   outline: 0;
   text-align: center;
   text-decoration: none;
-  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out,
+  transition:
+    background-color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
+    color 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
 }
 
