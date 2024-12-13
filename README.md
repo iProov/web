@@ -31,8 +31,8 @@ Check out our [example](./demo), which can be spun up with a single command, whi
 
 iProov offers Genuine Presence Assurance&trade; technology (also known as "Dynamic Liveness") and Liveness Assurance&trade; technology (also known as "Express Liveness"):
 
-- [Dynamic Liveness](https://www.iproov.com/iproov-system/technology/genuine-presence-assurance) verifies that an online remote user is the right person, a real person and that they are authenticating right now, for purposes of access control and security.
-- [Express Liveness](https://www.iproov.com/iproov-system/technology/liveness-assurance) verifies a remote online user is the right person and a real person for access control and security.
+- [Genuine Presence Assurance](https://www.iproov.com/iproov-system/technology/genuine-presence-assurance) verifies that an online remote user is the right person, a real person and that they are authenticating right now, for purposes of access control and security.
+- [Liveness Assurance](https://www.iproov.com/iproov-system/technology/liveness-assurance) verifies a remote online user is the right person and a real person for access control and security.
 
 ## ✍ Registration
 
@@ -244,10 +244,10 @@ Color option changes introduced in [v4.0.0](https://github.com/iProov/web/releas
 | **prompt_text_color**                    | Adjusts the color of the text visible in the centre prompt of the screen                                                                             |
 | **prompt_background_color**              | Adjusts the color of the background visible in the centre prompt of the screen                                                                       |
 | **header_background_color**              | Adjusts the color of the background visible in the top bar of the application (transparent by default)                                               |
-| **gpa_not_ready_oval_stroke_color**      | Stroke color for the centre oval whilst the SDK is in a "Not Ready" state in Dynamic Liveness                                                        |
-| **gpa_ready_oval_stroke_color**          | Stroke color for the centre oval whilst the SDK is in a "Ready" state in Dynamic Liveness                                                            |
-| **liveness_oval_stroke_color**           | Stroke color for the centre oval whilst the SDK before iProov-ing in Express Liveness                                                                |
-| **liveness_completed_oval_stroke_color** | Stroke color for the centre oval whilst the SDK after iProov-ing in Express Liveness                                                                 |
+| **gpa_not_ready_oval_stroke_color**      | Stroke color for the centre oval whilst the SDK is in a "Not Ready" state in GPA                                                                     |
+| **gpa_ready_oval_stroke_color**          | Stroke color for the centre oval whilst the SDK is in a "Ready" state in GPA                                                                         |
+| **liveness_oval_stroke_color**           | Stroke color for the centre oval whilst the SDK before iProov-ing in Liveness                                                                        |
+| **liveness_completed_oval_stroke_color** | Stroke color for the centre oval whilst the SDK after iProov-ing in Liveness                                                                         |
 
 Kiosk mode is unaffected from these changes to color options. The same color options passed through from 3.6.1 and prior should be utilized instead.
 
@@ -296,8 +296,8 @@ When `allow_landscape` is set to `true`, handheld devices will be able to start 
 
 Here is the behavior:
 
-- For Dynamic and Express Liveness, landscape orientation is blocked in most handheld devices.
-- For Express Liveness, no handheld device will be able to start in landscape mode, regardless of this setting.
+- For GPA and Liveness Assurance, landscape orientation is blocked in most handheld devices.
+- For Liveness Assurance, no handheld device will be able to start in landscape mode, regardless of this setting.
 - This blocking behavior is not enforced on Android tablets due to the varying position of their camera.
 - When in landscape mode in an affected UX, the iProov component will display the `rotate_portrait` slot.
 - Desktop devices are unaffected by `allow_landscape`.
@@ -575,7 +575,7 @@ In all events, corresponding _reason_ field can be displayed to the user.
 
 ### Error Feedback Codes
 
-Error feedback codes apply for both Dynamic and Express Liveness
+Error feedback codes apply for both GPA and Liveness Assurance
 
 | Feedback                            | Reason                                                     |
 | ----------------------------------- | ---------------------------------------------------------- |
