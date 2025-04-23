@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 23.04.2025 5.4.3
 
 ## Fixed
-- **Asset URLs**: Removed the CommonJS and AMD interfaces from iProovMe.js as they were not working and were causing issues with some bundlers.
+- **Module interface**: Removed the CommonJS and AMD interfaces from iProovMe.js as they were not working and were causing issues with some bundlers.
 
 ## 10.03.2025 5.4.2
 
