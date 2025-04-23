@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 23.04.2025 5.4.3
+
+## Fixed
+- **Asset URLs**: Removed the CommonJS and AMD interfaces from iProovMe.js as they were not working and were causing issues with some bundlers.
+
 ## 10.03.2025 5.4.2
 
 ## Fixed

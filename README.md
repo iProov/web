@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v5.4.2
+# iProov Biometrics Web SDK v5.4.3
 
 ## 📖 Table of contents
 
@@ -126,7 +126,7 @@ window.addEventListener("WebComponentsReady", function (event) {
 
 There are also the following framework specific example integrations available on the wiki:
 
-- [Angular v10](https://github.com/iProov/web/wiki/Angular-v10)
+- [Angular v15](https://github.com/iProov/web/wiki/Angular-v15)
 - [React v16](https://github.com/iProov/web/wiki/React-v16)
 - [Vue v2](https://github.com/iProov/web/wiki/Vue-v2)
 
