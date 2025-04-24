@@ -23,16 +23,27 @@
 
 ## 🤳 Introduction
 
-The iProov Biometrics Web SDK is the client for web browser based authentication. It can be integrated in a number of ways to support your web journeys for onboarding and authentication. You can find out more about how to use iProov Web in your [User Journeys](https://portal.iproov.com/documentation) and create [API Keys](https://portal.iproov.com/service-providers/create) on the [iProov Portal](https://portal.iproov.com/).
+This guide describes how to integrate iProov biometric assurance technologies into your Web app, or SDK.
 
-You will need to generate a token from your back-end to use with the iProov Biometrics Web SDK. You can use the [REST API](https://eu.rp.secure.iproov.me/docs.html) to make the relevant calls and return the token to your front-end. See the [backend section](#backend) for more details.
+iProov offers two powerful authentication solutions:
 
-Check out our [example](./demo), which can be spun up with a single command, which demonstrates an example backend/frontend integration.
+* **Dynamic Liveness™** technology (our **Genuine Presence Assurance™** solution) verifies that an online remote user is the right person, a real person, and that they are authenticating right now, for purposes of access control and security.
+* **Express Liveness™** technology (our **Liveness Assurance™** solution) verifies that a remote online user is the right person and a real person for access control and security.
 
-iProov offers Genuine Presence Assurance&trade; technology (also known as "Dynamic Liveness") and Liveness Assurance&trade; technology (also known as "Express Liveness"):
+### Software Download & Installation
 
-- [Genuine Presence Assurance](https://www.iproov.com/iproov-system/technology/genuine-presence-assurance) verifies that an online remote user is the right person, a real person and that they are authenticating right now, for purposes of access control and security.
-- [Liveness Assurance](https://www.iproov.com/iproov-system/technology/liveness-assurance) verifies a remote online user is the right person and a real person for access control and security.
+The iProov SDK can be downloaded and installed directly into your Web application, or incorporated into your own SDK.
+
+Our downloadable software components implementing **Dynamic Liveness™** and **Express Liveness™** technologies integrate seamlessly with your existing user journeys.
+
+### Web Services & API Access
+
+In addition to our downloadable software components, iProov provides identity authentication services through our secure API and web-based administration portal.
+These services enable organizations to implement **Dynamic Liveness™** and **Express Liveness™** verification capabilities across their digital platforms.
+
+Find out more about how to use iProov in your user journeys in the [Implementation Guide](https://docs.iproov.com/implementation_A-Z/architecutre_overview).
+
+iProov also supports [Android](https://github.com/iproov/android), [iOS](https://github.com/iproov/ios), [Flutter](https://github.com/iproov/flutter), [MAUI](https://github.com/iProov/dotnet-maui), and [React Native](https://github.com/iproov/react-native).
 
 ## ✍ Registration
 
