@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 15.05.2025 5.4.4
+
+## Added
+
+- **Accessibility**: For Dynamic Liveness, when the new SDK option `scanning_prompts` is enabled, two new prompts are displayed: one during scanning and another upon scanning completion.
+
+## Fixed
+- **iPad**: Fixed an issue where video streaming appeared too zoomed in on iPad.
+- **Localization**: Fixed localization for the `ready` and `grant_button` slots.
+- **Camera selector**: Fixed an issue where the camera selector was not applying the selected camera after permission was granted.
+
 ## 23.04.2025 5.4.3
 
 ## Fixed

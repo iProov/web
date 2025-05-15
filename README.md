@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v5.4.3
+# iProov Biometrics Web SDK v5.4.4
 
 ## 📖 Table of contents
 
@@ -289,6 +289,14 @@ The floating prompt has an option to control rounded corners. Rounded corners ar
 
 ```html
 <iproov-me token="***YOUR_TOKEN_HERE***" prompt_rounded_corners="false"></iproov-me>
+```
+
+#### Accessibility Scanning Prompts for Dynamic Liveness
+
+When `scanning_prompts` is set to `true` and only for Dynamic Liveness, the iProov component will display two additional prompts to the user: `prompt_scanning` during the scan and `prompt_genuine_presence_scan_completed` after the scan completes. These prompts will be read out by screen readers.
+
+```html
+<iproov-me token="***YOUR_TOKEN_HERE***" scanning_prompts="true"></iproov-me>
 ```
 
 #### CSP Nonce
@@ -1004,10 +1012,10 @@ Integrations via iframes are supported by the Web SDK but please note that you m
 
 ```html
 <iframe
-  style="width: 100vw; height: 100vh; border: 0"
-  src="https://your-iframe-target.example"
-  allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"
-  allowfullscreen="true"
+        style="width: 100vw; height: 100vh; border: 0"
+        src="https://your-iframe-target.example"
+        allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"
+        allowfullscreen="true"
 ></iframe>
 ```
 
