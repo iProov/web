@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v5.4.4
+# iProov Biometrics Web SDK v5.5.0
 
 ## 📖 Table of contents
 
@@ -27,8 +27,8 @@ This guide describes how to integrate iProov biometric assurance technologies in
 
 iProov offers two powerful authentication solutions:
 
-* **Dynamic Liveness™** technology (our **Genuine Presence Assurance™** solution) verifies that an online remote user is the right person, a real person, and that they are authenticating right now, for purposes of access control and security.
-* **Express Liveness™** technology (our **Liveness Assurance™** solution) verifies that a remote online user is the right person and a real person for access control and security.
+- **Dynamic Liveness™** technology (our **Genuine Presence Assurance™** solution) verifies that an online remote user is the right person, a real person, and that they are authenticating right now, for purposes of access control and security.
+- **Express Liveness™** technology (our **Liveness Assurance™** solution) verifies that a remote online user is the right person and a real person for access control and security.
 
 ### Software Download & Installation
 
@@ -190,10 +190,7 @@ You can use a custom logo by simply passing a relative link, absolute path or da
 You can use a custom button image by simply passing a relative link, an absolute path or a data URI to your image. We recommend providing an image in SVG format, but any web format is supported. If you don't pass an image, the default close button image will be shown.
 
 ```html
-<iproov-me
-  token="***YOUR_TOKEN_HERE***"
-  close_button="https://example.com/path-to-close-button.png"
-></iproov-me>
+<iproov-me token="***YOUR_TOKEN_HERE***" close_button="https://example.com/path-to-close-button.png"></iproov-me>
 ```
 
 SVG is recommended.
@@ -208,7 +205,6 @@ You can use a custom camera switch button by simply passing a relative link, an 
   switch_camera_button="https://example.com/camera-switch-button.svg"
 ></iproov-me>
 ```
-
 
 #### Custom Title
 
@@ -249,7 +245,7 @@ You can customize the look and feel of the main layout by changing the following
 Color option changes introduced in [v4.0.0](https://github.com/iProov/web/releases/tag/v4.0.0):
 
 | Color Option                             | Description                                                                                                                                          |
-| ---------------------------------------- |------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **title_text_color**                     | Adjusts the color of the text that can be added above the oval (by default there is no text here - see the custom_title option for more information) |
 | **surround_color**                       | Adjusts the color of the surroundings to the centre oval. It also affects the color of the mask in Liveness with `clear` or `blur` filter.           |
 | **prompt_text_color**                    | Adjusts the color of the text visible in the centre prompt of the screen                                                                             |
@@ -468,22 +464,22 @@ To integrate with our localization feature, use special class names in your slot
 
 The following is the complete list of slots can be used with the `<iproov-me>` web component and have associated [events](#-events):
 
-| Slot                     | Description                                                                                                |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| **button** \*               | Element that a user taps or clicks on to launch into fullscreen and start iProov                           |
-| **camera_selector** \*\*   | Label and dropdown populated with available cameras, if multiple cameras are detected.                     |
-| **canceled**            | State displayed to the user when they exit fullscreen before iProoving                                     |
-| **error**                | State displayed to the user in the event of an error                                                       |
-| **failed**               | State displayed to the user when the user failed iProov                                                    |
-| **grant_button** \*        | Element that user taps or clicks to grant camera permission                                                |
-| **grant_permission**     | State displayed to the user when camera or motion permission is unknown and not blocked                    |
-| **no_camera**            | State displayed to the user when there is no camera                                                        |
-| **passed**               | State displayed to the user when the user passed iProov                                                    |
-| **permission_denied**    | State displayed to the user when camera permission has been blocked                                        |
-| **progress**             | State displayed to the user when streaming has completed and iProov is processing the result               |
-| **ready**                | State displayed to the user when the component is ready to start the main iProov user journey              |
-| **rotate_portrait** \*\*\* | State displayed to the user when a handheld device is not in portrait orientation                          |
-| **unsupported**          | State displayed to the user when their browser is not supported                                            |
+| Slot                       | Description                                                                                   |
+| -------------------------- | --------------------------------------------------------------------------------------------- |
+| **button** \*              | Element that a user taps or clicks on to launch into fullscreen and start iProov              |
+| **camera_selector** \*\*   | Label and dropdown populated with available cameras, if multiple cameras are detected.        |
+| **canceled**               | State displayed to the user when they exit fullscreen before iProoving                        |
+| **error**                  | State displayed to the user in the event of an error                                          |
+| **failed**                 | State displayed to the user when the user failed iProov                                       |
+| **grant_button** \*        | Element that user taps or clicks to grant camera permission                                   |
+| **grant_permission**       | State displayed to the user when camera or motion permission is unknown and not blocked       |
+| **no_camera**              | State displayed to the user when there is no camera                                           |
+| **passed**                 | State displayed to the user when the user passed iProov                                       |
+| **permission_denied**      | State displayed to the user when camera permission has been blocked                           |
+| **progress**               | State displayed to the user when streaming has completed and iProov is processing the result  |
+| **ready**                  | State displayed to the user when the component is ready to start the main iProov user journey |
+| **rotate_portrait** \*\*\* | State displayed to the user when a handheld device is not in portrait orientation             |
+| **unsupported**            | State displayed to the user when their browser is not supported                               |
 
 > \* Interactive elements such as buttons that start full screen and cameras require a user gesture enforced by the browser. Using JavaScript to apply clicks is not recommended within your user journey and may cause unexpected errors or performance degradation.
 > See our [User Gestures Wiki](https://github.com/iProov/web/wiki/User-Gestures) for more details.
@@ -511,13 +507,13 @@ The available events are detailed below with any extra properties that are suppl
 
 | Event                   | Extra Properties                        | Description                                                                                                                                                                                                                     |
 | ----------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **canceled**            | _feedback, reason_                      | User has canceled iProov by exiting fullscreen |
+| **canceled**            | _feedback, reason_                      | User has canceled iProov by exiting fullscreen                                                                                                                                                                                  |
 | **connecting**          | None                                    | The SDK is connecting to the server. You should provide an indeterminate progress indicator to let the user know that the connection is taking place.                                                                           |
 | **connected**           | None                                    | The SDK has connected. You should hide any progress indication at this point.                                                                                                                                                   |
 | **error**               | _feedback, reason_                      | iProov encountered an error while processing the authentication                                                                                                                                                                 |
 | **failed**              | _type, passed, feedback, reason_        | Authentication was unsuccessful, the user needs to try again                                                                                                                                                                    |
 | **multiple_cameras** \* | _devices, device_selector, slot, label_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected                                                                                                                       |
-| **no_camera**            | _feedback, reason_                      | No video input was detected on the user's device |
+| **no_camera**           | _feedback, reason_                      | No video input was detected on the user's device                                                                                                                                                                                |
 | **passed**              | _type, feedback, reason, passed_        | Authentication was successful, the result can now be validated                                                                                                                                                                  |
 | **permission**          | _reason_                                | Camera permission is unknown & not blocked, show permission                                                                                                                                                                     |
 | **permission_denied**   | _feedback, reason_                      | User has blocked access to the camera                                                                                                                                                                                           |
@@ -532,20 +528,20 @@ The available events are detailed below with any extra properties that are suppl
 
 Properties of the event's **detail** payload:
 
-| Property             | Events                                  | Description                                                |
-| -------------------- | --------------------------------------- | ---------------------------------------------------------- |
-| **token**            | All                                     | The token associated with the authentication attempt       |
-| **type** (†)         | _passed, failed_                        | The type of authentication (`enrol` or `verify`)           |
-| **passed**           | _passed, failed_                        | Boolean value whether the result passed or failed          |
-| **frame** (†) (\*)   | _passed, failed_                        | An `ImageData` from the scanning process                   |
-| **progress**         | _progress_                              | A percentage (between 0 and 100) representing the progress |
-| **message**          | _progress_                              | A user-friendly description of the current progress stage  |
+| Property             | Events                                 | Description                                                |
+| -------------------- | -------------------------------------- | ---------------------------------------------------------- |
+| **token**            | All                                    | The token associated with the authentication attempt       |
+| **type** (†)         | _passed, failed_                       | The type of authentication (`enrol` or `verify`)           |
+| **passed**           | _passed, failed_                       | Boolean value whether the result passed or failed          |
+| **frame** (†) (\*)   | _passed, failed_                       | An `ImageData` from the scanning process                   |
+| **progress**         | _progress_                             | A percentage (between 0 and 100) representing the progress |
+| **message**          | _progress_                             | A user-friendly description of the current progress stage  |
 | **feedback**         | _canceled, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
 | **reason**           | _canceled, failed, error, unsupported_ | An English description of the reason for the event         |
-| **slot**             | _multiple_cameras_                      | The relevant slot for the event, for ease of use           |
-| **devices**          | _multiple_cameras_                      | Array of suitable `InputDevice`s for imagery capture       |
-| **device_selector**  | _multiple_cameras_                      | The multiple camera selection `<select>` element           |
-| **is_native_bridge** | All                                     | Boolean value if event originates from the native bridge   |
+| **slot**             | _multiple_cameras_                     | The relevant slot for the event, for ease of use           |
+| **devices**          | _multiple_cameras_                     | Array of suitable `InputDevice`s for imagery capture       |
+| **device_selector**  | _multiple_cameras_                     | The multiple camera selection `<select>` element           |
+| **is_native_bridge** | All                                    | Boolean value if event originates from the native bridge   |
 
 > - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
 > - The **type** and **frame** properties are not available when running in Native Bridge mode.
@@ -576,21 +572,20 @@ In all events, corresponding _reason_ field can be displayed to the user.
 | **too_much_movement** | Please keep still                                     |
 | **unknown**           | Try again                                             |
 
-
 ### Failure Feedback Codes for Liveness Assurance
 
 > ⚠️ This declares support for the new codes in the SDK. It does NOT define when the new codes will be produced by our servers.
 > This capability will be delivered in the future for Liveness Assurance.
 
-| Feedback          | Reason                                                |
-| ----------------- | ----------------------------------------------------- |
-| **eyes_closed**   | Keep your eyes open                                   |
-| **multiple_faces**| Ensure only one person is visible                     |
-| **obscured_face** | Remove any face coverings                             |
-| **sunglasses**    | Remove sunglasses                                     |
-| **too_bright**        | Ambient light too strong or screen brightness too low |
-| **too_dark**          | Your environment appears too dark                     |
-| **unknown**       | Try again                                             |
+| Feedback           | Reason                                                |
+| ------------------ | ----------------------------------------------------- |
+| **eyes_closed**    | Keep your eyes open                                   |
+| **multiple_faces** | Ensure only one person is visible                     |
+| **obscured_face**  | Remove any face coverings                             |
+| **sunglasses**     | Remove sunglasses                                     |
+| **too_bright**     | Ambient light too strong or screen brightness too low |
+| **too_dark**       | Your environment appears too dark                     |
+| **unknown**        | Try again                                             |
 
 ### Error Feedback Codes
 
@@ -689,7 +684,7 @@ Any value not supplied will fall back to the English default.
 ### Override language strings
 
 ```javascript
-window.addEventListener("WebComponentsReady", (event) => {
+window.addEventListener("WebComponentsReady", event => {
   const iProovMe = document.createElement("iproov-me")
   iProovMe.setAttribute("token", "***YOUR_TOKEN_HERE***")
 
@@ -707,7 +702,7 @@ window.addEventListener("WebComponentsReady", (event) => {
 #### Load language file
 
 ```javascript
-window.addEventListener("WebComponentsReady", async (event) => {
+window.addEventListener("WebComponentsReady", async event => {
   async function getLanguage(path) {
     const response = await fetch(path)
     const language = await response.text()
@@ -826,7 +821,7 @@ const supportChecker = new window.IProov.IProovSupport()
 const loggger = console // optionally pass in a logger conforming to JS console API
 const supportChecker = new iProovSupport(loggger)
 // Event based:
-supportChecker.addEventListener("check", (event) => {
+supportChecker.addEventListener("check", event => {
   const { supported, granted, is_native_bridge } = event.detail
   if (supported === false) {
     // go to fallback UX
@@ -994,11 +989,12 @@ iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ title_text_col
 Note: Native SDK implementations can only accept colour values in `#RRGGBB` and `#AARRGGBB` formats.
 
 #### Filters
-When configuring the `filter` options, you will need to pass these in as objects via the `native_sdk_options` option. See the related [Android SDK filter docs]([#-filter-options](https://docs.iproov.com/docs/Content/ImplementationGuide/biometric-sdk/android/sdk-android-customize-ui.htm?Highlight=filter)) or [iOS SDK filter docs](https://docs.iproov.com/docs/Content/ImplementationGuide/biometric-sdk/ios/sdk-ios-customize-ui.htm?Highlight=filter) for more details on configuring filters.
+
+When configuring the `filter` options, you will need to pass these in as objects via the `native_sdk_options` option. See the related [Android SDK filter docs](<[#-filter-options](https://docs.iproov.com/docs/Content/ImplementationGuide/biometric-sdk/android/sdk-android-customize-ui.htm?Highlight=filter)>) or [iOS SDK filter docs](https://docs.iproov.com/docs/Content/ImplementationGuide/biometric-sdk/ios/sdk-ios-customize-ui.htm?Highlight=filter) for more details on configuring filters.
 
 ```js
 // Example shows passing a filter to the Native SDK as natural and clear
-iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ filter: { name: "natural", style: "clear" }})))
+iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ filter: { name: "natural", style: "clear" } })))
 ```
 
 ## 🔳 Iframe integrations
@@ -1006,16 +1002,17 @@ iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ filter: { name
 Integrations via iframes are supported by the Web SDK but please note that you must declare that camera and fullscreen permissions are allowed. Any additional permissions you may require must be separated by a semi-colon `;`. Permissions `accelerometer;gyroscope;magnetometer;` are required.
 
 **Please note the following:**
+
 - Iframe integrations are not supported in iOS versions `14` and lower due to iOS not supporting motion permissions in iframes. All devices attempting to run iProov will be marked as `unsupported`.
 - Due to browser policies, it is also required to pass `allowfullscreen="true"` as well as the `allow` attribute.
 - Its important to ensure the iframe is expanded to 100% width and height. See an example of this below.
 
 ```html
 <iframe
-        style="width: 100vw; height: 100vh; border: 0"
-        src="https://your-iframe-target.example"
-        allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"
-        allowfullscreen="true"
+  style="width: 100vw; height: 100vh; border: 0"
+  src="https://your-iframe-target.example"
+  allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"
+  allowfullscreen="true"
 ></iframe>
 ```
 
@@ -1027,7 +1024,7 @@ Transactions can be manually canceled by calling the `cancelTransaction` functio
 // an example showing how to cancel a transaction 20 seconds after the connected event is fired
 const iProovMe = document.createElement("iproov-me")
 // add token and other options...
-const cancelAfterTimeoutFromConnected = (event) => {
+const cancelAfterTimeoutFromConnected = event => {
   setTimeout(function () {
     iProovMe.cancelTransaction() // error_transaction_canceled will be triggered
   }, 20 * 1000)
@@ -1048,17 +1045,18 @@ In this example, elements to hide during iProov scan are identified with the CSS
 ```javascript
 const ELEMENTS_TO_HIDE_IN_FS = document.querySelectorAll(".hide-in-fs")
 iProov.addEventListener("started", () => {
-  ELEMENTS_TO_HIDE_IN_FS.forEach((el) => el.setAttribute("aria-hidden", "true"))
+  ELEMENTS_TO_HIDE_IN_FS.forEach(el => el.setAttribute("aria-hidden", "true"))
 })
 const EXIT_EVENTS = ["canceled", "error", "failed", "passed"]
-EXIT_EVENTS.forEach((eventName) => {
+EXIT_EVENTS.forEach(eventName => {
   iProov.addEventListener(eventName, () => {
-    ELEMENTS_TO_HIDE_IN_FS.forEach((el) => el.removeAttribute("aria-hidden"))
+    ELEMENTS_TO_HIDE_IN_FS.forEach(el => el.removeAttribute("aria-hidden"))
   })
 })
 ```
 
 ## ✨ Image Quality Enhancement
+
 In Liveness Assurance, higher quality imagery can be collected and returned via the validate frame.
 This feature can be toggled on - please reach out to Customer Success to enable this.
 
@@ -1079,4 +1077,3 @@ For further help with integrating the SDK, please contact [support@iproov.com](m
   - [Safari 15.0 unable to render webcam to canvas context](https://github.com/mrdoob/three.js/issues/22582#issuecomment-938710902)
 - Flickering can occur while cropping with `clear` and `blur` SDK filters (only observed on MacBook Pro M2 with an external monitor)
 - Native Bridge integrations can only accept colour inputs in `#RRGGBB` and `#AARRGGBB` formats
-

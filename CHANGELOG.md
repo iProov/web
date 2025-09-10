@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 10.09.2025 5.5.0
+
+## Added
+
+- **Security**: Enhanced Security
+
+## Fixed
+
+- **Camera access**: Fix some camera selection issues with Chrome on desktop.
+
 ## 15.05.2025 5.4.4
 
 ## Added
@@ -12,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Accessibility**: For Dynamic Liveness, when the new SDK option `scanning_prompts` is enabled, two new prompts are displayed: one during scanning and another upon scanning completion.
 
 ## Fixed
+
 - **iPad**: Fixed an issue where video streaming appeared too zoomed in on iPad.
 - **Localization**: Fixed localization for the `ready` and `grant_button` slots.
 - **Camera selector**: Fixed an issue where the camera selector was not applying the selected camera after permission was granted.
@@ -19,54 +30,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 23.04.2025 5.4.3
 
 ## Fixed
+
 - **Module interface**: Removed the CommonJS and AMD interfaces from iProovMe.js as they were not working and were causing issues with some bundlers.
 
 ## 10.03.2025 5.4.2
 
 ## Fixed
+
 - **Asset URLs**: Fixed a bug where some URLs of the SDK assets contained a double slash `//`
 
 ## 20.11.2024 5.4.1
 
 ## Fixed
+
 - **Native Bridge**: Fixed a bug where the SDK would establish a redundant connection to the backend in [Native bridge](https://github.com/iProov/web?tab=readme-ov-file#-native-bridge) mode.
 
 ## 15.10.2024 5.4.0
 
 ## Changed
+
 - **Security**: General security enhancements.
 - **Performance**: Improved loading time (~10% faster on low-end Android phones).
 - **UI**: Font and SVG files are now preloaded.
 
 ## Fixed
+
 - **Bug**: Fixed a bug where the SDK would freeze due to an unstable IndexedDB (sometimes observed on iOS).
 
 ## 25.07.2024 5.3.0
 
 ## Changed
-- **Security**: Enhanced security.
 
+- **Security**: Enhanced security.
 
 ## 08.07.2024 5.2.2
 
 ## Fixed
-- **Bug**: Fixed a non-blocking bug in Dynamic Liveness (previously GPA) introduced in v5.2.1.
 
+- **Bug**: Fixed a non-blocking bug in Dynamic Liveness (previously GPA) introduced in v5.2.1.
 
 ## 24.06.2024 5.2.1
 
 ## Changed
+
 - **Security**: Enhanced security for Dynamic Liveness (previously GPA).
 
 ## Fixed
+
 - **Browserlist**: `.browserlistrc` back in NPM package (it had been missing since v5.1.0).
 
 ## 30.05.2024 5.2.0
 
 ## Added
+
 - Enhanced security for Dynamic Liveness (previously GPA).
 
 ## Fixed
+
 - **FireFox Mobile**: Fixed an issue with Firefox Mobile not always accepting given camera video constraints.
 - **Landscape Orientation**: Landscape Orientation: Fixed instances where streaming could start while the device was in landscape mode, even though landscape orientation was blocked.
 - **Assets**: Fixed issue where double `//` was included in some assets fetched by the Web SDK.
@@ -82,16 +102,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 20.02.2024 5.1.0
 
 ## Added
+
 - **Video**
   - **Error Handling**: Video errors are now handled more gracefully to prevent users being in a frozen state and unable to progress the claim.
 - **Security**: New security upgrades.
 
 ## Fixed
+
 - **Imagery**: Fixed blue tone issue on some Android devices.
 - **Support Checker**: Fixed an issue where the metadata endpoint wasn't called when a device is unsupported.
 - **Telemetry**: Fixed an issue where some telemetry was passing incorrect values.
 
 ## Changed
+
 - **UI**
   - **Canny**: New shaders to improve performance and visual consistency with the other iProov SDKs.
   - **Prompt**: Improved the prompt's initial styling to not appear empty on entering Canny.
