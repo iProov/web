@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.11.2025 6.0.0
+
+## Changed
+
+- **Security**: Security of the Web SDK has been improved.
+- **Feedback Codes**: All feedback codes have been updated to provide a list of reasons for each event. Each "Reason" contains a `localized_description` and, depending on the object type, may also include a `feedback_code` (replacing the old `feedback` attribute). [See behavior documentation for more information](https://github.com/iProov/web#events).
+- **Failed Event**: The `failed` event can now return up to three reasons for failure, instead of just one. All other events will contain one or fewer reasons. The `failed` slot now displays an unordered list (`ul`) of reasons.
+- **Safari/iOS/iPadOS Support**: The Web SDK now requires Safari/iOS/iPadOS version 15.2 or above and has been optimized accordingly.
+- **Bundle size**: The size of the Web SDK has been reduced by about 340KB (or 140KB gzipped).
+- **Screen Orientation During Scan**: Any change in orientation during a scan now results in an error.
+- **Landscape Orientation in Express Liveness**: Landscape orientation in Express on mobile devices is now blocked.
+
+## Fixed
+
+- **Firefox for Android**: Fixed a bug introduced in v5.5.0 that prevented access to the camera.
+
 ## 10.09.2025 5.5.0
 
 ## Added

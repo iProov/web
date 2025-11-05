@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Biometrics Web SDK v5.5.0
+# iProov Face SDK v6.0.0
 
 ## 📖 Table of contents
 
@@ -32,7 +32,7 @@ iProov offers two powerful authentication solutions:
 
 ### Software Download & Installation
 
-The iProov SDK can be downloaded and installed directly into your Web application, or incorporated into your own SDK.
+The SDK can be downloaded and installed directly into your Web application, or incorporated into your own SDK.
 
 Our downloadable software components implementing **Dynamic Liveness™** and **Express Liveness™** technologies integrate seamlessly with your existing user journeys.
 
@@ -45,19 +45,23 @@ Find out more about how to use iProov in your user journeys in the [Implementati
 
 iProov also supports [Android](https://github.com/iproov/android), [iOS](https://github.com/iproov/ios), [Flutter](https://github.com/iproov/flutter), [MAUI](https://github.com/iProov/dotnet-maui), and [React Native](https://github.com/iproov/react-native).
 
+### Upgrading from a previous version?
+
+For more information on the changes made between versions of the SDK, please refer to our [Upgrade Guide](https://github.com/iProov/web/wiki/Upgrade-Guide)
+
 ## ✍ Registration
 
 You can obtain API credentials by registering on the [iProov Portal](https://portal.iproov.com/).
 
 ## 📲 Installation
 
-The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk) allows for integration of the iProov Biometrics Web SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
+The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk) allows for integration of the SDK. It makes use of the [Web Components](https://www.webcomponents.org/introduction) APIs which are supported by most modern browsers and uses the [Polymer Project](https://www.polymer-project.org) to add support where they are not yet available.
 
 ### NPM Package
 
-Using the `@iproov/web-sdk` package is the recommended way of using the iProov Web SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The iProov Web SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on usage.
+Using the `@iproov/web-sdk` package is the recommended way of using the SDK in production, and works best with a bundler like Webpack, Parcel or Rollup. The SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on usage.
 
-> ⚠️ The iProov Web SDK shouldn't be included in any bundling, obfuscation, or minification processes. We have taken all necessary steps to ensure the SDK is as small as possible. Including the SDK in any of these processes may cause unexpected errors or performance degradation.
+> ⚠️ The SDK shouldn't be included in any bundling, obfuscation, or minification processes. We have taken all necessary steps to ensure the SDK is as small as possible. Including the SDK in any of these processes may cause unexpected errors or performance degradation.
 
 > ⚠️ When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login) or [YARN login](https://classic.yarnpkg.com/lang/en/docs/cli/login/).
 
@@ -83,10 +87,10 @@ import "@iproov/web-sdk"
 require("@iproov/web-sdk")
 ```
 
-It's as simple as that to include the iProov Biometrics Web SDK with your project.
+It's as simple as that to include the SDK with your project.
 Now you can inject the web component where you need it using one of the [integration methods](#frontend) shown below.
 
-> 🔒 A secure context is required when using the iProov Web SDK. This means that the page must be served over https including when using localhost. If you are using localhost, you can use a self-signed certificate.
+> 🔒 A secure context is required when using the SDK. This means that the page must be served over https including when using localhost. If you are using localhost, you can use a self-signed certificate.
 
 ## 🚀 Get started
 
@@ -94,7 +98,7 @@ Now you can inject the web component where you need it using one of the [integra
 
 To make use of this SDK you will require integration with the iProov backend service. You can obtain platform credentials and read our integration guide on [portal.iproov.com](https://portal.iproov.com).
 
-When starting an iProov transaction (or claim), you first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be passed on page load or fetched with AJAX, then used to initialise the iProov Biometrics Web SDK on the frontend.
+When starting an iProov transaction (or claim), you first need to generate an [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolServerToken) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyServerToken) token, which can be passed on page load or fetched with AJAX, then used to initialise the SDK on the frontend.
 
 After receiving the result from the SDK, you must then confirm its authenticity by validating the [enrolment](https://secure.iproov.me/docs.html#operation/userEnrolValidate) or [verification](https://secure.iproov.me/docs.html#operation/userVerifyValidate) token _before_ escalating the user's privileges. This must be done from your backend and is typically invoked with a redirect, form submission or AJAX call triggered by the `passed` [event](#-events).
 
@@ -145,7 +149,7 @@ There are also the following framework specific example integrations available o
 
 ## ⚙ Options
 
-The behavior of the iProov Biometrics Web SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
+The behavior of the SDK can be altered by setting the following options as attributes of the `<iproov-me>` tag in the same way as the token.
 
 #### Network Timeout
 
@@ -256,7 +260,7 @@ Color option changes introduced in [v4.0.0](https://github.com/iProov/web/releas
 | **liveness_oval_stroke_color**           | Stroke color for the centre oval whilst the SDK before iProov-ing in Liveness                                                                        |
 | **liveness_completed_oval_stroke_color** | Stroke color for the centre oval whilst the SDK after iProov-ing in Liveness                                                                         |
 
-Kiosk mode is unaffected from these changes to color options. The same color options passed through from 3.6.1 and prior should be utilized instead.
+Kiosk mode does not use the color options in the table above. It uses a different set of options from SDK v3.6.1 and prior. Please refer to the [Upgrade Guide](https://github.com/iProov/web/wiki/Upgrade-Guide) for the specific list of attributes used by Kiosk Mode.
 
 #### Aria Live
 
@@ -507,41 +511,40 @@ The available events are detailed below with any extra properties that are suppl
 
 | Event                   | Extra Properties                        | Description                                                                                                                                                                                                                     |
 | ----------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **canceled**            | _feedback, reason_                      | User has canceled iProov by exiting fullscreen                                                                                                                                                                                  |
+| **canceled**            | _reasons_                               | User has canceled iProov by exiting fullscreen                                                                                                                                                                                  |
 | **connecting**          | None                                    | The SDK is connecting to the server. You should provide an indeterminate progress indicator to let the user know that the connection is taking place.                                                                           |
 | **connected**           | None                                    | The SDK has connected. You should hide any progress indication at this point.                                                                                                                                                   |
-| **error**               | _feedback, reason_                      | iProov encountered an error while processing the authentication                                                                                                                                                                 |
-| **failed**              | _type, passed, feedback, reason_        | Authentication was unsuccessful, the user needs to try again                                                                                                                                                                    |
+| **error**               | _reasons_                               | iProov encountered an error while processing the authentication                                                                                                                                                                 |
+| **failed**              | _type, passed, reasons_                 | Authentication was unsuccessful, the user needs to try again                                                                                                                                                                    |
 | **multiple_cameras** \* | _devices, device_selector, slot, label_ | If `enable_camera_selector` is `true` returns an array of devices if more than 1 video device is detected                                                                                                                       |
-| **no_camera**           | _feedback, reason_                      | No video input was detected on the user's device                                                                                                                                                                                |
-| **passed**              | _type, feedback, reason, passed_        | Authentication was successful, the result can now be validated                                                                                                                                                                  |
-| **permission**          | _reason_                                | Camera permission is unknown & not blocked, show permission                                                                                                                                                                     |
-| **permission_denied**   | _feedback, reason_                      | User has blocked access to the camera                                                                                                                                                                                           |
+| **no_camera**           | _reasons_                               | No video input was detected on the user's device                                                                                                                                                                                |
+| **passed**              | _type, reasons, passed_                 | Authentication was successful, the result can now be validated                                                                                                                                                                  |
+| **permission**          | _reasons_                               | Camera permission is unknown & not blocked, show permission                                                                                                                                                                     |
+| **permission_denied**   | _reasons_                               | User has blocked access to the camera                                                                                                                                                                                           |
 | **progress**            | _progress, message_                     | iProov has published a progress update for the authentication                                                                                                                                                                   |
 | **ready**               | None                                    | iProov has initialized successfully and has camera permission                                                                                                                                                                   |
 | **started**             | None                                    | User has started iProov by launching into fullscreen                                                                                                                                                                            |
 | **streaming**           | None                                    | User has started streaming. The client remains in fullscreen.                                                                                                                                                                   |
 | **streamed**            | None                                    | User has finished streaming and the client has exited fullscreen _(Not guaranteed to fire every time due to a possible fast failure or any errors that can occur and should be handled within your event handlers accordingly)_ |
-| **unsupported**         | _feedback, reason_                      | Browser does not support using iProov                                                                                                                                                                                           |
+| **unsupported**         | _reasons_                               | Browser does not support using iProov                                                                                                                                                                                           |
 
 > \* See [Multiple Camera Example](https://github.com/iProov/web/wiki/Camera-Selection-Example) for an example demonstrating how a camera selection feature could be implemented.
 
 Properties of the event's **detail** payload:
 
-| Property             | Events                                 | Description                                                |
-| -------------------- | -------------------------------------- | ---------------------------------------------------------- |
-| **token**            | All                                    | The token associated with the authentication attempt       |
-| **type** (†)         | _passed, failed_                       | The type of authentication (`enrol` or `verify`)           |
-| **passed**           | _passed, failed_                       | Boolean value whether the result passed or failed          |
-| **frame** (†) (\*)   | _passed, failed_                       | An `ImageData` from the scanning process                   |
-| **progress**         | _progress_                             | A percentage (between 0 and 100) representing the progress |
-| **message**          | _progress_                             | A user-friendly description of the current progress stage  |
-| **feedback**         | _canceled, failed, error, unsupported_ | A fixed feedback code for making logical decisions         |
-| **reason**           | _canceled, failed, error, unsupported_ | An English description of the reason for the event         |
-| **slot**             | _multiple_cameras_                     | The relevant slot for the event, for ease of use           |
-| **devices**          | _multiple_cameras_                     | Array of suitable `InputDevice`s for imagery capture       |
-| **device_selector**  | _multiple_cameras_                     | The multiple camera selection `<select>` element           |
-| **is_native_bridge** | All                                    | Boolean value if event originates from the native bridge   |
+| Property             | Events                                 | Description                                                                                                                 |
+| -------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **token**            | All                                    | The token associated with the authentication attempt                                                                        |
+| **type** (†)         | _passed, failed_                       | The type of authentication (`enrol` or `verify`)                                                                            |
+| **passed**           | _passed, failed_                       | Boolean value whether the result passed or failed                                                                           |
+| **frame** (†) (\*)   | _passed, failed_                       | An `ImageData` from the scanning process                                                                                    |
+| **progress**         | _progress_                             | A percentage (between 0 and 100) representing the progress                                                                  |
+| **message**          | _progress_                             | A user-friendly description of the current progress stage                                                                   |
+| **reasons**          | _canceled, failed, error, unsupported_ | A list of English reasons (`localized_description`) and fixed feedback codes when applicable (`feedback_code`) for an event |
+| **slot**             | _multiple_cameras_                     | The relevant slot for the event, for ease of use                                                                            |
+| **devices**          | _multiple_cameras_                     | Array of suitable `InputDevice`s for imagery capture                                                                        |
+| **device_selector**  | _multiple_cameras_                     | The multiple camera selection `<select>` element                                                                            |
+| **is_native_bridge** | All                                    | Boolean value if event originates from the native bridge                                                                    |
 
 > - The `frame` property is for UI/UX purposes only and is only available if enabled on your service provider and token configuration. Imagery upon which authentication may later rely must be obtained from the token validate endpoint by a secure server-to-server call.
 > - The **type** and **frame** properties are not available when running in Native Bridge mode.
@@ -550,7 +553,7 @@ Properties of the event's **detail** payload:
 
 When the SDK exits, we use a set of feedback codes to expose more information about the exit reason for internal tracking.
 
-These codes can be used to tailor guidance for the user to try again in the case of `permission_denied`, `canceled` and `failure` events.
+These codes can be used to tailor guidance for the user to try again in the case of `permission_denied`, `canceled` and `failed` events.
 
 We always store the SDK exit feedback code against the transaction for reporting and quality improvement purposes.
 
@@ -577,15 +580,25 @@ In all events, corresponding _reason_ field can be displayed to the user.
 > ⚠️ This declares support for the new codes in the SDK. It does NOT define when the new codes will be produced by our servers.
 > This capability will be delivered in the future for Liveness Assurance.
 
-| Feedback           | Reason                                                |
-| ------------------ | ----------------------------------------------------- |
-| **eyes_closed**    | Keep your eyes open                                   |
-| **multiple_faces** | Ensure only one person is visible                     |
-| **obscured_face**  | Remove any face coverings                             |
-| **sunglasses**     | Remove sunglasses                                     |
-| **too_bright**     | Ambient light too strong or screen brightness too low |
-| **too_dark**       | Your environment appears too dark                     |
-| **unknown**        | Try again                                             |
+| Feedback             | Reason                                                 |
+| -------------------- | ------------------------------------------------------ |
+| **eyes_closed**      | Keep your eyes open                                    |
+| **multiple_faces**   | Ensure only one person is visible                      |
+| **obscured_face**    | Remove any face coverings                              |
+| **background_issue** | Move to a different location with a neutral background |
+| **eyewear**          | Remove your eyewear                                    |
+| **face_not_found**   | Align your face in the oval and then try to keep still |
+| **frames_blurry**    | Align your face in the oval and then try to keep still |
+| **lighting_issues**  | Make sure your face is well lit and free from glare.   |
+| **rejected**         | Transaction could not be completed.                    |
+| **system_error**     | System error.                                          |
+| **timeout**          | System timeout.                                        |
+| **user_not_found**   | Transaction could not be completed.                    |
+| **device_issue**     | Try a different device or browser.                     |
+| **motion_issue**     | Try a different device or browser.                     |
+| **device_restart**   | Please restart your device and try again.              |
+| **processing_fault** | Please try again.                                      |
+| **unknown**          | Try again                                              |
 
 ### Error Feedback Codes
 
@@ -652,7 +665,7 @@ function iProovEvent(event) {
     case "unsupported":
     case "permission":
     case "permission_denied":
-      console.warn("iProov " + event.type + " - " + event.detail.reason)
+      console.warn("iProov " + event.type + " - " + event.detail.reasons[0])
       break
     case "progress":
       console.info(event.detail.message + " (" + event.detail.progress + "%)")
@@ -747,20 +760,20 @@ If the ISO code corresponds to one of the following languages, the right-to-left
 
 ## 🌐 Browser support
 
-iProov's Web SDK makes use of the following technologies:
+The SDK makes use of the following technologies:
 
 - [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
 - [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 - [WebAssembly](https://webassembly.org/)
 - [WebComponents](https://www.webcomponents.org/introduction)
 
-iProov Biometrics Web SDK requires access to a front facing camera, WebGL, WebAssembly and the ability to enter full screen. A network connection is required that allows WebSockets. Provided there's a suitable webcam available, most modern desktop browsers fall within these criteria.
+The SDK requires access to a front facing camera, WebGL, WebAssembly and the ability to enter full screen. A network connection is required that allows WebSockets. Provided there's a suitable webcam available, most modern desktop browsers fall within these criteria.
 
-Of the mainstream browsers that support the above technologies, we support the **last two releases**. We feature detect capabilities and provide support for Web Components through polyfills. If we're sure our experience won't work well, due to misconfigured permissions policy or iframe settings, we mark the device as `unsupported`.
+Of the mainstream browsers that support the above technologies, we support the **last two releases**. We support iOS, iPadOS and Safari versions above 15.2. We feature detect capabilities and provide support for Web Components through polyfills. If we're sure our experience won't work well, due to misconfigured permissions policy or iframe settings, we mark the device as `unsupported`.
 
 For known issues, [see here](#known-issues).
 
-We officially support only the following browsers. Please note that browsers not included in the list may not guarantee an optimal experience when utilizing the iProov Biometrics Web SDK.
+We officially support only the following browsers. Please note that browsers not included in the list may not guarantee an optimal experience when utilizing the SDK.
 
 | <img src="https://avatars1.githubusercontent.com/u/4119093?s=200&v=4" alt="Safari" width="24px" height="24px" /><br/>Platform | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /><br/>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /><br/>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" /><br/>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /><br/>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /><br/>Opera | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /><br/>Samsung |
 | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -917,14 +930,14 @@ const possibleTests = {
 
 The `is_native_bridge` property will be exposed on support checker events if the checker detects that `iProovNativeBridgeInfo` exists within the global scope. This variable is injected automatically by the native SDK. In this case, the browser support and permission checks are cast to `true` as we won't be using the browser to iProov.
 
-Using the support checker is the best and canonical way to detect whether the user's browser supports the Web SDK.
+Using the support checker is the best and canonical way to detect whether the user's browser supports the SDK.
 
 ## 🕸 WebViews
 
-Web Views are compatible with the iProov Web SDK. However, there are some considerations to take into account when integrating iProov into a WebView based app.
+Web Views are compatible with the SDK. However, there are some considerations to take into account when integrating iProov into a WebView based app.
 
 - [Native Bridge](#native-bridge) mode is _mandatory_ for iOS `WKWebView` based apps until iOS `14.3`, when Apple enabled support for `getUserMedia`. In all other cases, the `unsupported` event fires. All iOS versions after this are supported.
-- In Android WebView apps, it _is_ possible to use the Web SDK directly provided that your app correctly allows fullscreen mode. This ensures the user interface is correctly rendered.
+- In Android WebView apps, it _is_ possible to use the SDK directly provided that your app correctly allows fullscreen mode. This ensures the user interface is correctly rendered.
 
 ### Android WebView
 
@@ -975,7 +988,7 @@ For more information on using iProov Web within a native WebView based app, see 
 - [Android Native Bridge Integration Guide](https://github.com/iProov/android/wiki/Web-Native-Bridge)
 - [iOS Native Bridge Integration Guide](https://github.com/iProov/ios/wiki/Native-Bridge)
 
-> Please note: Web SDK v5 and onwards is only compatible with iOS SDK v11 and Android SDK v9.
+> Please note: Web SDK v6 and onwards is only compatible with iOS SDK v13 and Android SDK v11.
 
 ### Customization
 
@@ -999,7 +1012,7 @@ iProovMe.setAttribute("native_sdk_options", btoa(JSON.stringify({ filter: { name
 
 ## 🔳 Iframe integrations
 
-Integrations via iframes are supported by the Web SDK but please note that you must declare that camera and fullscreen permissions are allowed. Any additional permissions you may require must be separated by a semi-colon `;`. Permissions `accelerometer;gyroscope;magnetometer;` are required.
+Integrations via iframes are supported by the SDK but please note that you must declare that camera and fullscreen permissions are allowed. Any additional permissions you may require must be separated by a semi-colon `;`. Permissions `accelerometer;gyroscope;magnetometer;` are required.
 
 **Please note the following:**
 
@@ -1009,10 +1022,10 @@ Integrations via iframes are supported by the Web SDK but please note that you m
 
 ```html
 <iframe
-  style="width: 100vw; height: 100vh; border: 0"
-  src="https://your-iframe-target.example"
-  allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"
-  allowfullscreen="true"
+        style="width: 100vw; height: 100vh; border: 0"
+        src="https://your-iframe-target.example"
+        allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;"
+        allowfullscreen="true"
 ></iframe>
 ```
 
