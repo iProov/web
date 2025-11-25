@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 24.11.2025 6.0.1
+
+## Added
+
+- **Compatibility**: Edge case browser support for iframe integrations.
+
 ## 5.11.2025 6.0.0
 
 ## Changed
@@ -30,6 +36,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 
 - **Camera access**: Fix some camera selection issues with Chrome on desktop.
+
+## 24.11.2025 5.4.5
+
+## Added
+
+- **Compatibility**: Edge case browser support for iframe integrations.
 
 ## 15.05.2025 5.4.4
 
