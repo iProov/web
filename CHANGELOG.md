@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 12.12.2025 5.5.1
+
+## Fixed
+
+- **Compatibility**: Fix some compatibility issue with web pages overriding the fetch API.
+- **Compatibility**: Edge case browser support for iframe integrations (same as v5.4.5).
+
+## 24.11.2025 5.4.5
+
+## Added
+
+- **Compatibility**: Edge case browser support for iframe integrations.
+
 ## 10.09.2025 5.5.0
 
 ## Added
