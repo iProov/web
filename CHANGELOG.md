@@ -5,11 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 29.01.2026 6.0.2
+
+## Fixed
+
+- **Camera Permission Denied**: Fixed a bug introduced in v6.0.0 where an `error` event with the feedback `integration_unloaded` was dispatched before the `permission_denied` event. This occurred when the SDK was loaded after camera permission had already been denied.
+- **Compatibility**: Fixed a compatibility issue with web pages overriding the fetch API.
+- **Failed Slot**: Fixed a potential error when custom `failed` slot content is missing the `.iproov-lang-term` element.
+
 ## 24.11.2025 6.0.1
 
 ## Added
 
 - **Compatibility**: Edge case browser support for iframe integrations.
+
+## 12.12.2025 5.5.1
+
+## Fixed
+
+- **Compatibility**: Fixed a compatibility issue with web pages overriding the fetch API.
+- **Compatibility**: Edge case browser support for iframe integrations (same as v5.4.5).
 
 ## 5.11.2025 6.0.0
 
