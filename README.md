@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Face SDK v6.0.2
+# iProov Face SDK v6.1.0
 
 ## 📖 Table of contents
 
@@ -309,17 +309,14 @@ Note that inline CSS _is_ needed to provide critical styles for `<iproov-me>` fo
 <iproov-me token="***YOUR_TOKEN_HERE***" csp_nonce="P5wB82PFZt"></iproov-me>
 ```
 
-#### Allow Landscape
+#### Allow Landscape for Dynamic Liveness
+<blockquote> ⚠️ Android tablets are always allowed to complete transactions in landscape mode due to the varying position of their camera. </blockquote>
 
-When `allow_landscape` is set to `true`, handheld devices will be able to start in landscape orientation.
+Desktop devices are unaffected by `allow_landscape`.
 
-Here is the behavior:
+When `allow_landscape` is set to `true`, handheld devices (mobiles and tablets) will be able to start in landscape orientation. Rotating from landscape to portrait mid-transaction will result in the error `error_do_not_rotate`. See errors here. 
 
-- For GPA and Liveness Assurance, landscape orientation is blocked in most handheld devices.
-- For Liveness Assurance, no handheld device will be able to start in landscape mode, regardless of this setting.
-- This blocking behavior is not enforced on Android tablets due to the varying position of their camera.
-- When in landscape mode in an affected UX, the iProov component will display the `rotate_portrait` slot.
-- Desktop devices are unaffected by `allow_landscape`.
+When `allow_landscape` is not set and a handheld device (apart from Android tablets, where landscape is always allowed) starts in landscape orientation, the iProov component will display the `rotate_portrait` slot.
 
 See [slots](#-slots) for details on how to override the `rotate_portrait` slot.
 
@@ -613,7 +610,8 @@ Error feedback codes apply for both GPA and Liveness Assurance
 | **error_camera**                    | The camera cannot be started for unknown reasons           |
 | **error_camera_in_use**             | The camera is already in use and cannot be accessed        |
 | **error_camera_not_supported**      | The camera resolution is too small                         |
-| **error_camera_permission_denied**  | The user denied our camera permission request              |
+| **error_camera_permission_denied**  | The user denied our camera permission request         
+| **error_do_not_rotate**     | The user rotated mid-transaction. Please note that `allow_landscape` does not allow mid-transaction rotations |
 | **error_device_motion_denied**      | The user denied our device motion permission request       |
 | **error_device_motion_unsupported** | Your device does not seem to fully report device motion    |
 | **error_fullscreen_change**         | Exited fullscreen without completing iProov                |
