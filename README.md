@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Face SDK v6.0.2
+# iProov Face SDK v6.1.0
 
 ## 📖 Table of contents
 
@@ -14,6 +14,7 @@
   - [Feedback Codes](#feedback-codes)
 - [Localization](#-localization)
 - [Browser support](#-browser-support)
+  - [Fullscreen](#fullscreen)
 - [WebViews](#-webviews)
 - [Native bridge](#-native-bridge)
 - [Iframe Integrations](#-iframe-integrations)
@@ -309,17 +310,15 @@ Note that inline CSS _is_ needed to provide critical styles for `<iproov-me>` fo
 <iproov-me token="***YOUR_TOKEN_HERE***" csp_nonce="P5wB82PFZt"></iproov-me>
 ```
 
-#### Allow Landscape
+#### Allow Landscape for Dynamic Liveness
 
-When `allow_landscape` is set to `true`, handheld devices will be able to start in landscape orientation.
+<blockquote> ⚠️ Android tablets are always allowed to complete transactions in landscape mode due to the varying position of their camera. </blockquote>
 
-Here is the behavior:
+Desktop devices are unaffected by `allow_landscape`.
 
-- For GPA and Liveness Assurance, landscape orientation is blocked in most handheld devices.
-- For Liveness Assurance, no handheld device will be able to start in landscape mode, regardless of this setting.
-- This blocking behavior is not enforced on Android tablets due to the varying position of their camera.
-- When in landscape mode in an affected UX, the iProov component will display the `rotate_portrait` slot.
-- Desktop devices are unaffected by `allow_landscape`.
+When `allow_landscape` is set to `true`, handheld devices (mobiles and tablets) will be able to start in landscape orientation. Rotating from landscape to portrait mid-transaction will result in the error `error_do_not_rotate`. See errors here. 
+
+When `allow_landscape` is not set and a handheld device (apart from Android tablets, where landscape is always allowed) starts in landscape orientation, the iProov component will display the `rotate_portrait` slot.
 
 See [slots](#-slots) for details on how to override the `rotate_portrait` slot.
 
@@ -559,46 +558,40 @@ We always store the SDK exit feedback code against the transaction for reporting
 
 In all events, corresponding _reason_ field can be displayed to the user.
 
-### Failure Feedback Codes for Genuine Presence Assurance
+### Failure Feedback Codes
 
-| Feedback              | Reason                                                |
-| --------------------- | ----------------------------------------------------- |
-| **eyes_closed**       | Keep your eyes open                                   |
-| **face_too_far**      | Move your face closer to the screen                   |
-| **face_too_close**    | Move your face farther from the screen                |
-| **misaligned_face**   | Keep your face in the oval                            |
-| **multiple_faces**    | Ensure only one person is visible                     |
-| **obscured_face**     | Remove any face coverings                             |
-| **sunglasses**        | Remove sunglasses                                     |
-| **too_bright**        | Ambient light too strong or screen brightness too low |
-| **too_dark**          | Your environment appears too dark                     |
-| **too_much_movement** | Please keep still                                     |
-| **unknown**           | Try again                                             |
+The following table lists all failure feedback codes with their corresponding reasons and indicates which assurance type supports each code.
 
-### Failure Feedback Codes for Liveness Assurance
+| Feedback              | Reason                                                            | GPA | LA  |
+| --------------------- | ----------------------------------------------------------------- | --- | --- |
+| **unknown**           | Try again                                                         | ✅  | ✅  |
+| **too_much_movement** | Please keep still                                                 | ✅  | ❌  |
+| **too_bright**        | Ambient light too strong or screen brightness too low             | ✅  | ❌  |
+| **too_dark**          | Your environment appears too dark                                 | ✅  | ❌  |
+| **misaligned_face**   | Keep your face in the oval                                        | ✅  | ❌  |
+| **face_too_far**      | Move your face closer to the screen                               | ✅  | ❌  |
+| **face_too_close**    | Move your face farther from the screen                            | ✅  | ❌  |
+| **sunglasses**        | Remove sunglasses                                                 | ✅  | ❌  |
+| **obscured_face**     | Remove any face coverings                                         | ✅  | ✅  |
+| **eyes_closed**       | Keep your eyes open                                               | ✅  | ✅  |
+| **multiple_faces**    | Ensure only one person is visible                                 | ✅  | ✅  |
+| **background_issue**  | Move to a different location with a neutral background            | ✅  | ✅  |
+| **device_issue**      | Try a different device or browser.                                | ✅  | ✅  |
+| **eyewear**           | Remove your eyewear                                               | ✅  | ✅  |
+| **face_not_found**    | Align your face in the oval and then try to keep still            | ✅  | ✅  |
+| **frames_blurry**     | Align your face in the oval and then try to keep still            | ✅  | ✅  |
+| **motion_issue**      | Try a different device or browser.                                | ✅  | ✅  |
+| **lighting_issues**   | Make sure your face is well lit and free from glare.              | ✅  | ✅  |
+| **rejected**          | Transaction could not be completed.                               | ✅  | ✅  |
+| **system_error**      | System error.                                                     | ✅  | ✅  |
+| **timeout**           | System timeout.                                                   | ✅  | ✅  |
+| **user_not_found**    | Transaction could not be completed.                               | ✅  | ✅  |
+| **device_restart**    | Please restart your device and try again.                         | ✅  | ✅  |
+| **processing_fault**  | Please try again.                                                 | ✅  | ✅  |
 
-> ⚠️ This declares support for the new codes in the SDK. It does NOT define when the new codes will be produced by our servers.
-> This capability will be delivered in the future for Liveness Assurance.
+Key: ✅ = will be returned, ❌ = will not be returned
 
-| Feedback             | Reason                                                 |
-| -------------------- | ------------------------------------------------------ |
-| **eyes_closed**      | Keep your eyes open                                    |
-| **multiple_faces**   | Ensure only one person is visible                      |
-| **obscured_face**    | Remove any face coverings                              |
-| **background_issue** | Move to a different location with a neutral background |
-| **eyewear**          | Remove your eyewear                                    |
-| **face_not_found**   | Align your face in the oval and then try to keep still |
-| **frames_blurry**    | Align your face in the oval and then try to keep still |
-| **lighting_issues**  | Make sure your face is well lit and free from glare.   |
-| **rejected**         | Transaction could not be completed.                    |
-| **system_error**     | System error.                                          |
-| **timeout**          | System timeout.                                        |
-| **user_not_found**   | Transaction could not be completed.                    |
-| **device_issue**     | Try a different device or browser.                     |
-| **motion_issue**     | Try a different device or browser.                     |
-| **device_restart**   | Please restart your device and try again.              |
-| **processing_fault** | Please try again.                                      |
-| **unknown**          | Try again                                              |
+> ⚠️ These are not an indication of tests being performed but only whether reasons of failure are reported.
 
 ### Error Feedback Codes
 
@@ -614,6 +607,7 @@ Error feedback codes apply for both GPA and Liveness Assurance
 | **error_camera_in_use**             | The camera is already in use and cannot be accessed        |
 | **error_camera_not_supported**      | The camera resolution is too small                         |
 | **error_camera_permission_denied**  | The user denied our camera permission request              |
+| **error_do_not_rotate**             | The user rotated mid-transaction. Please note that `allow_landscape` does not allow mid-transaction rotations |
 | **error_device_motion_denied**      | The user denied our device motion permission request       |
 | **error_device_motion_unsupported** | Your device does not seem to fully report device motion    |
 | **error_fullscreen_change**         | Exited fullscreen without completing iProov                |
@@ -785,6 +779,23 @@ We officially support only the following browsers. Please note that browsers not
 > \* See [known issues](#known-issues) for more details
 
 > ℹ️ If the device attempting to iProov doesn't meet the minimum requirements, the `unsupported` event is emitted. See the [events](#-events) section for more details.
+
+### Fullscreen
+
+When the user taps the start button, the SDK automatically enters fullscreen mode using the browser's [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API). This is not configurable via attributes — it is managed entirely by the SDK.
+
+Fullscreen is enabled by default on most desktop and Android browsers. It is **automatically disabled** on:
+
+| Platform / Browser              | Reason                                                    |
+| ------------------------------- | --------------------------------------------------------- |
+| **iOS / iPadOS** (all browsers) | The Fullscreen API is only partially supported by WebKit              |
+| **Mi Browser**                  | Entering fullscreen causes an unintended landscape switch  |
+
+When fullscreen is unavailable or the browser denies the request, the SDK continues normally — no action is required from the integrator. However, we recommend ensuring fullscreen is available where possible for better pass rates.
+
+When embedding the SDK in an **iframe**, you must explicitly grant fullscreen permissions. See the [Iframe Integrations](#-iframe-integrations) section for details.
+
+For **Android WebView** apps, fullscreen must be allowed in your native code. See the [WebViews](#-webviews) section for examples.
 
 ### Support checker
 

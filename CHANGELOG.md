@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 27.04.2026 6.1.0
+
+## Fixed
+
+- **Error Handling**: Improved handling for various errors which should now give a clearer reason in many scenarios, instead of `error_client` / "Unknown error".
+- **Device Support**: Disabled fullscreen for Mi Browser.
+- **Native Bridge**: Fixed a log incorrectly indicating that the iOS SDK had failed to launch.
+
+## Changed
+
+- **Security**: Enhanced security.
+- **Security**: The Web SDK no longer requires `unsafe-eval` in your Content Security Policy. The narrower `wasm-unsafe-eval` source expression is now sufficient for `script-src`.
+- **Bundle Size**: Reduced the size of the SDK bundle by around 280KB (80KB gzipped).
+
 ## 29.01.2026 6.0.2
 
 ## Fixed
