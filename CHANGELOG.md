@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 07.05.2026 6.1.1
+
+## Fixed
+
+- **iOS / iPadOS**: Fixed a bug on iOS / iPadOS that prevented some data from being collected on the first attempt.
+
 ## 27.04.2026 6.1.0
 
 ## Fixed

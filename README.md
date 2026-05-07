@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Face SDK v6.1.0
+# iProov Face SDK v6.1.1
 
 ## 📖 Table of contents
 
