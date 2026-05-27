@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 27.05.2026 6.2.0
+
+## Added
+
+- **Express Liveness**: New experimental user experience for Android tablets in landscape orientation. This feature is not suitable for general access and remains disabled by default.
+
 ## 07.05.2026 6.1.1
 
 ## Fixed

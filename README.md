@@ -1,6 +1,6 @@
 ![iProov: Biometric Face Verification for Remote Identity Assurance](https://github.com/iProov/web/raw/master/images/banner.png)
 
-# iProov Face SDK v6.1.1
+# iProov Face SDK v6.2.0
 
 ## 📖 Table of contents
 
@@ -312,13 +312,13 @@ Note that inline CSS _is_ needed to provide critical styles for `<iproov-me>` fo
 
 #### Allow Landscape for Dynamic Liveness
 
-<blockquote> ⚠️ Android tablets are always allowed to complete transactions in landscape mode due to the varying position of their camera. </blockquote>
+`allow_landscape` controls whether a device may **start** a Dynamic Liveness transaction in landscape orientation.
 
-Desktop devices are unaffected by `allow_landscape`.
+> ⚠️ `allow_landscape` only applies to Dynamic Liveness on Android mobile devices, iOS mobile devices, and iPads. Desktops and Android tablets always permit landscape, and Express transactions on mobile devices and iPads always require portrait.
 
-When `allow_landscape` is set to `true`, handheld devices (mobiles and tablets) will be able to start in landscape orientation. Rotating from landscape to portrait mid-transaction will result in the error `error_do_not_rotate`. See errors here. 
+Once scanning has started, **any** rotation will result in the error [`error_do_not_rotate`](#error-feedback-codes), regardless of direction.
 
-When `allow_landscape` is not set and a handheld device (apart from Android tablets, where landscape is always allowed) starts in landscape orientation, the iProov component will display the `rotate_portrait` slot.
+When `allow_landscape` does not apply (or is left unset) and the device starts in landscape orientation, the iProov component will display the `rotate_portrait` slot.
 
 See [slots](#-slots) for details on how to override the `rotate_portrait` slot.
 
