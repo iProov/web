@@ -13,7 +13,7 @@
   "dependencies": {
     "@hapi/basic": "^6.0.0",
     "@hapi/hapi": "^20.2.2",
-    "@hapi/inert": "^6.0.4",
+    "@hapi/inert": "^7.1.1",
     "dotenv": "^8.6.0",
     "prettier": "^2.7.1",
     "superagent": "^6.1.0"
