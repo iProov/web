@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 06.08.2026 6.2.1
+
+## Fixed
+
+- **Native Bridge**: Fixed a bug where an `error` event with the feedback `integration_unloaded` was dispatched after a `passed` or `failed` result. This occurred when the integration removed the `<iproov-me>` element from the page once it had handled the result, for example when navigating to the next step.
+- **Support Checker**: Fixed a bug where `check()` never returned when `iProovSupport` was created without passing a console. The console parameter is optional again and defaults to `window.console`, as documented.
+
 ## 27.05.2026 6.2.0
 
 ## Added
