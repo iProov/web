@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 19.10.2026 7.0.0
+
+## Added
+
+- **Lighting guidance (Dynamic only)**: The SDK can now assess the user's lighting before the scan begins and, where needed, coach the user towards better conditions first. It is disabled by default; to enable it for a service provider, contact your iProov account manager. No integration change is required. The guidance will be refined in future releases.
+- **Accessibility guidance (Dynamic only)**: Three new options give a continuous, text-free indication of how close the user is to being correctly positioned. `accessibility_color` uses the background surrounding the oval, sweeping it from orange through yellow to green, `accessibility_sound` plays a click that speeds up as the user approaches, and `accessibility_vibration` taps out the same rhythm. Each is independent and disabled by default. Vibration is only available in Android Chromium browsers; see the README for the platform limits.
+- **Backend rejections**: Two new error feedback codes, `error_unsupported_version_os` and `error_unsupported_version_sdk`, reported when iProov's servers reject a claim because the device's OS version or the SDK version is below the minimum configured for the service provider. Neither should be retried.
+- **`error_unsupported_device`**: New error feedback code for a backend rejection of the device itself. Previously this shared `error_not_supported` with the client-side support checker, so integrators could not tell an iProov-side rejection from a problem with their own integration — only the latter is something they can act on.
+- **Runtime language switching**: The `language` attribute is now reactive. Updating it mid-session re-renders all SDK text immediately, without a new token or re-initialisation. Custom slot content is outside the SDK's control and must be updated separately; see the README.
+- **Typed events and a complete attribute list in the published TypeScript declarations.** `iProovMe.d.ts` now maps every event to its `detail` payload, so `addEventListener("passed", …)` types `event.detail.passed`, `type` and `reasons` without a cast, and `document.querySelector("iproov-me")` resolves to the element rather than `Element`. The detail shapes are exported for use in your own function signatures.
+
+## Changed
+
+- **Breaking — `clear` is now the default filter.** A claim that does not set the `filter` option renders the camera image instead of the `shaded` line drawing. Set `filter="shaded"` to keep the previous appearance.
+- **Breaking — the iProov logo follows the filter rather than a per-service-provider flag.** It appears on a Dynamic claim rendering the Clear family, and never on a Canny render or an Express claim. iProov can suppress it for a given service provider; no integrator option governs it.
+- **The iProov logo is a new mark in a new position.** The "Secured by iProov" badge is replaced by the full-colour iProov mark, in the bottom-right corner of the camera view, 40 px from the right and bottom edges. Its height is 5% of the oval's height with a 12 px floor, so it scales with the oval on every device rather than switching between layouts at a breakpoint.
+- **Breaking — the iProov logo is no longer announced by assistive technology**, and the `label_secured_by_iproov_aria` term has been removed. The mark is decorative, so it now carries `aria-hidden`. A `language` JSON that still supplies that term is rejected as `error_client` with the reason `error_invalid_language_key`; remove the key from any customised language file.
+- **Breaking — `language` values are now validated.** Each value must be a plain-text string. A value that fails is rejected as `error_client` with the reason `error_invalid_language_value`, and a `language` that is not valid JSON with `error_invalid_language_json`. Unknown keys are still rejected with `error_invalid_language_key`. See the README's Language validation section.
+- **Breaking — `clear` no longer needs enabling per service provider.** Dynamic claims accept it from any integrator. The `error_unexpected_filter_in_GPA` error now applies to `blur` alone, which is an Express filter and is rejected on Dynamic claims rather than rendering as `clear`.
+- **Breaking — the SDK is now an ES module only.** A classic `<script src=".../iProovMe.js">` no longer executes; load it with `<script type="module">`, or through a bundler. There is no CommonJS/UMD build, so `require()` is unsupported.
+- **Breaking — the `window.IProov` global has been removed**, along with `window.IProov.IProovSupport`. Import the `<iproov-me>` element from the package root, and the support checker from the `@iproov/web-sdk/iProovSupport.js` subpath. The extension is required: `exports` subpaths are matched exactly.
+- **Breaking — `iProovSupport.js` is now an ES module** and no longer sets a `window.iProovSupport` global. Use `import { iProovSupport } from "@iproov/web-sdk/iProovSupport.js"`.
+- **Breaking — asset paths now carry the build.** The `assets_url` attribute still gives the origin and is unchanged, and chunks are still resolved against it at runtime. Beneath that origin the chunks, Wasm modules, workers and fonts move from `iproov-assets/7.0.0/` to `iproov-assets/7.0.0-<commit>/`. Self-hosted assets must be mirrored under the new directory name, and any pinned or allow-listed asset path must be updated.
+- **Twelve documented options were missing from `iProovMe.d.ts`** and are now declared: `disable_exterior_blur`, `switch_camera_button`, `scanning_prompts` and the nine colour options. TypeScript and React integrations no longer have to cast or ignore an error to set an option the README documents. Options that accept `null` are typed as nullable.
+- **Breaking — the support checker's assurance-type option is declared under the name it is actually read as**, `assuranceType` rather than `assurance_type`, and is now optional. The old name was declared as required, so a TypeScript integration passing an options object was setting it and will stop compiling until it is renamed. It is marked deprecated: it is accepted and defaulted but never read, because the support checks do not differ by assurance type.
+- **Breaking — support-checker test results are typed `boolean | null`**, which is what they have always been at runtime: each test is `null` until it has run, and `gyro` is only tested on phones and tablets. Branching on one is unaffected — `if (tests.gyro)` and `tests.wasm === false` both still compile — but assigning one to a `boolean`, or passing it where a `boolean` is expected, no longer does.
+- **Breaking — a backend rejection of the device now reports `error_unsupported_device` instead of `error_not_supported`.** `error_not_supported` is now raised only by the client-side support checker, and so arrives only on the `unsupported` event. Integrators matching on `error_not_supported` to detect a backend rejection must add the new code.
+- **Security**: Enhanced security.
+
+## Fixed
+
+- **Firefox for Android**: Fixed claims failing with `ufc_unknown`, caused by a browser-specific timing inconsistency.
+- **Browser-forced landscape**: Some browsers turn the screen to landscape as part of entering fullscreen, which the SDK read as the user rotating the device — raising the rotate prompt, or `error_do_not_rotate` once scanning had started. The SDK now recognises a browser-driven rotation and recovers from it. This replaces the per-browser denylist added in v6.1.0, so browsers that behave this way are handled without a code change.
+- **Iframe Bridge**: Restored for Firefox on Android, where the browser withholds device motion from an embedded page regardless of the permissions the host declares.
+- **Android tablets**: Improved detection of Android tablets requesting a desktop site.
+- **Invalid token**: Fixed the handling of an invalid token passed as an attribute.
+- **Start and Grant buttons**: Click handling is bound to the buttons themselves rather than their slots, so a custom slot wrapper no longer swallows the click.
+- **Failure to start**: A failure before the SDK has finished loading now raises the `error` event instead of leaving the integration waiting with nothing on screen. An unreachable `assets_url`, or SDK assets blocked by a Content Security Policy, reports `error_asset_fetch`; any other failure at that stage reports `error_client`. The event's `localized_description` carries the feedback code itself, because the SDK's text has not loaded yet.
+- **Faulty cameras**: Where a device reports a camera that cannot deliver frames, the SDK now moves on to the next one rather than failing the claim, and falls back to a safe configuration where a device rejects the resolution it advertises.
+- **Flash timing**: Fixed the colour flash running slower than intended on recent iOS.
+- **Fonts**: The main UI typeface now ships in WOFF2 alongside its existing formats. Modern browsers were falling back to the larger WOFF for this face, so it is about 5 KB smaller on every session.
+- **Asset delivery**: SDK assets served from `cdn.iproov.app` now return `Cross-Origin-Resource-Policy: cross-origin`. Integrations that set `Cross-Origin-Embedder-Policy: require-corp` previously had assets blocked, most visibly the rotate-to-portrait animation, which failed to render with no error reported.
+
+## Removed
+
+- **sdk_unsupported**: Removed the `sdk_unsupported` error feedback code. It was documented but never emitted; `error_unsupported_version_sdk` replaces it.
+- **Breaking — the `frame` property has been removed** from the `passed` and `failed` event `detail`. It was available only when enabled on your service provider and token configuration, and was for UI/UX purposes only. Imagery on which authentication may rely must be obtained from the token validate endpoint by a secure server-to-server call.
+- **Breaking — iOS and iPadOS 15 are no longer supported.** The minimum supported version is now iOS / iPadOS 16. The support checker reports these devices as unsupported on the `unsupported` event with `error_not_supported`, as it already did for iOS 14 and below. iPads running "Request Desktop Website" are covered too: the SDK recovers the real OS from a live touch probe rather than trusting the spoofed macOS user agent. Safari on macOS is unaffected and keeps its existing 15.2 minimum.
+
 ## 06.08.2026 6.2.1
 
 ## Fixed
