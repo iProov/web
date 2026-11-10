@@ -54,8 +54,9 @@ For more information on the changes made between versions of the SDK, please ref
 
 > ### ⚠️ Breaking changes in v7.0.0
 >
-> - The SDK is **ESM-only**. A classic `<script src="…iProovMe.js">` no longer executes — use `<script type="module">`, or a bundler. There is no CommonJS/UMD build; `require()` is unsupported.
-> - `window.IProov` and `window.IProov.IProovSupport` are **removed**. Import the element from the package root, and the support checker from the `@iproov/web-sdk/iProovSupport.js` subpath — the extension is required, because `exports` subpaths are matched exactly.
+> - The SDK is **ESM-only**. A classic `<script src="…iProovMe.js">` no longer executes — use `<script type="module">`, or a dynamic `import()`. There is no CommonJS/UMD build; `require()` is unsupported.
+> - **`iProovMe.js` must be served exactly as published.** If a build step changes it in any way — bundling, minification, transpilation, or a dev server's dependency pre-bundling — every transaction fails. Serve the file as-is and load it by URL, as shown in [Setup](#setup).
+> - `window.IProov` and `window.IProov.IProovSupport` are **removed**. Load the element as above, and import the support checker from the `@iproov/web-sdk/iProovSupport.js` subpath — the extension is required, because `exports` subpaths are matched exactly. The support checker can still be bundled.
 > - `iProovSupport.js` is now an ES module and no longer sets a `window.iProovSupport` global.
 >
 > Chunk delivery is unchanged: `assets_url` still decides where split chunks load from at runtime.
@@ -72,7 +73,7 @@ The NPM package [@iproov/web-sdk](https://www.npmjs.com/package/@iproov/web-sdk)
 
 Using the `@iproov/web-sdk` package is the recommended way of using the SDK in production. The package is an ES module. The SDK is held in a private NPM registry, to gain access, please contact [support@iproov.com](mailto:support@iproov.com) sharing your NPM username and you will be given instructions on usage.
 
-> ⚠️ **Ship `iProovMe.js` as published.** Your bundler may resolve and import it, but it must not run it through a further minification, obfuscation or transpilation pass — the published file is already optimised, and re-transforming it can cause unexpected errors or degrade performance. If your build would otherwise transform it, mark `@iproov/web-sdk` as external.
+> ⚠️ **Serve `iProovMe.js` exactly as published.** If your build changes the file in any way — bundling, minification, transpilation, or a dev server's dependency pre-bundling — every transaction fails. Do not import `@iproov/web-sdk` through your bundler: load `iProovMe.js` by URL, as shown in [Setup](#setup). The [Loading the SDK](https://github.com/iProov/web/wiki/Serving-Assets-And-CORS#loading-the-sdk) wiki page has the recipe for Vite, Next.js, Angular and webpack.
 
 > ⚠️ When you have been granted access, to use the `@iproov/web-sdk` via your CLI, you will need to authenticate with [NPM Login](https://docs.npmjs.com/cli/v9/commands/npm-login) or [YARN login](https://classic.yarnpkg.com/lang/en/docs/cli/login/).
 
@@ -88,17 +89,25 @@ yarn add @iproov/web-sdk
 npm i @iproov/web-sdk --save
 ```
 
-After you have installed the `@iproov/web-sdk` package, import it into your codebase. The package is a standard **ES module** (ESM-only), resolved through the `import` condition, and it can also be loaded directly with `<script type="module">`. There is no CommonJS/UMD build — `require()` is not supported.
+After you have installed the `@iproov/web-sdk` package, serve its `iProovMe.js` from your own origin, unchanged, and load it by URL. The package is a standard **ES module** (ESM-only). There is no CommonJS/UMD build — `require()` is not supported.
 
-```javascript
-// ESM / module bundler — the side-effect import registers the <iproov-me> element:
-import "@iproov/web-sdk"
+Copy `node_modules/@iproov/web-sdk/iProovMe.js` into a folder your app serves as-is — for example `public/iproov/` with Vite or Next.js — from a script that runs before your dev server and your build. Then load it with a module script:
 
-// ESM — the element class is also the default (and named) export, for programmatic access:
-import IProovMe from "@iproov/web-sdk"
+```html
+<script type="module" src="/iproov/iProovMe.js"></script>
 ```
 
-It's as simple as that to include the SDK with your project.
+Or from code, keeping the URL in a variable so your bundler leaves it alone. The element is registered once the import resolves:
+
+```javascript
+const sdkUrl = new URL("/iproov/iProovMe.js", window.location.href).href
+await import(/* webpackIgnore: true */ /* @vite-ignore */ sdkUrl)
+```
+
+For TypeScript, `import type IProovMe from "@iproov/web-sdk"` gives you the element's types and is removed at compile time.
+
+The [Loading the SDK](https://github.com/iProov/web/wiki/Serving-Assets-And-CORS#loading-the-sdk) wiki page has a copy script and the details for each bundler.
+
 Now you can inject the web component where you need it using one of the [integration methods](#frontend) shown below.
 
 > 🔒 A secure context is required when using the SDK. This means that the page must be served over https including when using localhost. If you are using localhost, you can use a self-signed certificate.
